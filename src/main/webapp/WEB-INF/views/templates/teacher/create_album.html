@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--/*/ <th:block th:include="templates/includes/components :: components"></th:block> /*/-->
+    <!--/*/ <th:block th:include="templates/includes/header :: header('', ${username})"></th:block> /*/-->
+    <link th:href="@{/resources/contents/css/signup.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title>Create subject</title>
+</head>
+<body>
+<form class="form-signin" method="POST" action="/teacher/create-album" th:action="@{/teacher/create-album}"
+      th:object="${album}">
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Create Album</h1>
+    </div>
+    <input type="hidden" name="id" th:value="${id}"/>
+    </div>
+    <div class="form-label-group">
+        <input type="text" id="inputAlbumName" th:field="*{albumName}" class="form-control"
+               placeholder="Album name" required autofocus>
+        <label for="inputAlbumName">Album name</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="text" id="inputAlbumDescription" th:field="*{description}" class="form-control"
+               placeholder="Album Description">
+        <label for="inputAlbumDescription">Description</label>
+    </div>
+
+    <div class="form-label-group ui-widget">
+        <input type="text" id="tag" name="subject" class="form-control"
+               placeholder="Tag" required>
+        <label for="tag">Tag</label>
+    </div>
+    <input type="hidden" name="uploadTime" th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm')}" />
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+</form>
+</body>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    var list = [[${subjects}]];
+    $( function() {
+        $( "#tag" ).autocomplete({
+            source: list
+        });
+    } );
+
+</script>
+</html>

@@ -1,0 +1,8 @@
+@media screen and (max-width: 504px) and (max-height: 504px)) {
+	body {
+		background-color: skyblue;
+		width: 90vw;
+		height: 90vh;
+		border: groove black;
+	}
+}

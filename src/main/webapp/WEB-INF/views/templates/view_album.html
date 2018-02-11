@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--/*/ <th:block th:include="templates/includes/components :: components"></th:block> /*/-->
+    <!--/*/ <th:block th:include="templates/includes/header :: header('', ${username})"></th:block> /*/-->
+    <link th:href="@{/resources/contents/css/docs.min.css}" rel="stylesheet" type="text/css"/>
+    <title>View album</title>
+</head>
+<body>
+<div class="container">
+    <div th:if="${album.screenCasts!=null}">
+        <th:block th:each="screenCast: ${album.screenCasts}">
+            <div class="row bd-callout bd-callout-info">
+                <div class="col-lg">
+                    <h5><span th:text="${screenCast.name}"></span></h5>
+                    <p th:text="${screenCast.description}"></p>
+                    <a th:href="@{/download/{album}/{file}(album=${album.albumId}, file=${screenCast.id})}">Download</a>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

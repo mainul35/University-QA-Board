@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--/*/ <th:block th:include="templates/includes/components :: components"></th:block> /*/-->
+    <!--/*/ <th:block th:include="templates/includes/header :: header(potentialTeachers='', username='')"></th:block> /*/-->
+    <link th:href="@{/resources/contents/css/signup.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<form class="form-signin" method="POST" action="/signup" th:action="@{/signup}" th:object="${user}">
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
+    </div>
+    <input type="hidden" name="id" th:value="${id}"/>
+    <div class="form-label-group">
+        <input type="text" id="inputName" th:field="*{name}" class="form-control" placeholder="Name" required autofocus>
+        <label for="inputName">Name</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="email" id="inputEmail" th:field="*{email}" class="form-control" placeholder="Email address" required>
+        <label for="inputEmail">Email address</label>
+    </div>
+
+    <div class="form-label-group">
+        <input type="password" id="inputPassword" th:field="*{password}" class="form-control" placeholder="Password" required>
+        <label for="inputPassword">Password</label>
+    </div>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="true" name="asTeacher"> Register as instructor
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+</form>
+
+
+            <!--<form class="form-signin" method="POST" action="/signup" th:action="@{/signup}" th:object="${user}">-->
+                <!--<span id="reauth-email" class="reauth-email"></span>-->
+                <!--<input type="hidden" th:field="*{id}"/>-->
+                <!--<input type="text" name="name" th:field="*{name}" class="form-control" placeholder="Name" required autofocus>-->
+                <!--<input type="text" name="username" th:field="*{username}" class="form-control" placeholder="Username" required>-->
+                <!--<input type="email" name="email" th:field="*{email}" class="form-control" placeholder="Email address" required autofocus>-->
+                <!--<input type="password" name="password" th:field="*{password}" class="form-control" placeholder="Password" required>-->
+                <!--<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign Up</button>-->
+            <!--</form>-->
+<!-- /card-container -->
+
+</body>
+</html>
