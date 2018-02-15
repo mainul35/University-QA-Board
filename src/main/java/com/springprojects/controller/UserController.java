@@ -73,7 +73,7 @@ public class UserController {
 //			UserEntity userEntity = new UserEntity();
 //			userEntity.setId(System.currentTimeMillis());
 //			userEntity.setName("Admin");
-//			userEntity.setEmail("admin@ewsd.com");
+//			userEntity.setEmail("teamg5.bit@gmail.com");
 //			userEntity.setDepartment("admin");
 //			Set<Authority> authorities = new HashSet<>();
 //			authorities.add(authorityService.findByRoleName("ROLE_ADMIN"));
@@ -167,5 +167,16 @@ public class UserController {
     public String accessDenied_GET(){
         logger.info("Access Denied page ");
         return "/templates/403";
+    }
+    
+    @RequestMapping(value="/reset-password", method= RequestMethod.GET)
+    public String resetPassword_GET() {
+    	return "/templates/reset_password";
+    }
+    
+    @RequestMapping(value="/reset-password", method= RequestMethod.POST)
+    public String resetPassword_POST(@RequestParam("email") String email) {
+        userService.sendPasswordResetLink(email);
+    	return "/templates/reset_password";
     }
 }

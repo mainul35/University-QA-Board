@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.Set;
 
@@ -20,14 +22,19 @@ public class UserEntity implements UserDetails, Serializable {
     Long id;
     @Column(name = "name", length = 200, nullable = false)
     String name;
-    @Column(name = "username", length = 200, nullable = false, unique = true)
+    @Column(name = "username", length = 200, unique = true)
     String username;
     @Column(name = "password", length = 200, nullable = false)
     String password;
     @Column(name = "email", nullable = false, unique = true,length = 200)
     String email;
     @Column(name="dept", nullable= false, length = 200)
-    String department;    
+    String department;
+    @Column(name="created_on")
+	Date date;
+	@Column(name="created_at")
+	Time time;
+	
     @ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(name="user_authority",
             joinColumns = {@JoinColumn(name="user_id", referencedColumnName="user_uuid")},

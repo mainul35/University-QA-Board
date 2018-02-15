@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.Augmenter;
 
-public class AdminIndexTest {
+public class LoginPageTest {
 	//intregation test. 
 //detect crome driver
 	public static void main(String[] args) throws InterruptedException {
@@ -18,37 +18,38 @@ public class AdminIndexTest {
 				"C:\\Users\\hossa\\Desktop\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		//url to test
-		driver.get("http://localhost:8080/online-coaching/");
-		Thread.sleep(7000); // Let the user actually see something!
-		captureScreen(driver, "Browser_loaded");
+		driver.get("http://localhost:8080/ewsd/");
+		Thread.sleep(5000); // Let the user actually see something!
+		captureScreen(driver, "login_page");
 
 		
 		//invalid email and pass entered. try wrong email
 		WebElement emailBox = driver.findElement(By.name("email"));
-		emailBox.sendKeys("admin@ewsd.com");
+		emailBox.sendKeys("teamg5.bit@gmail.com");
 		WebElement passwordBox=driver.findElement(By.name("password"));
 		passwordBox.sendKeys("secre");
 		captureScreen(driver, "invalide Input_Entered");
 		WebElement submit = driver.findElement(By.className("btn"));
-		
+
+		Thread.sleep(5000); // Let the user actually see something!
 		submit.submit();
-		Thread.sleep(7000); // Let the user actually see something!
 		captureScreen(driver, "invelade_entry");
 		
 		
 		
 		//valid entry
 		emailBox = driver.findElement(By.name("email"));
-		emailBox.sendKeys("admin@ewsd.com");
+		emailBox.sendKeys("teamg5.bit@gmail.com");
 		passwordBox=driver.findElement(By.name("password"));
 		passwordBox.sendKeys("secret");
 		captureScreen(driver, "Valide_Input_Entered");
 		submit = driver.findElement(By.className("btn"));
-		
+
+		Thread.sleep(3000); // Let the user actually see something!
 		submit.submit();
-		Thread.sleep(7000); // Let the user actually see something!
+		Thread.sleep(4000);
 		captureScreen(driver, "Loged In");
-		
+//		driver.quit();
 		
 	}
 	//function to take screenshot.

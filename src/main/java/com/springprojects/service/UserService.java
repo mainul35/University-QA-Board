@@ -1,5 +1,6 @@
 package com.springprojects.service;
 
+import com.springprojects.config.Mailer;
 import com.springprojects.entity.Authority;
 import com.springprojects.entity.UserEntity;
 import com.springprojects.repository.UserRepository;
@@ -30,7 +31,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByUsername(username.split("@")[0]);
+        UserEntity userEntity = (username.contains("@"))? userRepository.findByEmail(username):userRepository.findByUsername(username);
         logger.info(userEntity.toString());
         return userEntity;
     }
@@ -43,16 +44,16 @@ public class UserService implements UserDetailsService {
         if(!existsWithEmail(user.getEmail()) || !existsWithUsername(user.getUsername())) {
             user.setEnabled(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setUsername(user.getEmail().split("@")[0]);
+            user.setUsername(null);
             Set<Authority> authorities = new HashSet();
 
-            authorities.add(isTeacher==true?
-                    authorityService.findByRoleName("ROLE_POTENTIAL_TEACHER")==null?
-                            authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_POTENTIAL_TEACHER"))
-                            :authorityService.findByRoleName("ROLE_POTENTIAL_TEACHER")
-                    :authorityService.findByRoleName("ROLE_STUDENT")==null?
-                            authorityService.create(new Authority(System.currentTimeMillis(),"ROLE_STUDENT"))
-                            :authorityService.findByRoleName("ROLE_STUDENT"));
+//            authorities.add(isTeacher==true?
+//                    authorityService.findByRoleName("ROLE_POTENTIAL_TEACHER")==null?
+//                            authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_POTENTIAL_TEACHER"))
+//                            :authorityService.findByRoleName("ROLE_POTENTIAL_TEACHER")
+//                    :authorityService.findByRoleName("ROLE_STUDENT")==null?
+//                            authorityService.create(new Authority(System.currentTimeMillis(),"ROLE_STUDENT"))
+//                            :authorityService.findByRoleName("ROLE_STUDENT"));
 //            authorities.add(authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_ADMIN")));
             user.setAuthorities(authorities);
             userRepository.save(user);
@@ -84,5 +85,9 @@ public class UserService implements UserDetailsService {
 
     public List<UserEntity> usersWithRole(String role){
         return userRepository.findByAuthority(role);
+    }
+
+    public void sendPasswordResetLink(String email) {
+        Mailer.sendMail(email, "DoNotReply", "Here is the password \nreset link for you\n http://www.google.com.");
     }
 }

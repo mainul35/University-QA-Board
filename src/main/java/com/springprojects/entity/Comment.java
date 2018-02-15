@@ -1,5 +1,8 @@
 package com.springprojects.entity;
 
+import java.sql.Date;
+import java.sql.Time;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,6 +24,10 @@ public class Comment {
 	UserEntity reactedUser;
 	@Column(name="anonymous")
 	boolean isAnonymous;
+	@Column
+	Date date;
+	@Column
+	Time time;
 	public Long getCommentId() {
 		return commentId;
 	}
@@ -45,14 +52,29 @@ public class Comment {
 	public void setAnonymous(boolean isAnonymous) {
 		this.isAnonymous = isAnonymous;
 	}
+	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Time getTime() {
+		return time;
+	}
+	public void setTime(Time time) {
+		this.time = time;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((commentBody == null) ? 0 : commentBody.hashCode());
 		result = prime * result + ((commentId == null) ? 0 : commentId.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + (isAnonymous ? 1231 : 1237);
 		result = prime * result + ((reactedUser == null) ? 0 : reactedUser.hashCode());
+		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
 	@Override
@@ -74,6 +96,11 @@ public class Comment {
 				return false;
 		} else if (!commentId.equals(other.commentId))
 			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
 		if (isAnonymous != other.isAnonymous)
 			return false;
 		if (reactedUser == null) {
@@ -81,11 +108,16 @@ public class Comment {
 				return false;
 		} else if (!reactedUser.equals(other.reactedUser))
 			return false;
+		if (time == null) {
+			if (other.time != null)
+				return false;
+		} else if (!time.equals(other.time))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", commentBody=" + commentBody + ", reactedUser=" + reactedUser
-				+ ", isAnonymous=" + isAnonymous + "]";
+				+ ", isAnonymous=" + isAnonymous + ", date=" + date + ", time=" + time + "]";
 	}	
 }
