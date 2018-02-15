@@ -168,4 +168,15 @@ public class UserController {
         logger.info("Access Denied page ");
         return "/templates/403";
     }
+    
+    @RequestMapping(value="/reset-password", method= RequestMethod.GET)
+    public String resetPassword_GET() {
+    	return "/templates/reset_password";
+    }
+    
+    @RequestMapping(value="/reset-password", method= RequestMethod.POST)
+    public String resetPassword_POST(@RequestParam("email") String email) {
+        userService.sendPasswordResetLink(email);
+    	return "/templates/reset_password";
+    }
 }
