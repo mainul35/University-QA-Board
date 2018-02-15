@@ -66,32 +66,32 @@ public class UserController {
         if (sitePreference == SitePreference.NORMAL) {
             log(request);
             model.addAttribute("msg", "some message");
-//    		authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_ADMIN"));
-//    		authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_QA_MANAGER"));
-//    		authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_QA_COORDINATOR"));
-//    		authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_STUDENT"));
-//            UserEntity userEntity = new UserEntity();
-//            userEntity.setId(System.currentTimeMillis());
-//            userEntity.setName("Admin");
-//            userEntity.setEmail("admin@ewsd.com");
-//            userEntity.setDepartment("admin");
-//            Set< Authority> authorities = new HashSet<>();
-//            authorities.add(authorityService.findByRoleName("ROLE_ADMIN"));
-//            userEntity.setAuthorities(authorities);
-//            userEntity.setEnabled(true);
-//            userEntity.setPassword(encoder.encode("secret"));
-//            userEntity.setUsername("admin");
-//            
-//            Attachment userImage = new Attachment();
-//            Long attachmentId = System.currentTimeMillis();
-//            userImage.setAttachmentId(attachmentId);
-//            userImage.setFileName(Long.toString(attachmentId));
-//            userImage.setFileTitle("Admin image");
-//            userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
-//            
-//            attachmentService.save(userImage);
-//            userEntity.setUserImage(userImage);
-//            userService.createUser(userEntity);
+//			authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_ADMIN"));
+//			authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_QA_MANAGER"));
+//			authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_QA_COORDINATOR"));
+//			authorityService.create(new Authority(System.currentTimeMillis(), "ROLE_STUDENT"));
+//			UserEntity userEntity = new UserEntity();
+//			userEntity.setId(System.currentTimeMillis());
+//			userEntity.setName("Admin");
+//			userEntity.setEmail("admin@ewsd.com");
+//			userEntity.setDepartment("admin");
+//			Set<Authority> authorities = new HashSet<>();
+//			authorities.add(authorityService.findByRoleName("ROLE_ADMIN"));
+//			userEntity.setAuthorities(authorities);
+//			userEntity.setEnabled(true);
+//			userEntity.setPassword(encoder.encode("secret"));
+//			userEntity.setUsername("admin");
+//
+//			Attachment userImage = new Attachment();
+//			Long attachmentId = System.currentTimeMillis();
+//			userImage.setAttachmentId(attachmentId);
+//			userImage.setFileName(Long.toString(attachmentId));
+//			userImage.setFileTitle("Admin image");
+//			userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
+//
+//			attachmentService.save(userImage);
+//			userEntity.setUserImage(userImage);
+//			userService.createUser(userEntity);
             return "/templates/login";
         } else if (sitePreference == SitePreference.MOBILE) {
             logger.info("Site preference is mobile");
