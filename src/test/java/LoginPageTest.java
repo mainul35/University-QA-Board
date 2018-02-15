@@ -15,7 +15,7 @@ public class LoginPageTest {
 //detect crome driver
 	public static void main(String[] args) throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver",
-				"C:\\Users\\hossa\\Desktop\\chromedriver.exe");
+				"C:\\Users\\Syed Mainul Hasan\\Documents\\chromedriver_win32\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		//url to test
 		driver.get("http://localhost:8080/ewsd/");
@@ -39,7 +39,7 @@ public class LoginPageTest {
 		
 		//valid entry
 		emailBox = driver.findElement(By.name("email"));
-		emailBox.sendKeys("teamg5.bit@gmail.com");
+		emailBox.sendKeys("teamg5.bit");
 		passwordBox=driver.findElement(By.name("password"));
 		passwordBox.sendKeys("secret");
 		captureScreen(driver, "Valide_Input_Entered");
@@ -49,7 +49,7 @@ public class LoginPageTest {
 		submit.submit();
 		Thread.sleep(4000);
 		captureScreen(driver, "Loged In");
-//		driver.quit();
+		driver.quit();
 		
 	}
 	//function to take screenshot.
