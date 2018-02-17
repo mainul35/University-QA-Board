@@ -15,7 +15,7 @@ public class LoginPageTest {
 //detect crome driver
 	public static void main(String[] args) throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver",
-				"C:\\Users\\Syed Mainul Hasan\\Documents\\chromedriver_win32\\chromedriver.exe");
+				"Desktop\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		//url to test
 		driver.get("http://localhost:8080/ewsd/");
@@ -52,6 +52,7 @@ public class LoginPageTest {
 		driver.quit();
 		
 	}
+	
 	//function to take screenshot.
 	public static void captureScreen(WebDriver driver, String screenShotName) {
 	    String path;
