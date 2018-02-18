@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Set;
 
@@ -31,9 +32,7 @@ public class UserEntity implements UserDetails, Serializable {
     @Column(name="dept", nullable= false, length = 200)
     String department;
     @Column(name="created_on")
-	Date date;
-	@Column(name="created_at")
-	Time time;
+	Timestamp dateTime;
 	
     @ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(name="user_authority",
@@ -44,7 +43,7 @@ public class UserEntity implements UserDetails, Serializable {
     @OneToOne(optional=false)
 	@JoinColumn(name="user_image", unique = true, nullable = false, updatable = false)
 	Attachment userImage;
-	@Column(nullable = false, name = "enabled")
+    @Column(nullable = false, name = "enabled")
     boolean enabled;
     @Column(nullable = false, name = "accountNonExpired")
     boolean accountNonExpired = true;
@@ -156,6 +155,14 @@ public class UserEntity implements UserDetails, Serializable {
 		this.userImage = userImage;
 	}
 
+	public Timestamp getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Timestamp dateTime) {
+		this.dateTime = dateTime;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -175,6 +182,11 @@ public class UserEntity implements UserDetails, Serializable {
 		} else if (!authorities.equals(other.authorities))
 			return false;
 		if (credentialsNonExpired != other.credentialsNonExpired)
+			return false;
+		if (dateTime == null) {
+			if (other.dateTime != null)
+				return false;
+		} else if (!dateTime.equals(other.dateTime))
 			return false;
 		if (department == null) {
 			if (other.department != null)
@@ -224,6 +236,7 @@ public class UserEntity implements UserDetails, Serializable {
 		result = prime * result + (accountNonLocked ? 1231 : 1237);
 		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
 		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
+		result = prime * result + ((dateTime == null) ? 0 : dateTime.hashCode());
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (enabled ? 1231 : 1237);
@@ -238,8 +251,9 @@ public class UserEntity implements UserDetails, Serializable {
     @Override
 	public String toString() {
 		return "UserEntity [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
-				+ ", email=" + email + ", department=" + department + ", authorities=" + authorities + ", userImage="
-				+ userImage + ", enabled=" + enabled + ", accountNonExpired=" + accountNonExpired
-				+ ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired + "]";
+				+ ", email=" + email + ", department=" + department + ", dateTime=" + dateTime + ", authorities="
+				+ authorities + ", userImage=" + userImage + ", enabled=" + enabled + ", accountNonExpired="
+				+ accountNonExpired + ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired="
+				+ credentialsNonExpired + "]";
 	}
 }

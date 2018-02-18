@@ -129,6 +129,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler(
         		"/admin/resources/**",
         		"/staff/resources/**",
+        		"/student/resources/**",
         		"/qa_manager/resources/**",
         		"/qa_coordinator/resources/**",
         		"/resources/**"

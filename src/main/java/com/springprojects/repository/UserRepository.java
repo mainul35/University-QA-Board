@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query(value = "SELECT * FROM tbl_user u, tbl_authority a, user_authority au WHERE u.user_uuid = au.user_id AND a.role_uuid = au.role_id AND a.authority= ?1", nativeQuery = true)
     List<UserEntity> findByAuthority(String authority);
+    
 }
