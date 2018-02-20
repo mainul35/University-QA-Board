@@ -2,6 +2,7 @@ package com.springprojects.entity;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,13 +22,11 @@ public class Comment {
 	String commentBody;
 	@OneToOne(optional=false)
 	@JoinColumn(name="commented_user_Id", unique = true, nullable = false, updatable = false)
-	UserEntity reactedUser;
+	UserEntity commentedUser;
 	@Column(name="anonymous")
 	boolean isAnonymous;
 	@Column
-	Date date;
-	@Column
-	Time time;
+	Timestamp commentDateTime;
 	public Long getCommentId() {
 		return commentId;
 	}
@@ -40,11 +39,11 @@ public class Comment {
 	public void setCommentBody(String commentBody) {
 		this.commentBody = commentBody;
 	}
-	public UserEntity getReactedUser() {
-		return reactedUser;
+	public UserEntity getCommentedUser() {
+		return commentedUser;
 	}
-	public void setReactedUser(UserEntity reactedUser) {
-		this.reactedUser = reactedUser;
+	public void setCommentedUser(UserEntity commentedUser) {
+		this.commentedUser = commentedUser;
 	}
 	public boolean isAnonymous() {
 		return isAnonymous;
@@ -53,28 +52,21 @@ public class Comment {
 		this.isAnonymous = isAnonymous;
 	}
 	
-	public Date getDate() {
-		return date;
+	public Timestamp getCommentDateTime() {
+		return commentDateTime;
 	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	public Time getTime() {
-		return time;
-	}
-	public void setTime(Time time) {
-		this.time = time;
+	public void setCommentDateTime(Timestamp commentDateTime) {
+		this.commentDateTime = commentDateTime;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((commentBody == null) ? 0 : commentBody.hashCode());
+		result = prime * result + ((commentDateTime == null) ? 0 : commentDateTime.hashCode());
 		result = prime * result + ((commentId == null) ? 0 : commentId.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((commentedUser == null) ? 0 : commentedUser.hashCode());
 		result = prime * result + (isAnonymous ? 1231 : 1237);
-		result = prime * result + ((reactedUser == null) ? 0 : reactedUser.hashCode());
-		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		return result;
 	}
 	@Override
@@ -91,33 +83,28 @@ public class Comment {
 				return false;
 		} else if (!commentBody.equals(other.commentBody))
 			return false;
+		if (commentDateTime == null) {
+			if (other.commentDateTime != null)
+				return false;
+		} else if (!commentDateTime.equals(other.commentDateTime))
+			return false;
 		if (commentId == null) {
 			if (other.commentId != null)
 				return false;
 		} else if (!commentId.equals(other.commentId))
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if (commentedUser == null) {
+			if (other.commentedUser != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!commentedUser.equals(other.commentedUser))
 			return false;
 		if (isAnonymous != other.isAnonymous)
-			return false;
-		if (reactedUser == null) {
-			if (other.reactedUser != null)
-				return false;
-		} else if (!reactedUser.equals(other.reactedUser))
-			return false;
-		if (time == null) {
-			if (other.time != null)
-				return false;
-		} else if (!time.equals(other.time))
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Comment [commentId=" + commentId + ", commentBody=" + commentBody + ", reactedUser=" + reactedUser
-				+ ", isAnonymous=" + isAnonymous + ", date=" + date + ", time=" + time + "]";
+		return "Comment [commentId=" + commentId + ", commentBody=" + commentBody + ", commentedUser=" + commentedUser
+				+ ", isAnonymous=" + isAnonymous + ", commentDateTime=" + commentDateTime + "]";
 	}	
 }

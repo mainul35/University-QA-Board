@@ -155,8 +155,12 @@ public class UserController {
 
 	@RequestMapping(value = "/reset-password", method = RequestMethod.POST)
 	public String resetPassword_POST(Model model, @RequestParam("email") String email) {
-		userService.sendPasswordResetLink(email);
-		model.addAttribute("ok", "true");
+		if(userService.existsWithEmail(email)) {
+			userService.sendPasswordResetLink(email);
+			model.addAttribute("ok", "true");
+		} else {
+			model.addAttribute("ok", "false");
+		}
 		return "/templates/reset_password";
 	}
 
