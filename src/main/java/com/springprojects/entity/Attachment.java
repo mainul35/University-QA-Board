@@ -1,5 +1,7 @@
 package com.springprojects.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="attachment", catalog="ewsd")
-public class Attachment {
+public class Attachment implements Serializable{
 
 	@Id
 	@Column(name="attachment_id", length = 20, nullable = false)

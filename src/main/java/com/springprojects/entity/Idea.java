@@ -1,5 +1,6 @@
 package com.springprojects.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "idea", catalog = "ewsd")
-public class Idea {
+public class Idea  implements Serializable{
 
 	@Id
 	@Column(name = "idea_id", length = 20, nullable = false)
@@ -33,17 +34,20 @@ public class Idea {
 	Timestamp publishingDate;
 	@OneToMany
 	@JoinTable(name = "idea_comments")
-	Set<Comment> comments = new HashSet<>();
+	Set<Comment> comments = new HashSet<>(0);
 	@OneToMany
 	@JoinTable(name = "idea_reactions")
-	Set<Reaction> reactions = new HashSet<>();
+	Set<Reaction> reactions = new HashSet<>(0);
+	@OneToMany
+	@JoinTable(name="idea_attachments")
+	Set<Attachment> attachments = new HashSet<>(0);
 	@ManyToOne
-	Tag tag;
+	Tag tag = new Tag();
 	@ManyToMany
 	@JoinTable(name = "idea_seen_by", joinColumns = {
 			@JoinColumn(name = "idea_id", referencedColumnName = "idea_id") }, inverseJoinColumns = {
 					@JoinColumn(name = "user_id", referencedColumnName = "user_uuid") })
-	Set<UserEntity> seenBy;
+	Set<UserEntity> seenBy = new HashSet<>(0);
 
 	public Long getIdeaId() {
 		return ideaId;
@@ -125,10 +129,19 @@ public class Idea {
 		this.seenBy = seenBy;
 	}
 
+	public Set<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(Set<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((attachments == null) ? 0 : attachments.hashCode());
 		result = prime * result + ((authorEmail == null) ? 0 : authorEmail.hashCode());
 		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
 		result = prime * result + ((countViews == null) ? 0 : countViews.hashCode());
@@ -151,6 +164,11 @@ public class Idea {
 		if (getClass() != obj.getClass())
 			return false;
 		Idea other = (Idea) obj;
+		if (attachments == null) {
+			if (other.attachments != null)
+				return false;
+		} else if (!attachments.equals(other.attachments))
+			return false;
 		if (authorEmail == null) {
 			if (other.authorEmail != null)
 				return false;
@@ -208,7 +226,8 @@ public class Idea {
 	public String toString() {
 		return "Idea [ideaId=" + ideaId + ", ideaTitle=" + ideaTitle + ", ideaBody=" + ideaBody + ", authorEmail="
 				+ authorEmail + ", countViews=" + countViews + ", publishingDate=" + publishingDate + ", comments="
-				+ comments + ", reactions=" + reactions + ", tag=" + tag + ", seenBy=" + seenBy + "]";
+				+ comments + ", reactions=" + reactions + ", attachments=" + attachments + ", tag=" + tag + ", seenBy="
+				+ seenBy + "]";
 	}
 
 }

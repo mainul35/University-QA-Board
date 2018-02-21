@@ -1,5 +1,6 @@
 package com.springprojects.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="comment", catalog="ewsd")
-public class Comment {
+public class Comment  implements Serializable{
 
 	@Id
 	@Column(name="comment_Id", length=20, nullable=false)

@@ -76,11 +76,12 @@ public class UserService implements UserDetailsService {
 	}
 
 	public void createUser(UserEntity userEntity) {
-		userRepository.save(userEntity);
+		if(userRepository.findOne(userEntity.getId())==null && existsWithEmail(userEntity.getEmail())==false && existsWithUsername(userEntity.getUsername())==false)
+			userRepository.save(userEntity);
 	}
 
 	public boolean existsWithUsername(String username) {
-		if (userRepository.findByUsername(username) instanceof UserEntity) {
+		if (userRepository.findByUsername(username) != null) {
 			return true;
 		} else {
 			return false;
@@ -88,7 +89,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public boolean existsWithEmail(String email) {
-		if (userRepository.findByUsername(email) instanceof UserEntity) {
+		if (userRepository.findByUsername(email) != null) {
 			return true;
 		} else {
 			return false;

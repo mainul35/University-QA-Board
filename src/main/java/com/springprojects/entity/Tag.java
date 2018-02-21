@@ -1,5 +1,6 @@
 package com.springprojects.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -9,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tag", catalog="ewsd")
-public class Tag {
+public class Tag  implements Serializable{
 	@Id
 	@Column(nullable=false, length=20)
 	Long tagId;

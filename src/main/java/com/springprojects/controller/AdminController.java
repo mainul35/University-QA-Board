@@ -1,5 +1,6 @@
 package com.springprojects.controller;
 
+import com.springprojects.config.Utils;
 import com.springprojects.entity.Authority;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
@@ -15,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,23 +33,36 @@ public class AdminController {
     AuthorityService authorityService;
     @Autowired
     TagService tagService;
-
+    @Autowired
+    Utils utils;
+    
     Logger logger = Logger.getLogger(AdminController.class.getName());
-
-    @RequestMapping("/list-potential-teachers")
-    public String listPotentialTeachers(Model model, HttpSession session){
-//        model.addAttribute("username", session.getAttribute("username").toString());
-//        List<UserEntity> userEntityList = userService.usersWithRole("ROLE_POTENTIAL_TEACHER");
-//        model.addAttribute("potentialTeachers", userEntityList);
-        logger.info("Showing potential teachers : ");
-        return "/templates/admin/potential_teachers";
-    }
 
     @RequestMapping("/dashboard")
     public String dashboard(Model model, HttpSession session){
     	UserEntity userEntity = (UserEntity) session.getAttribute("usr");
         model.addAttribute("usr", userEntity);
         logger.info("Admin Dashboard : ");
+        return "/admin_template/index";
+    }
+    
+    @RequestMapping(value = "/set-terms-and-conditions", method=RequestMethod.GET)
+    public String setTermsAndConditions_GET(Model model, HttpSession session) {
+    	UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+        model.addAttribute("usr", userEntity);
+        String tNc = utils.readFile("/TermsAndConditions.txt");
+        model.addAttribute("tNc", tNc);
+        model.addAttribute("pageName", "terms-and-conditions");
+    	return "/admin_template/index";
+    }
+    
+    @RequestMapping(value = "/set-terms-and-conditions", method=RequestMethod.POST)
+    public String setTermsAndConditions_POST(Model model, HttpSession session, @RequestParam("editor1") String tc) {
+    	UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+        model.addAttribute("usr", userEntity);
+        model.addAttribute("pageName", "terms-and-conditions");
+        tc = utils.writeFile("/TermsAndConditions.txt", tc);
+        model.addAttribute("tNc", tc);
         return "/admin_template/index";
     }
     

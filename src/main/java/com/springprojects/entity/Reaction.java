@@ -1,5 +1,7 @@
 package com.springprojects.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="reaction", schema="ewsd")
-public class Reaction {
+public class Reaction  implements Serializable{
 
 	@Id
 	@Column(name="reaction_Id", length=20, nullable=false)

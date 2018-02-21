@@ -233,8 +233,8 @@
 		</div>
 		<!-- /.box-header -->
 		<!-- form start -->
-		<form method="POST" th:action="@{/admin/create-role}" th:object="${role}"
-			class="form-horizontal">
+		<form method="POST" th:action="@{/admin/create-role}"
+			th:object="${role}" class="form-horizontal">
 			<div class="box-body">
 				<div th:if="${isOk=='true'}" class="alert alert-success">Role
 					created successfully.</div>
@@ -244,8 +244,8 @@
 					<label for="role" class="col-sm-2 control-label">Please
 						enter role name</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="role" th:field="*{authority}"
-							placeholder="ROLE_ROLENAME">
+						<input type="text" class="form-control" id="role"
+							th:field="*{authority}" placeholder="ROLE_ROLENAME">
 					</div>
 				</div>
 			</div>
@@ -263,6 +263,118 @@
 
 
 
+<!-- Start of set-terms-and-conditions -->
+
+<th:block th:fragment="postNewIdea(categories='', idea='')">
+	<div class="form-group">
+		<label for="inputIdeaTitle">Idea Title</label> <input type="text"
+			name="ideaTitle" class="form-control" id="inputIdeaTitle"
+			placeholder="Idea Title" th:field="*{ideaTitle}" required />
+	</div>
+	<div class="form-group">
+		<label for="inputIdeaBody">Idea Body</label>
+		<textarea id="inputIdeaBody" name="ideaBody" class="form-control"
+			th:field="*{ideaBody}" placeholder="Idea Body" required></textarea>
+	</div>
+
+	<div class="form-group">
+		<label>Categories</label> <select name="tagName"
+			class="form-control select2" style="width: 100%;">
+			<option th:each="cat : ${categories}" th:value="${cat.tagName}"
+				th:text="${cat.tagName}"></option>
+		</select>
+
+	</div>
+
+	<input type="hidden" name="publishingDateTime"
+		th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm:ss')}" />
+
+	<div class="form-group">
+		<label for="images">Upload Documents: </label> <input type="file"
+			id="images" name="images[]" multiple="multiple" />
+	</div>
+	<div class="row">
+		<div class="form-group col-sm-2 col-lg-2 col-xl-2 col-md-2 col-xs-2">
+			<a onclick="showTermsAndConditions();"
+				class="btn btn-block btn-primary">Post</a>
+		</div>
+	</div>
+
+
+
+	<!--/*/ <th:block th:include="@{includes/components} :: modal"></th:block> /*/-->
+
+
+
+	<script type="text/javascript">
+	    CKEDITOR.replace( 'inputIdeaBody',{ 
+		    toolbar: [
+			    {
+				    name: 'styles', 
+				    items: [ 'Styles', 'Format', 'Font', 'FontSize' ] 
+			    },
+			    { 
+				    name: 'basicstyles', 
+				    groups: [ 'basicstyles', 'cleanup' ], 
+				    items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ]
+			     },
+			     { 
+				     name: 'links',
+				     items: [ 'Link', 'Unlink', 'Anchor' ]
+			     },
+			     { 
+				     name: 'colors', 
+				     items: [ 'TextColor'] 
+			     },
+			     { 
+				     name: 'paragraph', 
+				     groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] 
+			     },
+			     { 
+				     name: 'links' 
+			     },
+			 	 { 
+				 	 name: 'insert' 
+			 	 }
+			    ]
+	    } );
+	    
+
+	    
+	    function showTermsAndConditions(){
+	    	$('#myModal').modal({backdrop: 'static', keyboard: false});
+	    	$(".modal-body").load("/ewsd/terms-and-conditions");
+	    }
+	</script>
+</th:block>
+
+<!-- End of set terms and conditions -->
+
+
+
+<!-- Modal -->
+<th:block th:fragment="modal">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Terms and Conditions</h4>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<a class="btn btn-default" data-dismiss="modal">Close</a> <input
+						type="submit" class="btn btn-primary" value="Agree">
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<!-- End Modal -->
+
+
+
+
 <!-- Start of createTag -->
 
 <th:block th:fragment="createTag(isOk='', tag='')">
@@ -272,8 +384,8 @@
 		</div>
 		<!-- /.box-header -->
 		<!-- form start -->
-		<form method="POST" th:action="@{/admin/create-tag}" th:object="${tag}"
-			class="form-horizontal">
+		<form method="POST" th:action="@{/admin/create-tag}"
+			th:object="${tag}" class="form-horizontal">
 			<div class="box-body">
 				<div th:if="${isOk=='true'}" class="alert alert-success">Tag
 					created successfully.</div>
@@ -283,8 +395,8 @@
 					<label for="tag" class="col-sm-2 control-label">Please
 						enter tag name</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="tag" th:field="*{tagName}"
-							placeholder="Tag">
+						<input type="text" class="form-control" id="tag"
+							th:field="*{tagName}" placeholder="Tag">
 					</div>
 				</div>
 			</div>
@@ -330,7 +442,7 @@
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
 										aria-label="Browser: activate to sort column ascending">No</th>
-									
+
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
 										aria-label="Platform(s): activate to sort column ascending">Role
@@ -383,7 +495,7 @@
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
 										aria-label="Browser: activate to sort column ascending">No</th>
-									
+
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
 										aria-label="Platform(s): activate to sort column ascending">Tag

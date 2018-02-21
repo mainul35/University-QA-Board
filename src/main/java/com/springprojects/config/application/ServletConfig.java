@@ -132,7 +132,8 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         		"/student/resources/**",
         		"/qa_manager/resources/**",
         		"/qa_coordinator/resources/**",
-        		"/resources/**"
+        		"/resources/**",
+        		"classpath:/resources/"
         		).addResourceLocations("/resources/");
     }
 

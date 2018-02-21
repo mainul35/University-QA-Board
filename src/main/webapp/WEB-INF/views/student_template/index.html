@@ -303,29 +303,29 @@
 
 
 
-<!-- 					<li class="active treeview menu-open"><a href="#"> <i -->
-<!-- 							class="fa fa-dashboard"></i> <span>Manage Roles</span> <span -->
-<!-- 							class="pull-right-container"> <i -->
-<!-- 								class="fa fa-angle-left pull-right"></i> -->
-<!-- 						</span> -->
-<!-- 					</a> -->
-<!-- 						<ul class="treeview-menu"> -->
-<!-- 							<li class="active"><a th:href="@{/admin/create-role}"><i -->
-<!-- 									class="fa fa-circle-o"></i> Create Role</a></li> -->
-<!-- 							<li><a th:href="@{/admin/view-all-roles}"><i -->
-<!-- 									class="fa fa-circle-o"></i> View All Roles</a></li> -->
-<!-- 						</ul></li> -->
-<!-- 					<li class="treeview"><a href="#"> <i class="fa fa-files-o"></i> -->
-<!-- 							<span>Manage Tags</span> <span class="pull-right-container"> -->
-<!-- 								<i class="fa fa-angle-left pull-right"></i> -->
-<!-- 						</span> -->
-<!-- 					</a> -->
-<!-- 						<ul class="treeview-menu"> -->
-<!-- 							<li><a th:href="@{/admin/create-tag}"><i -->
-<!-- 									class="fa fa-circle-o"></i> Create Tag</a></li> -->
-<!-- 							<li><a th:href="@{/admin//view-all-tags}"><i -->
-<!-- 									class="fa fa-circle-o"></i> View Tags</a></li> -->
-<!-- 						</ul></li> -->
+					<!-- 					<li class="active treeview menu-open"><a href="#"> <i -->
+					<!-- 							class="fa fa-dashboard"></i> <span>Manage Roles</span> <span -->
+					<!-- 							class="pull-right-container"> <i -->
+					<!-- 								class="fa fa-angle-left pull-right"></i> -->
+					<!-- 						</span> -->
+					<!-- 					</a> -->
+					<!-- 						<ul class="treeview-menu"> -->
+					<!-- 							<li class="active"><a th:href="@{/admin/create-role}"><i -->
+					<!-- 									class="fa fa-circle-o"></i> Create Role</a></li> -->
+					<!-- 							<li><a th:href="@{/admin/view-all-roles}"><i -->
+					<!-- 									class="fa fa-circle-o"></i> View All Roles</a></li> -->
+					<!-- 						</ul></li> -->
+					<!-- 					<li class="treeview"><a href="#"> <i class="fa fa-files-o"></i> -->
+					<!-- 							<span>Manage Tags</span> <span class="pull-right-container"> -->
+					<!-- 								<i class="fa fa-angle-left pull-right"></i> -->
+					<!-- 						</span> -->
+					<!-- 					</a> -->
+					<!-- 						<ul class="treeview-menu"> -->
+					<!-- 							<li><a th:href="@{/admin/create-tag}"><i -->
+					<!-- 									class="fa fa-circle-o"></i> Create Tag</a></li> -->
+					<!-- 							<li><a th:href="@{/admin//view-all-tags}"><i -->
+					<!-- 									class="fa fa-circle-o"></i> View Tags</a></li> -->
+					<!-- 						</ul></li> -->
 
 
 
@@ -647,38 +647,14 @@
 								<!-- /.tab-pane -->
 
 								<div class="tab-pane" id="settings">
-									<form class="form-horizontal">
-										<div class="form-group">
-											<label for="inputIdeaTitle" class="col-sm-2 control-label">Title</label>
+									<div class="row">
+										<div class="col-xs-12 col-xl-12 col-md-12 col-lg-12 col-sm-12">
+											<form method="post" enctype="multipart/form-data" action="/student/post-new-idea" th:action="@{/student/post-new-idea}" th:object="${idea}">
+												<!--/*/ <th:block th:include="@{includes/components} :: postNewIdea(${categories}, ${idea})"></th:block> /*/-->
+											</form>
+										</div>
+									</div>
 
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="inputIdeaTitle"
-													placeholder="Idea Title">
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="inputIdeaBody" class="col-sm-2 control-label">Body</label>
-
-											<div class="col-sm-10">
-												<textarea rows="3" class="form-control" id="inputIdeaBody"
-													placeholder="Idea Body"></textarea>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="col-sm-offset-2 col-sm-10">
-												<div class="checkbox">
-													<label> <input type="checkbox"> I agree to
-														the <a href="#">terms and conditions</a>
-													</label>
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="col-sm-offset-2 col-sm-10">
-												<button type="submit" class="btn btn-danger">Submit</button>
-											</div>
-										</div>
-									</form>
 								</div>
 								<!-- /.tab-pane -->
 							</div>

@@ -259,16 +259,16 @@
 				</div>
 			</nav>
 		</header>
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		<!-- Left side column. contains the logo and sidebar -->
-		
-		
-		
+
+
+
 		<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
@@ -295,8 +295,7 @@
 						</span>
 					</div>
 				</form>
-				/.search form
-				sidebar menu: : style can be found in sidebar.less
+				<!-- 				/.search form sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 
 
@@ -324,6 +323,10 @@
 							<li><a th:href="@{/admin//view-all-tags}"><i
 									class="fa fa-circle-o"></i> View Tags</a></li>
 						</ul></li>
+
+					<li><a th:href="@{/admin/set-terms-and-conditions}"> <i
+							class="fa fa-th"></i> <span>Set Terms and Conditions</span>
+					</a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -363,6 +366,29 @@
 				<th:block th:if="${pageName=='view-all-tags'}">
 					<!--/*/ <th:block th:include="@{includes/components} :: listAllTags(${tags}) "></th:block> /*/-->
 				</th:block>
+
+				<th:block th:if="${pageName=='terms-and-conditions'}">
+					<div class="row">
+						<div class="col-xs-12 col-xl-12 col-md-12 col-lg-12 col-sm-12">
+							<form method="post"
+								th:action="@{/admin/set-terms-and-conditions}">
+								<div class="form-group">
+									<textarea id="editor1" name="editor1" th:text="${tNc}"></textarea>
+								</div>
+								<div class="row">
+								<div class="form-group col-sm-2 col-lg-2 col-xl-2 col-md-2 col-xs-2">
+									<input type="submit" class="btn btn-block btn-primary btn-lg" value="Save">
+								</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<script type="text/javascript">
+					    CKEDITOR.replace( 'editor1' );
+					</script>
+
+				</th:block>
+
 			</section>
 
 			<!-- /.Ending Main content -->

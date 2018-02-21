@@ -54,6 +54,31 @@
 <!-- Google Font -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+<script th:src="@{resources/contents/lib/ckeditor/ckeditor.js}"></script>
+
+<script th:src="@{/resources/contents/lib/ckeditor/sample.js}"></script>
+
+
+<script type="text/javascript"
+	th:src="@{resources/contents/lib/ckeditor/config.js}"></script>
+<link rel="stylesheet" type="text/css"
+	th:href="@{resources/contents/lib/ckeditor/skins/moono-lisa/editor.css}">
+<script type="text/javascript"
+	th:src="@{resources/contents/lib/ckeditor/lang/en.js}"></script>
+<script type="text/javascript"
+	th:src="@{resources/contents/lib/ckeditor/styles.js}"></script>
+<link rel="stylesheet" type="text/css"
+	th:href="@{resources/contents/lib/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{resources/contents/lib/ckeditor/plugins/scayt/dialogs/dialog.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{resources/contents/lib/ckeditor/plugins/tableselection/styles/tableselection.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{resources/contents/lib/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css}">
 </head>
 
 
@@ -69,7 +94,7 @@
 	<script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
-	
+
 	<!-- Bootstrap 3.3.7 -->
 	<script
 		th:src="@{resources/contents/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
@@ -108,5 +133,5 @@
 	<script th:src="@{resources/contents/lib/js/dashboard.js}"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script th:src="@{resources/contents/lib/js/demo.js}"></script>
-	
+
 </div>

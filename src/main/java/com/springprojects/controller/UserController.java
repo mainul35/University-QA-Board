@@ -159,7 +159,7 @@ public class UserController {
 			userService.sendPasswordResetLink(email);
 			model.addAttribute("ok", "true");
 		} else {
-			model.addAttribute("ok", "false");
+			model.addAttribute("ok", "invalid-email");
 		}
 		return "/templates/reset_password";
 	}

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springprojects.config.Properties;
 import com.springprojects.entity.Attachment;
 import com.springprojects.repository.AttachmentRepository;
 
@@ -27,12 +28,12 @@ public class AttachmentService {
     Logger logger = Logger.getLogger(AttachmentService.class.getName());
 
     
-	public void save(Attachment attachment, MultipartFile file, Long userId) {
+	public Attachment save(Attachment attachment, MultipartFile file, Long userId) {
         try {
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
 
-            File dir = Paths.get(UPLOADED_FOLDER
+            File dir = Paths.get(Properties.TEMP_PATH
                     + userId+"//"
                     ).toFile();
             if(!dir.exists()){
@@ -43,7 +44,7 @@ public class AttachmentService {
             while(tokenizer.hasMoreTokens()){
                 extension = tokenizer.nextToken();
             }
-            String url = UPLOADED_FOLDER +
+            String url = Properties.TEMP_PATH +
                     userId+"//" + attachment.getAttachmentId()+"."+extension;
             File serverFile = new File(url);
             BufferedOutputStream stream = new BufferedOutputStream(
@@ -57,6 +58,7 @@ public class AttachmentService {
         }
 
 		attachmentRepository.save(attachment);
+		return attachment;
 	}
 	
 	public void save(Attachment attachment) {
