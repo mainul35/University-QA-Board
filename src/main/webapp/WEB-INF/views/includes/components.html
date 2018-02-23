@@ -373,8 +373,28 @@
 <!-- End Modal -->
 
 
+<!-- Start of /student/post-new-idea -->
+
+<div class="tab-pane" id="post-an-idea">
+																		<div class="row" >
+										<div class="col-xs-12 col-xl-12 col-md-12 col-lg-12 col-sm-12">
+											<form method="post" enctype="multipart/form-data"
+												action="/student/post-new-idea"
+												th:action="@{/student/post-new-idea}" th:object="${idea}">
+												<div th:if="${isOk=='true'}" class="alert alert-success"
+													th:text="${msg}"></div>
+												<div th:if="${isOk==''}" class="alert alert-success"
+													th:text="${msg}"></div>
+												<!--/*/ <th:block th:include="@{includes/components} :: postNewIdea(${categories}, ${idea})"></th:block> /*/-->
+											</form>
+										</div>
+									</div>
+
+								</div>
 
 
+
+<!-- End of /student/post-new-idea -->
 <!-- Start of createTag -->
 
 <th:block th:fragment="createTag(isOk='', tag='')">
@@ -386,19 +406,80 @@
 		<!-- form start -->
 		<form method="POST" th:action="@{/admin/create-tag}"
 			th:object="${tag}" class="form-horizontal">
-			<div class="box-body">
+			<div class="box-body" style="margin-left: 7%">
 				<div th:if="${isOk=='true'}" class="alert alert-success">Tag
 					created successfully.</div>
 				<div th:if="${isOk=='false'}" class="alert alert-danger">Sorry,
 					the tag creation went wrong. Possibly, the tag already exists.</div>
-				<div class="form-group">
-					<label for="tag" class="col-sm-2 control-label">Please
-						enter tag name</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="tag"
-							th:field="*{tagName}" placeholder="Tag">
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+							<label for="tag" class="control-label">Please enter tag
+								name</label>
+						</div>
+						<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+							<input type="text" class="form-control" id="tag"
+								th:field="*{tagName}" placeholder="Tag">
+						</div>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+							<label for="opening-date" class="control-label">Opening
+								Date</label>
+						</div>
+						<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+							<input type="text" class="form-control" id="opening-date"
+								name="opening-date" placeholder="DD/MM/YYYY"required/>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+							<label for="closure-date" class="control-label">Closure
+								Date</label>
+						</div>
+						<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+							<input type="text" class="form-control" id="closure-date"
+								name="closure-date" placeholder="DD/MM/YYYY"required/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+							<label for="final-closure-date" class="control-label">Final Closure
+								Date</label>
+						</div>
+						<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+							<input type="text" class="form-control" id="final-closure-date"
+								name="final-closure-date" placeholder="DD/MM/YYYY" required/>
+						</div>
+					</div>
+				</div>
+				<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+				<script>
+var dateToday = new Date();
+var dates = $("#opening-date, #closure-date, #final-closure-date").datepicker({
+    // defaultDate: "+1w",
+    changeMonth: true,
+    numberOfMonths: 1,
+    minDate: dateToday,
+    dateFormat: "d/m/yy",
+    onSelect: function(selectedDate) {
+        var option = this.id == "from" ? "minDate" : "maxDate",
+            instance = $(this).data("datepicker"),
+            date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+        dates.not(this).datepicker("option", option, date);
+    }
+});
+</script>
 			</div>
 			<!-- /.box-body -->
 			<div class="box-footer">

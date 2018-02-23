@@ -19,10 +19,10 @@ public class Utils {
 
 	private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
-	public Timestamp convertDateTimeToTimestamp(String dateTime) {
+	public Timestamp convertDateTimeToTimestamp(String dateTime, String format) {
 		Timestamp timestamp = null;
 		try {
-		    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		    DateFormat dateFormat = new SimpleDateFormat(format);
 		    Date parsedDate = dateFormat.parse(dateTime);
 		    return timestamp = new java.sql.Timestamp(parsedDate.getTime());
 		} catch(Exception e) { //this generic but you can control another types of exception

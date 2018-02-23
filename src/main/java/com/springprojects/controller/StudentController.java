@@ -1,6 +1,9 @@
 package com.springprojects.controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.springprojects.config.Utils;
 import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.IdeaService;
@@ -35,7 +39,7 @@ public class StudentController {
 	AttachmentService attachmentService;
 	@Autowired
 	IdeaService ideaService;
-	
+
 	Logger logger = Logger.getLogger(getClass().getName());
 
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
@@ -44,7 +48,11 @@ public class StudentController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("idea", new Idea());
 		model.addAttribute("usr", userEntity);
-		model.addAttribute("categories", tagService.listAllTags());
+		List<Tag> tags = tagService.listAllTags();
+		tags.removeIf(
+				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
+		tags.forEach(tag->{System.out.println(tag.getClosingDate().getTime() - System.currentTimeMillis());});
+		model.addAttribute("categories", tags);
 		logger.info("Student Dashboard : ");
 		return "/student_template/index";
 	}
@@ -56,11 +64,17 @@ public class StudentController {
 			@RequestParam(name = "images[]") MultipartFile[] files) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		Tag tag = tagService.findByTagName(tagName);
+		if(tag.getClosingDate().getTime() < System.currentTimeMillis()) {
+			model.addAttribute("ok", "false");
+			model.addAttribute("msg", "Sorry, The category expired.");
+			return "";
+		}
 		idea.setTag(tagService.findByTagName(tagName));
 		idea.setAuthorEmail(userEntity.getEmail());
 		idea.setCountViews(0);
 		idea.setIdeaId(System.currentTimeMillis());
-		idea.setPublishingDate(utils.convertDateTimeToTimestamp(publishingDateTime));
+		idea.setPublishingDate(utils.convertDateTimeToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
 
 		Set<Attachment> attachments = new HashSet<>();
 		if (files[0].getOriginalFilename().contains(".")) {
@@ -73,16 +87,23 @@ public class StudentController {
 				attachment = attachmentService.save(attachment, file, userEntity.getId());
 				attachments.add(attachment);
 			}
-			
+
 		}
-		
+
+		List<Tag> tags = tagService.listAllTags();
+		tags.removeIf(
+				t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
+		tags.forEach(t->{System.out.println(t.getClosingDate().getTime() - System.currentTimeMillis());});
+
 		idea.setAttachments(attachments);
 		ideaService.save(idea);
 		model.addAttribute("idea", idea);
-		
+
 		System.out.println(idea.toString());
 		model.addAttribute("usr", userEntity);
-		model.addAttribute("categories", tagService.listAllTags());
+		model.addAttribute("categories", tags);
+		model.addAttribute("ok", "true");
+		model.addAttribute("msg", "Idea was submitted successfully.");
 		logger.info("Student Dashboard : ");
 		return "/student_template/index";
 	}

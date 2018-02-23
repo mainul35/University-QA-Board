@@ -650,6 +650,8 @@
 									<div class="row">
 										<div class="col-xs-12 col-xl-12 col-md-12 col-lg-12 col-sm-12">
 											<form method="post" enctype="multipart/form-data" action="/student/post-new-idea" th:action="@{/student/post-new-idea}" th:object="${idea}">
+												<div th:if="${isOk=='true'}" class="alert alert-success">Idea was submitted successfully.</div>
+					<div th:if="${isOk=='true'}" class="alert alert-success" th:text="${msg}"></div>
 												<!--/*/ <th:block th:include="@{includes/components} :: postNewIdea(${categories}, ${idea})"></th:block> /*/-->
 											</form>
 										</div>
