@@ -221,6 +221,14 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

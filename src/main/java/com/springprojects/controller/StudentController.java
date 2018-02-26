@@ -1,14 +1,23 @@
 package com.springprojects.controller;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +25,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.springprojects.config.Utils;
+import com.springprojects.customModel.Timeline;
 import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Idea;
 import com.springprojects.entity.Tag;
@@ -51,7 +62,9 @@ public class StudentController {
 		List<Tag> tags = tagService.listAllTags();
 		tags.removeIf(
 				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
-		tags.forEach(tag->{System.out.println(tag.getClosingDate().getTime() - System.currentTimeMillis());});
+		tags.forEach(tag -> {
+			System.out.println(tag.getClosingDate().getTime() - System.currentTimeMillis());
+		});
 		model.addAttribute("categories", tags);
 		logger.info("Student Dashboard : ");
 		return "/student_template/index";
@@ -65,7 +78,7 @@ public class StudentController {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Tag tag = tagService.findByTagName(tagName);
-		if(tag.getClosingDate().getTime() < System.currentTimeMillis()) {
+		if (tag.getClosingDate().getTime() < System.currentTimeMillis()) {
 			model.addAttribute("ok", "false");
 			model.addAttribute("msg", "Sorry, The category expired.");
 			return "";
@@ -74,7 +87,7 @@ public class StudentController {
 		idea.setAuthorEmail(userEntity.getEmail());
 		idea.setCountViews(0);
 		idea.setIdeaId(System.currentTimeMillis());
-		idea.setPublishingDate(utils.convertDateTimeToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
+		idea.setPublishingDate(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
 
 		Set<Attachment> attachments = new HashSet<>();
 		if (files[0].getOriginalFilename().contains(".")) {
@@ -91,9 +104,10 @@ public class StudentController {
 		}
 
 		List<Tag> tags = tagService.listAllTags();
-		tags.removeIf(
-				t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
-		tags.forEach(t->{System.out.println(t.getClosingDate().getTime() - System.currentTimeMillis());});
+		tags.removeIf(t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
+		tags.forEach(t -> {
+			System.out.println(t.getClosingDate().getTime() - System.currentTimeMillis());
+		});
 
 		idea.setAttachments(attachments);
 		ideaService.save(idea);
@@ -105,6 +119,36 @@ public class StudentController {
 		model.addAttribute("ok", "true");
 		model.addAttribute("msg", "Idea was submitted successfully.");
 		logger.info("Student Dashboard : ");
+		return "/student_template/index";
+	}
+
+	@RequestMapping(value = "/timeline", method = RequestMethod.GET)
+	public String timeline_GET(HttpSession session, Model model) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		ArrayList<Idea> ideas = (ArrayList<Idea>) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
+
+		TreeMap<String, Idea> ideasByDate = new TreeMap<>(Collections.reverseOrder());
+		String dateTimeString = "";
+		for (Idea idea : ideas) {
+
+			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
+
+			ideasByDate.put(dateTimeString, idea);
+		}
+
+		System.out.println(ideasByDate.toString());
+		model.addAttribute("idea", new Idea());
+		model.addAttribute("usr", userEntity);
+		List<Tag> tags = tagService.listAllTags();
+		tags.removeIf(
+				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
+
+		model.addAttribute("categories", tags);
+
+		model.addAttribute("ideasByDate", ideasByDate);
+		model.addAttribute("utils", utils);
+		logger.info("Student Dashboard : ");
+
 		return "/student_template/index";
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -32,18 +33,18 @@ public class Idea  implements Serializable{
 	Integer countViews;
 	@Column
 	Timestamp publishingDate;
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "idea_comments")
 	Set<Comment> comments = new HashSet<>(0);
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "idea_reactions")
 	Set<Reaction> reactions = new HashSet<>(0);
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="idea_attachments")
 	Set<Attachment> attachments = new HashSet<>(0);
 	@ManyToOne
 	Tag tag = new Tag();
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "idea_seen_by", joinColumns = {
 			@JoinColumn(name = "idea_id", referencedColumnName = "idea_id") }, inverseJoinColumns = {
 					@JoinColumn(name = "user_id", referencedColumnName = "user_uuid") })

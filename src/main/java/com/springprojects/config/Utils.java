@@ -19,7 +19,7 @@ public class Utils {
 
 	private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
-	public Timestamp convertDateTimeToTimestamp(String dateTime, String format) {
+	public Timestamp convertStringToTimestamp(String dateTime, String format) {
 		Timestamp timestamp = null;
 		try {
 		    DateFormat dateFormat = new SimpleDateFormat(format);
@@ -32,6 +32,13 @@ public class Utils {
 		return timestamp;
 	}
 
+	public String convertTimestampToString(Timestamp timestamp, String format) {
+		Date date = new Date();
+		date.setTime(timestamp.getTime());
+		String formattedDate = new SimpleDateFormat(format).format(date);
+		return formattedDate;
+	}
+	
 	public String readFile(String fileName) {
 		BufferedReader br = null;
 		String content = null;

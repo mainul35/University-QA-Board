@@ -24,4 +24,7 @@ public class IdeaService {
 	}
 	
 	
+	public List<Idea> listAllIdeasByAuthorEmail(String authorEmail){
+		return (List<Idea>) ideaRepository.findAllByAuthorEmailOrderByPublishingDateDesc(authorEmail);
+	}
 }

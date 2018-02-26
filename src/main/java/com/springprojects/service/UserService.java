@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public boolean existsWithEmail(String email) {
-		if (userRepository.findByUsername(email) != null) {
+		if (userRepository.findByEmail(email) != null) {
 			return true;
 		} else {
 			return false;

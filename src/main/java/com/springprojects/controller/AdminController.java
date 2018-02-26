@@ -128,8 +128,8 @@ public class AdminController {
 
 		tag.setTagId(System.currentTimeMillis());
 		System.out.println(openingDate);
-		tag.setOpeningDate(utils.convertDateTimeToTimestamp(openingDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-		tag.setClosingDate(utils.convertDateTimeToTimestamp(closureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+		tag.setOpeningDate(utils.convertStringToTimestamp(openingDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+		tag.setClosingDate(utils.convertStringToTimestamp(closureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
 //		if (finalClosureDate.equals("")) {
 //			SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 //			Calendar c = Calendar.getInstance();
@@ -147,7 +147,7 @@ public class AdminController {
 //			tag.setFinalClosingDate(utils.convertDateTimeToTimestamp(output + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
 //		} else {
 			tag.setFinalClosingDate(
-					utils.convertDateTimeToTimestamp(finalClosureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+					utils.convertStringToTimestamp(finalClosureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
 //		}
 
 		System.out.println(tag.getOpeningDate() + "\t" + tag.getClosingDate() + "\t" + tag.getFinalClosingDate());
