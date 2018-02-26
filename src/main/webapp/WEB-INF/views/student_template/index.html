@@ -558,37 +558,38 @@
 								<!-- /.tab-pane -->
 								<div class="tab-pane" id="timeline">
 									<!-- The timeline -->
-									<th:block th:each="ideaList : ${ideasByDate}">
+									<th:block th:each="date : ${dates}">
 										<ul class="timeline timeline-inverse">
 											<!-- timeline time label -->
 											<li class="time-label"><span class="bg-red"
-												th:text="${ideaList.key}"> </span></li>
+												th:text="${date.key}"> </span></li>
 											<!-- /.timeline-label -->
 											<!-- timeline item -->
-											<li>
-											<th:block th:each="idea : ${ideaList}">
-											
-												<div class="timeline-item">
-													<span class="time" 
-													><i class="fa fa-clock-o"></i>
-													${utils.convertTimestampToString(${idea.publishingDate}, 'd/MM/YYYY HH:mm:ss')}
-													</span>
+											<th:block th:each="timeline : ${date.value}">
+												<li>
 
-													<h3 class="timeline-header">
-														<a> th:href="@{${url}}" th:text="${username}"</a> Posted
-													</h3>
 
-													<div class="timeline-body">
-														<h3>th:text="${title}"</h3>
-														<p>th:text="${body-short-para}"</p>
+													<div class="timeline-item">
+														<span class="time" th:text=" ${timeline.time}"><i
+															class="fa fa-clock-o" ></i>
+															</span>
+
+														<h3 class="timeline-header">
+															<a th:href="@{/profile(id=${usr.id})}" th:text="${usr.username}"></a> Posted
+														</h3>
+
+														<div class="timeline-body">
+															<h3 th:text="${timeline.idea.ideaTitle}"></h3>
+															<p th:utext="${timeline.idea.ideaBody}"></p>
+														</div>
+														<div class="timeline-footer">
+															<a class="btn btn-primary btn-xs" th:text="${'Read more'}" th:href="@{/post(id=${timeline.idea.ideaId})}">
+																</a>
+														</div>
 													</div>
-													<div class="timeline-footer">
-														<a class="btn btn-primary btn-xs">th:text="${read-more}"
-															th:href="@{${paragraph-url}}"</a>
-													</div>
-												</div>
-												</th:block>
-											</li>
+
+												</li>
+											</th:block>
 											<!-- END timeline item -->
 
 										</ul>

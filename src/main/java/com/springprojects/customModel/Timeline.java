@@ -2,7 +2,7 @@ package com.springprojects.customModel;
 
 import com.springprojects.entity.Idea;
 
-public class Timeline {
+public class Timeline implements Comparable<Timeline>{
 	String time;
 	Idea idea;
 	
@@ -58,5 +58,10 @@ public class Timeline {
 	@Override
 	public String toString() {
 		return "Timeline [time=" + time + ", idea=" + idea + "]";
+	}
+	@Override
+	public int compareTo(Timeline o) {
+		// TODO Auto-generated method stub
+		return Integer.compare(this.idea.hashCode(), o.idea.hashCode());
 	}
 }

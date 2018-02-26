@@ -3,6 +3,7 @@ package com.springprojects.controller;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,14 +11,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.collections4.set.MapBackedSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -127,16 +132,28 @@ public class StudentController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		ArrayList<Idea> ideas = (ArrayList<Idea>) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
 
-		TreeMap<String, Idea> ideasByDate = new TreeMap<>(Collections.reverseOrder());
+		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
+		List<Timeline> timelines = new ArrayList<>();
+//		ideas.sort((e1, e2) -> new Long(e1.getPublishingDate().getTime())
+//				.compareTo(new Long(e2.getPublishingDate().getTime())));
+
 		String dateTimeString = "";
+
 		for (Idea idea : ideas) {
 
 			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
+			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
 
-			ideasByDate.put(dateTimeString, idea);
+			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
+				dates.put(dateTimeString.split(" ")[0], new ArrayList());
+			}
+			System.out.println(dateTimeString.split(" ")[0]);
+			if (dates.containsKey(dateTimeString.split(" ")[0])) {
+				dates.get(dateTimeString.split(" ")[0]).add(new Timeline(time, idea));
+			}
 		}
 
-		System.out.println(ideasByDate.toString());
+		System.out.println(dates.toString());
 		model.addAttribute("idea", new Idea());
 		model.addAttribute("usr", userEntity);
 		List<Tag> tags = tagService.listAllTags();
@@ -145,7 +162,8 @@ public class StudentController {
 
 		model.addAttribute("categories", tags);
 
-		model.addAttribute("ideasByDate", ideasByDate);
+		model.addAttribute("dates", dates);
+		model.addAttribute("timelines", timelines);
 		model.addAttribute("utils", utils);
 		logger.info("Student Dashboard : ");
 
