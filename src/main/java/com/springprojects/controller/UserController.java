@@ -185,7 +185,8 @@ public class UserController {
 		UserEntity userEntity = userService.getUserByUsername(username);
 		if(password.equals(rePassword)) {
 			userEntity.setPassword(encoder.encode(password));
-			userService.createUser(userEntity);
+			System.out.println(password);
+			userService.updateUser(userEntity);
 			model.addAttribute("ok", "true");
 		}else {
 			model.addAttribute("ok", "false");

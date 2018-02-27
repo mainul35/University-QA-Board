@@ -80,6 +80,10 @@ public class UserService implements UserDetailsService {
 			userRepository.save(userEntity);
 	}
 
+	public void updateUser(UserEntity userEntity) {
+			userRepository.save(userEntity);
+	}
+	
 	public boolean existsWithUsername(String username) {
 		if (userRepository.findByUsername(username) != null) {
 			return true;
