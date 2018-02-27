@@ -376,21 +376,21 @@
 <!-- Start of /student/post-new-idea -->
 
 <div class="tab-pane" id="post-an-idea">
-																		<div class="row" >
-										<div class="col-xs-12 col-xl-12 col-md-12 col-lg-12 col-sm-12">
-											<form method="post" enctype="multipart/form-data"
-												action="/student/post-new-idea"
-												th:action="@{/student/post-new-idea}" th:object="${idea}">
-												<div th:if="${isOk=='true'}" class="alert alert-success"
-													th:text="${msg}"></div>
-												<div th:if="${isOk==''}" class="alert alert-success"
-													th:text="${msg}"></div>
-												<!--/*/ <th:block th:include="@{includes/components} :: postNewIdea(${categories}, ${idea})"></th:block> /*/-->
-											</form>
-										</div>
-									</div>
+	<div class="row">
+		<div class="col-xs-12 col-xl-12 col-md-12 col-lg-12 col-sm-12">
+			<form method="post" enctype="multipart/form-data"
+				action="/student/post-new-idea"
+				th:action="@{/student/post-new-idea}" th:object="${idea}">
+				<div th:if="${isOk=='true'}" class="alert alert-success"
+					th:text="${msg}"></div>
+				<div th:if="${isOk==''}" class="alert alert-success"
+					th:text="${msg}"></div>
+				<!--/*/ <th:block th:include="@{includes/components} :: postNewIdea(${categories}, ${idea})"></th:block> /*/-->
+			</form>
+		</div>
+	</div>
 
-								</div>
+</div>
 
 
 
@@ -432,7 +432,7 @@
 						</div>
 						<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
 							<input type="text" class="form-control" id="opening-date"
-								name="opening-date" placeholder="DD/MM/YYYY"required/>
+								name="opening-date" placeholder="DD/MM/YYYY" required />
 						</div>
 					</div>
 				</div>
@@ -445,20 +445,20 @@
 						</div>
 						<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
 							<input type="text" class="form-control" id="closure-date"
-								name="closure-date" placeholder="DD/MM/YYYY"required/>
+								name="closure-date" placeholder="DD/MM/YYYY" required />
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="form-group">
 						<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
-							<label for="final-closure-date" class="control-label">Final Closure
-								Date</label>
+							<label for="final-closure-date" class="control-label">Final
+								Closure Date</label>
 						</div>
 						<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
 							<input type="text" class="form-control" id="final-closure-date"
-								name="final-closure-date" placeholder="DD/MM/YYYY" required/>
+								name="final-closure-date" placeholder="DD/MM/YYYY" required />
 						</div>
 					</div>
 				</div>
@@ -581,6 +581,18 @@ var dates = $("#opening-date, #closure-date, #final-closure-date").datepicker({
 										rowspan="1" colspan="1"
 										aria-label="Platform(s): activate to sort column ascending">Tag
 										Name</th>
+									<th class="sorting" tabindex="0" aria-controls="example2"
+										rowspan="1" colspan="1"
+										aria-label="Platform(s): activate to sort column ascending">Opening date</th>
+									<th class="sorting" tabindex="0" aria-controls="example2"
+										rowspan="1" colspan="1"
+										aria-label="Platform(s): activate to sort column ascending">Closure Date</th>
+									<th class="sorting" tabindex="0" aria-controls="example2"
+										rowspan="1" colspan="1"
+										aria-label="Platform(s): activate to sort column ascending">Final Closure Date</th>
+									<th class="sorting" tabindex="0" aria-controls="example2"
+										rowspan="1" colspan="1"
+										aria-label="Platform(s): activate to sort column ascending">Linked Ideas</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -588,6 +600,10 @@ var dates = $("#opening-date, #closure-date, #final-closure-date").datepicker({
 									<tr role="row" class="odd">
 										<td th:text="${iterationStatus.count}"></td>
 										<td th:text=${tag.tagName}></td>
+										<td th:text=${tag.openingDate}></td>
+										<td th:text=${tag.closingDate}></td>
+										<td th:text=${tag.finalClosingDate}></td>
+										<td><a class="btn btn-block btn-default btn-sm" href="#" th:text="${'Linked ideas'}"></a></td>
 									</tr>
 								</th:block>
 							</tbody>

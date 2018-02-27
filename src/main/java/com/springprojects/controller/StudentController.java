@@ -57,9 +57,13 @@ public class StudentController {
 	IdeaService ideaService;
 
 	Logger logger = Logger.getLogger(getClass().getName());
-
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
-	public String studentDashboard_GET(Model model, HttpSession session) {
+	public String studentDashboard_GET() {
+		return "redirect:/student/activity";
+	}
+	@RequestMapping(method = RequestMethod.GET, value = "/activity")
+	public String studentActivity_GET(Model model, HttpSession session) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("idea", new Idea());
@@ -71,10 +75,26 @@ public class StudentController {
 			System.out.println(tag.getClosingDate().getTime() - System.currentTimeMillis());
 		});
 		model.addAttribute("categories", tags);
-		logger.info("Student Dashboard : ");
-		return "/student_template/index";
+		logger.info("Student -> Activity : ");
+		return "/student_template/activity";
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/post-new-idea")
+	public String postNewIdea_GET(Model model, HttpSession session) {
+
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("idea", new Idea());
+		model.addAttribute("usr", userEntity);
+		List<Tag> tags = tagService.listAllTags();
+		tags.removeIf(
+				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
+		tags.forEach(tag -> {
+			System.out.println(tag.getClosingDate().getTime() - System.currentTimeMillis());
+		});
+		model.addAttribute("categories", tags);
+		logger.info("Student -> Post new idea : ");
+		return "/student_template/post_an_idea";
+	}
 	@RequestMapping(value = "/post-new-idea", method = RequestMethod.POST)
 	public String postNewIdea_POST(Model model, HttpSession session, @ModelAttribute("idea") Idea idea,
 			@RequestParam(name = "tagName", defaultValue = "") String tagName,
@@ -110,21 +130,11 @@ public class StudentController {
 
 		List<Tag> tags = tagService.listAllTags();
 		tags.removeIf(t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
-		tags.forEach(t -> {
-			System.out.println(t.getClosingDate().getTime() - System.currentTimeMillis());
-		});
 
 		idea.setAttachments(attachments);
 		ideaService.save(idea);
-		model.addAttribute("idea", idea);
-
-		System.out.println(idea.toString());
-		model.addAttribute("usr", userEntity);
-		model.addAttribute("categories", tags);
-		model.addAttribute("ok", "true");
-		model.addAttribute("msg", "Idea was submitted successfully.");
-		logger.info("Student Dashboard : ");
-		return "/student_template/index";
+		logger.info("Student -> Post new idea : ");
+		return "redirect:/student/timeline";
 	}
 
 	@RequestMapping(value = "/timeline", method = RequestMethod.GET)
@@ -133,9 +143,6 @@ public class StudentController {
 		ArrayList<Idea> ideas = (ArrayList<Idea>) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
 
 		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
-		List<Timeline> timelines = new ArrayList<>();
-//		ideas.sort((e1, e2) -> new Long(e1.getPublishingDate().getTime())
-//				.compareTo(new Long(e2.getPublishingDate().getTime())));
 
 		String dateTimeString = "";
 
@@ -147,26 +154,15 @@ public class StudentController {
 			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
 				dates.put(dateTimeString.split(" ")[0], new ArrayList());
 			}
-			System.out.println(dateTimeString.split(" ")[0]);
 			if (dates.containsKey(dateTimeString.split(" ")[0])) {
 				dates.get(dateTimeString.split(" ")[0]).add(new Timeline(time, idea));
 			}
 		}
 
-		System.out.println(dates.toString());
-		model.addAttribute("idea", new Idea());
 		model.addAttribute("usr", userEntity);
-		List<Tag> tags = tagService.listAllTags();
-		tags.removeIf(
-				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
-
-		model.addAttribute("categories", tags);
-
 		model.addAttribute("dates", dates);
-		model.addAttribute("timelines", timelines);
-		model.addAttribute("utils", utils);
-		logger.info("Student Dashboard : ");
+		logger.info("Student -> timeline : ");
 
-		return "/student_template/index";
+		return "/student_template/timeline";
 	}
 }
