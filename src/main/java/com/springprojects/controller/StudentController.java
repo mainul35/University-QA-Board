@@ -66,15 +66,7 @@ public class StudentController {
 	public String studentActivity_GET(Model model, HttpSession session) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		model.addAttribute("idea", new Idea());
 		model.addAttribute("usr", userEntity);
-		List<Tag> tags = tagService.listAllTags();
-		tags.removeIf(
-				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
-		tags.forEach(tag -> {
-			System.out.println(tag.getClosingDate().getTime() - System.currentTimeMillis());
-		});
-		model.addAttribute("categories", tags);
 		logger.info("Student -> Activity : ");
 		return "/student_template/activity";
 	}
@@ -88,13 +80,12 @@ public class StudentController {
 		List<Tag> tags = tagService.listAllTags();
 		tags.removeIf(
 				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
-		tags.forEach(tag -> {
-			System.out.println(tag.getClosingDate().getTime() - System.currentTimeMillis());
-		});
+		
 		model.addAttribute("categories", tags);
 		logger.info("Student -> Post new idea : ");
 		return "/student_template/post_an_idea";
 	}
+	
 	@RequestMapping(value = "/post-new-idea", method = RequestMethod.POST)
 	public String postNewIdea_POST(Model model, HttpSession session, @ModelAttribute("idea") Idea idea,
 			@RequestParam(name = "tagName", defaultValue = "") String tagName,
