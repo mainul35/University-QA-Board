@@ -41,7 +41,10 @@ public class PasswordResetTest {
 		Thread.sleep(2000);
 		captureScreen(driver, "link sent to the email successfully");
 		driver.get("https://mail.google.com");
-		driver.quit();
+		
+		//driver.quit();
+		
+		
 		
 	}
 	
