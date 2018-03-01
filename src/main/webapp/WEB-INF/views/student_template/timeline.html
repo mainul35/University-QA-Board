@@ -434,7 +434,7 @@
 								<li><a th:href="@{/student/post-new-idea}">Post an idea</a></li>
 							</ul>
 							<div class="tab-content">
-								
+
 								<!-- /.tab-pane -->
 								<div class="active tab-pane" id="timeline">
 									<!-- The timeline -->
@@ -451,11 +451,11 @@
 
 													<div class="timeline-item">
 														<span class="time" th:text=" ${timeline.time}"><i
-															class="fa fa-clock-o" ></i>
-															</span>
+															class="fa fa-clock-o"></i> </span>
 
 														<h3 class="timeline-header">
-															<a th:href="@{/profile(id=${usr.id})}" th:text="${usr.username}"></a> Posted
+															<a th:href="@{/profile(id=${usr.id})}"
+																th:text="${usr.username}"></a> Posted
 														</h3>
 
 														<div class="timeline-body">
@@ -463,8 +463,118 @@
 															<p th:utext="${timeline.idea.ideaBody}"></p>
 														</div>
 														<div class="timeline-footer">
-															<a class="btn btn-primary btn-xs" th:text="${'Read more'}" th:href="@{/post(id=${timeline.idea.ideaId})}">
-																</a>
+
+
+
+															<ul class="list-inline">
+																<li><a class="link-black text-sm"
+																	th:text="${'View fill post'}"
+																	th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
+																<th:block>
+																	<li>&nbsp;|&nbsp;&nbsp;<span
+																		th:text="${timeline.totalThumbUp}"
+																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
+																	<li><a href="#" 
+																	th:id="'thumb-up_'+${timeline.idea.ideaId}"
+																		th:attr="data-pid=${timeline.idea.ideaId},
+																		 data-total-tup=${timeline.totalThumbUp},
+																		  data-user=${usr.username}"
+																		class="link-black text-sm"><i
+																			class="fa fa-thumbs-o-up margin-r-5"></i> Thumb up</a></li>
+																</th:block>
+																<th:block>
+																	<li>&nbsp;|&nbsp;&nbsp;<span
+																		th:text="${timeline.totalThumbDown}"
+																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbdown_count'"></span></li>
+																	<li><a href="#"
+																		th:id="'thumb-down_'+${timeline.idea.ideaId}"
+																		th:attr="data-pid=${timeline.idea.ideaId}, 
+																		data-total-tdown=${timeline.totalThumbUp},
+																		 data-user=${usr.username}"
+																		 class="link-black text-sm"><i
+																			class="fa fa-thumbs-o-down margin-r-5"></i> Thumb
+																			down</a> <script type="text/javascript"
+																			th:inline="javascript">
+																			/*<![CDATA[*/
+																		    var ideaId = /*[[${timeline.idea.ideaId}]]*/;
+																			var reactionOfCurrentUser = /*[[${timeline.reactionOfCurrentUser}]]*/;
+																			/*]]>*/
+																			
+																			if(reactionOfCurrentUser==0){
+																				document.querySelector("#thumb-up_"+ideaId+" > i").removeAttribute("class");
+																				document.querySelector("#thumb-down_"+ideaId+" > i").removeAttribute("class");
+																				document.querySelector("#thumb-up_"+ideaId+" > i").setAttribute("class", "fa fa-thumbs-o-up margin-r-5");
+																				document.querySelector("#thumb-down_"+ideaId+" > i").setAttribute("class", "fa fa-thumbs-o-down margin-r-5");
+																			}else if(reactionOfCurrentUser==1){
+																				document.querySelector("#thumb-up_"+ideaId+" > i").removeAttribute("class");
+																				document.querySelector("#thumb-down_"+ideaId+" > i").removeAttribute("class");
+																				document.querySelector("#thumb-up_"+ideaId+" > i").setAttribute("class", "fa fa-thumbs-up margin-r-5");
+																				document.querySelector("#thumb-down_"+ideaId+" > i").setAttribute("class", "fa fa-thumbs-o-down margin-r-5");
+																			}else if(reactionOfCurrentUser==2){
+																				document.querySelector("#thumb-up_"+ideaId+" > i").removeAttribute("class");
+																				document.querySelector("#thumb-down_"+ideaId+" > i").removeAttribute("class");
+																				document.querySelector("#thumb-up_"+ideaId+" > i").setAttribute("class", "fa fa-thumbs-o-up margin-r-5");
+																				document.querySelector("#thumb-down_"+ideaId+" > i").setAttribute("class", "fa fa-thumbs-down margin-r-5");
+																			}
+
+																			
+																			$(document).ready(function(){
+																				var thumbUpId = /*[['#thumb-up_'+${timeline.idea.ideaId}]]*/;
+																				var thumbDownId = /*[['#thumb-down_'+${timeline.idea.ideaId}]]*/;
+																				reactionOfCurrentUser = /*[[${timeline.reactionOfCurrentUser}]]*/;
+																				$(thumbUpId).click(
+																					function(){
+																						ideaId = /*[[${timeline.idea.ideaId}]]*/;
+																						var uid=$(this).data('user');
+																						var totalThumbsUp = /*[[${timeline.totalThumbUp}]]*/;
+																						if(reactionOfCurrentUser!=1 && ideaId == /*[[${timeline.idea.ideaId}]]*/){
+																							$("#idea_"+ideaId+"_thumbup_count").html(parseInt($("#idea_"+ideaId+"_thumbup_count").text())+1);
+																							$("#thumb-up_"+ideaId+" > i").attr("class", "fa fa-thumbs-up margin-r-5");
+																							if(reactionOfCurrentUser==2){
+																								$("#idea_"+ideaId+"_thumbdown_count").html(parseInt($("#idea_"+ideaId+"_thumbdown_count").text())-1);
+																								$("#thumb-down_"+ideaId+" > i").attr("class", "fa fa-thumbs-o-down margin-r-5");
+																							}
+																							reactionOfCurrentUser = 1;
+																						}
+																						$.ajax({
+																							  type: "GET",
+																							  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
+																						});
+																						
+																						
+																					});
+
+																				$(thumbDownId).click(
+																						function(){
+																							var ideaId = /*[[${timeline.idea.ideaId}]]*/;
+																							var uid=$(this).data('user');
+																							var totalThumbsDown = /*[[${timeline.totalThumbDown}]]*/;
+
+																							
+																							$.ajax({
+																								  type: "GET",
+																								  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
+																							});
+																							
+																							if(reactionOfCurrentUser!=2 && ideaId == /*[[${timeline.idea.ideaId}]]*/){
+																								$("#idea_"+ideaId+"_thumbdown_count").html(parseInt($("#idea_"+ideaId+"_thumbdown_count").text())+1);
+																								$("#thumb-down_"+ideaId+" > i").attr("class", "fa fa-thumbs-down margin-r-5");
+																								if(reactionOfCurrentUser==1){
+																									$("#idea_"+ideaId+"_thumbup_count").html(parseInt($("#idea_"+ideaId+"_thumbup_count").text())-1);
+																									$("#thumb-up_"+ideaId+" > i").attr("class", "fa fa-thumbs-o-up margin-r-5");
+																								}
+																								reactionOfCurrentUser = 2;
+																							}
+																						});
+																			});
+																			</script></li>
+																</th:block>
+
+																<li class="pull-right"><a href="#"
+																	class="link-black text-sm"><i
+																		class="fa fa-comments-o margin-r-5"></i> <span
+																		th:text="${'Comments ('+timeline.totalComments+')'}"></span></a></li>
+															</ul>
 														</div>
 													</div>
 
@@ -474,11 +584,52 @@
 
 										</ul>
 									</th:block>
+
 								</div>
 								<!-- /.tab-pane -->
+
+								<!-- 								<div class="box-tools pull-right"> -->
+								<!-- 									<ul class="pagination pagination-sm inline"> -->
+								<!-- 										<li><a href="#">«</a></li> -->
+								<!-- 										<li><a href="#">1</a></li> -->
+								<!-- 										<li><a href="#">2</a></li> -->
+								<!-- 										<li><a href="#">3</a></li> -->
+								<!-- 										<li><a href="#">»</a></li> -->
+								<!-- 									</ul> -->
+								<!-- 								</div> -->
+
 							</div>
 							<!-- /.tab-content -->
 						</div>
+
+						<!-- Pagination -->
+
+						<div class="box-tools pull-right">
+							<ul class="pagination pagination-sm inline">
+								<th:block th:if="${(currentPage-1)>0}">
+									<li><a
+										th:href="@{/student/timeline(page=${currentPage-1})}"
+										th:text="${'&laquo;'}"></a></li>
+									<li><a
+										th:href="@{/student/timeline(page=${currentPage-1})}"
+										th:text="${currentPage-1}"></a></li>
+								</th:block>
+								<li class="active"><a
+									th:href="@{/student/timeline(page=${currentPage})}"
+									th:text="${currentPage}"></a></li>
+
+								<th:block th:unless="${currentPage>pages}">
+									<li><a
+										th:href="@{/student/timeline(page=${currentPage+1})}"
+										th:text="${currentPage+1}"></a></li>
+									<li><a
+										th:href="@{/student/timeline(page=${currentPage+1})}"
+										th:text="${'&raquo;'}"></a></li>
+								</th:block>
+							</ul>
+						</div>
+
+						<!-- ./Pagination -->
 						<!-- /.nav-tabs-custom -->
 					</div>
 					<!-- /.col -->

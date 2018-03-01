@@ -6,20 +6,27 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="reaction", schema="ewsd")
-public class Reaction  implements Serializable{
+public class Reaction  implements Serializable, Comparable<Reaction>{
 
 	@Id
 	@Column(name="reaction_Id", length=20, nullable=false)
 	Long reactionId;
-	@OneToOne(optional=false)
-	@JoinColumn(name="reacted_user_Id", unique = true, nullable = false, updatable = false)
+	@OneToOne
+	@JoinColumn(name="reacted_user_Id", nullable = false, updatable=false)
 	UserEntity reactedUser;
-	@Column(name="reaction_type", nullable = false, updatable = false)
+	@ManyToOne
+	@JsonIgnore
+	Idea idea = new Idea();
+	@Column(name="reaction_type", nullable = false, updatable = true)
 	Integer reactionType;
 	public Long getReactionId() {
 		return reactionId;
@@ -39,6 +46,14 @@ public class Reaction  implements Serializable{
 	public void setReactionType(Integer reactionType) {
 		this.reactionType = reactionType;
 	}
+
+	public Idea getIdea() {
+		return idea;
+	}
+	public void setIdea(Idea idea) {
+		this.idea = idea;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -57,6 +72,11 @@ public class Reaction  implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Reaction other = (Reaction) obj;
+		if (idea == null) {
+			if (other.idea != null)
+				return false;
+		} else if (!idea.equals(other.idea))
+			return false;
 		if (reactedUser == null) {
 			if (other.reactedUser != null)
 				return false;
@@ -76,8 +96,13 @@ public class Reaction  implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Reaction [reactionId=" + reactionId + ", reactedUser=" + reactedUser + ", reactionType=" + reactionType
-				+ "]";
+		return "Reaction [reactionId=" + reactionId + ", reactedUser=" + reactedUser 
+				+ ", reactionType=" + reactionType + "]";
+	}
+	
+	@Override
+	public int compareTo(Reaction o) {
+		return Integer.compare(this.hashCode(), o.hashCode());
 	}
 	
 	

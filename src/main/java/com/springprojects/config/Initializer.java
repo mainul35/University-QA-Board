@@ -16,7 +16,7 @@ public class Initializer {
 
 	public Initializer(AuthorityService authorityService, UserService userService, AttachmentService attachmentService, PasswordEncoder encoder) {
 		// TODO Auto-generated constructor stub
-		
+	
 		authorityService.create(new Authority(System.nanoTime(), "ROLE_ADMIN"));
 		authorityService.create(new Authority(System.nanoTime(), "ROLE_QA_MANAGER"));
 		authorityService.create(new Authority(System.nanoTime(), "ROLE_QA_COORDINATOR"));

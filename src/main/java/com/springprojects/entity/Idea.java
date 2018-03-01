@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "idea", catalog = "ewsd")
@@ -36,8 +39,8 @@ public class Idea  implements Serializable{
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "idea_comments")
 	Set<Comment> comments = new HashSet<>(0);
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinTable(name = "idea_reactions")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="idea", cascade = CascadeType.ALL)
+//	@JsonIgnore
 	Set<Reaction> reactions = new HashSet<>(0);
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="idea_attachments")
@@ -150,8 +153,6 @@ public class Idea  implements Serializable{
 		result = prime * result + ((ideaId == null) ? 0 : ideaId.hashCode());
 		result = prime * result + ((ideaTitle == null) ? 0 : ideaTitle.hashCode());
 		result = prime * result + ((publishingDate == null) ? 0 : publishingDate.hashCode());
-		result = prime * result + ((reactions == null) ? 0 : reactions.hashCode());
-		result = prime * result + ((seenBy == null) ? 0 : seenBy.hashCode());
 		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
 		return result;
 	}
@@ -227,7 +228,7 @@ public class Idea  implements Serializable{
 	public String toString() {
 		return "Idea [ideaId=" + ideaId + ", ideaTitle=" + ideaTitle + ", ideaBody=" + ideaBody + ", authorEmail="
 				+ authorEmail + ", countViews=" + countViews + ", publishingDate=" + publishingDate + ", comments="
-				+ comments + ", reactions=" + reactions + ", attachments=" + attachments + ", tag=" + tag + ", seenBy="
+				+ comments + ", attachments=" + attachments + ", tag=" + tag + ", seenBy="
 				+ seenBy + "]";
 	}
 

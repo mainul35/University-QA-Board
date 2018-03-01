@@ -36,7 +36,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.springprojects.config.Utils;
 import com.springprojects.customModel.Timeline;
 import com.springprojects.entity.Attachment;
+import com.springprojects.entity.Comment;
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.Reaction;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
 import com.springprojects.service.AttachmentService;
@@ -129,9 +131,15 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "/timeline", method = RequestMethod.GET)
-	public String timeline_GET(HttpSession session, Model model) {
+	public String timeline_GET(
+			HttpSession session, 
+			Model model, 
+			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		ArrayList<Idea> ideas = (ArrayList<Idea>) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
+		
+		int resultPerPage = 5;
+		
+		List<Idea> ideas = (List<Idea>) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber, resultPerPage);
 
 		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
 
@@ -146,12 +154,35 @@ public class StudentController {
 				dates.put(dateTimeString.split(" ")[0], new ArrayList());
 			}
 			if (dates.containsKey(dateTimeString.split(" ")[0])) {
-				dates.get(dateTimeString.split(" ")[0]).add(new Timeline(time, idea));
+				Timeline timeline = new Timeline(time, idea);
+				
+				for(Reaction reaction :idea.getReactions()) {
+					if(reaction.getReactionType()==1) {
+						timeline.setTotalThumbUp(timeline.getTotalThumbUp()+1);
+					}else if(reaction.getReactionType()==2){
+						timeline.setTotalThumbDown(timeline.getTotalThumbDown()+1);
+					}
+					if(reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
+						timeline.setReactionOfCurrentUser(reaction.getReactionType());
+					}
+				}
+				
+				timeline.setTotalComments(idea.getComments().size());
+				
+				dates.get(dateTimeString.split(" ")[0]).add(timeline);
 			}
 		}
-
+		int totalResults = ideas.size();
+        int pages =(int)Math.ceil(((double)totalResults) / resultPerPage);
+        model.addAttribute("pages",
+                resultPerPage == 5
+                ?ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage)-1:resultPerPage==totalResults
+                ?0:pages-1);
+        model.addAttribute("currentPage", pageNumber);
+        
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("dates", dates);
+//		model.addAttribute("reactions", attributeValue);
 		logger.info("Student -> timeline : ");
 
 		return "/student_template/timeline";
