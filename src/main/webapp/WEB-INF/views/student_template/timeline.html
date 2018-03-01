@@ -474,11 +474,12 @@
 																	<li>&nbsp;|&nbsp;&nbsp;<span
 																		th:text="${timeline.totalThumbUp}"
 																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
-																	<li><a href="#" 
+																	<li><a href="#" onclick="onThumbUpClick(this)"
 																	th:id="'thumb-up_'+${timeline.idea.ideaId}"
 																		th:attr="data-pid=${timeline.idea.ideaId},
 																		 data-total-tup=${timeline.totalThumbUp},
-																		  data-user=${usr.username}"
+																		  data-user=${usr.username}, 
+																		  data-reactionOfCurrentUser=${timeline.reactionOfCurrentUser}"
 																		class="link-black text-sm"><i
 																			class="fa fa-thumbs-o-up margin-r-5"></i> Thumb up</a></li>
 																</th:block>
@@ -486,11 +487,12 @@
 																	<li>&nbsp;|&nbsp;&nbsp;<span
 																		th:text="${timeline.totalThumbDown}"
 																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbdown_count'"></span></li>
-																	<li><a href="#"
+																	<li><a href="#" onclick="onThumbDownClick(this)"
 																		th:id="'thumb-down_'+${timeline.idea.ideaId}"
 																		th:attr="data-pid=${timeline.idea.ideaId}, 
-																		data-total-tdown=${timeline.totalThumbUp},
-																		 data-user=${usr.username}"
+																		 data-total-tdown=${timeline.totalThumbDown},
+																		 data-user=${usr.username}, 
+																		 data-reactionOfCurrentUser=${timeline.reactionOfCurrentUser}"
 																		 class="link-black text-sm"><i
 																			class="fa fa-thumbs-o-down margin-r-5"></i> Thumb
 																			down</a> <script type="text/javascript"
@@ -517,56 +519,64 @@
 																				document.querySelector("#thumb-down_"+ideaId+" > i").setAttribute("class", "fa fa-thumbs-down margin-r-5");
 																			}
 
-																			
-																			$(document).ready(function(){
-																				var thumbUpId = /*[['#thumb-up_'+${timeline.idea.ideaId}]]*/;
-																				var thumbDownId = /*[['#thumb-down_'+${timeline.idea.ideaId}]]*/;
-																				reactionOfCurrentUser = /*[[${timeline.reactionOfCurrentUser}]]*/;
-																				$(thumbUpId).click(
-																					function(){
-																						ideaId = /*[[${timeline.idea.ideaId}]]*/;
-																						var uid=$(this).data('user');
-																						var totalThumbsUp = /*[[${timeline.totalThumbUp}]]*/;
-																						if(reactionOfCurrentUser!=1 && ideaId == /*[[${timeline.idea.ideaId}]]*/){
-																							$("#idea_"+ideaId+"_thumbup_count").html(parseInt($("#idea_"+ideaId+"_thumbup_count").text())+1);
-																							$("#thumb-up_"+ideaId+" > i").attr("class", "fa fa-thumbs-up margin-r-5");
-																							if(reactionOfCurrentUser==2){
-																								$("#idea_"+ideaId+"_thumbdown_count").html(parseInt($("#idea_"+ideaId+"_thumbdown_count").text())-1);
-																								$("#thumb-down_"+ideaId+" > i").attr("class", "fa fa-thumbs-o-down margin-r-5");
-																							}
-																							reactionOfCurrentUser = 1;
-																						}
-																						$.ajax({
-																							  type: "GET",
-																							  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
-																						});
-																						
-																						
-																					});
+																			function onThumbUpClick(element){
+																				console.log($(element).attr("data-pid"));
+																				reactionOfCurrentUser = $(element).attr("data-reactionofcurrentuser");
+																				
+																				ideaId =$(element).attr("data-pid");
+																				var uid=$(element).attr("data-user");
+																				console.log("Idea ID = "+ideaId+"; Reaction Type = "+reactionOfCurrentUser);
+																				var totalThumbsUp = $(element).attr("data-total-tup");
+																				$("idea_"+ideaId+"_thumbup_count").text(totalThumbsUp);
+																				
+																				if(reactionOfCurrentUser!=1){
+																					$("#idea_"+ideaId+"_thumbup_count").html(parseInt($("#idea_"+ideaId+"_thumbup_count").text())+1);
+																					$("#thumb-up_"+ideaId+" > i").attr("class", "fa fa-thumbs-up margin-r-5");
+																					if(reactionOfCurrentUser==2){
+																						$("#idea_"+ideaId+"_thumbdown_count").html(parseInt($("#idea_"+ideaId+"_thumbdown_count").text())-1);
+																						$("#thumb-down_"+ideaId+" > i").attr("class", "fa fa-thumbs-o-down margin-r-5");
+																					}
+																					document.querySelector("#thumb-up_"+ideaId).removeAttribute("data-reactionofcurrentuser");
+																					document.querySelector("#thumb-up_"+ideaId).setAttribute("data-reactionofcurrentuser", "1");
+																					document.querySelector("#thumb-down_"+ideaId).removeAttribute("data-reactionofcurrentuser");
+																					document.querySelector("#thumb-down_"+ideaId).setAttribute("data-reactionofcurrentuser", "1");
+																				}
+																				$.ajax({
+																					  type: "GET",
+																					  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
+																				});
+																		
+																			}
 
-																				$(thumbDownId).click(
-																						function(){
-																							var ideaId = /*[[${timeline.idea.ideaId}]]*/;
-																							var uid=$(this).data('user');
-																							var totalThumbsDown = /*[[${timeline.totalThumbDown}]]*/;
 
-																							
-																							$.ajax({
-																								  type: "GET",
-																								  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
-																							});
-																							
-																							if(reactionOfCurrentUser!=2 && ideaId == /*[[${timeline.idea.ideaId}]]*/){
-																								$("#idea_"+ideaId+"_thumbdown_count").html(parseInt($("#idea_"+ideaId+"_thumbdown_count").text())+1);
-																								$("#thumb-down_"+ideaId+" > i").attr("class", "fa fa-thumbs-down margin-r-5");
-																								if(reactionOfCurrentUser==1){
-																									$("#idea_"+ideaId+"_thumbup_count").html(parseInt($("#idea_"+ideaId+"_thumbup_count").text())-1);
-																									$("#thumb-up_"+ideaId+" > i").attr("class", "fa fa-thumbs-o-up margin-r-5");
-																								}
-																								reactionOfCurrentUser = 2;
-																							}
-																						});
-																			});
+																			function onThumbDownClick(element){
+																				console.log($(element).attr("data-pid"));
+																				reactionOfCurrentUser = $(element).attr("data-reactionOfCurrentUser");
+
+																				ideaId =$(element).attr("data-pid");
+																				var uid=$(element).attr("data-user");
+																				console.log("Idea ID = "+ideaId+"; Reaction Type = "+reactionOfCurrentUser);
+																				var totalThumbsDown = $(element).attr("data-total-tdown");
+																				$("idea_"+ideaId+"_thumbdown_count").text(totalThumbsDown);
+																				if(reactionOfCurrentUser!=2){
+																					$("#idea_"+ideaId+"_thumbdown_count").html(parseInt($("#idea_"+ideaId+"_thumbdown_count").text())+1);
+																					$("#thumb-down_"+ideaId+" > i").attr("class", "fa fa-thumbs-down margin-r-5");
+																					if(reactionOfCurrentUser==1){
+																						$("#idea_"+ideaId+"_thumbup_count").html(parseInt($("#idea_"+ideaId+"_thumbup_count").text())-1);
+																						$("#thumb-up_"+ideaId+" > i").attr("class", "fa fa-thumbs-o-up margin-r-5");
+																					}
+																					document.querySelector("#thumb-up_"+ideaId).removeAttribute("data-reactionofcurrentuser");
+																					document.querySelector("#thumb-up_"+ideaId).setAttribute("data-reactionofcurrentuser", "2");
+																					document.querySelector("#thumb-down_"+ideaId).removeAttribute("data-reactionofcurrentuser");
+																					document.querySelector("#thumb-down_"+ideaId).setAttribute("data-reactionofcurrentuser", "2");
+// 																					
+																				}
+																				$.ajax({
+																					  type: "GET",
+																					  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
+																				});
+																		
+																			}
 																			</script></li>
 																</th:block>
 
