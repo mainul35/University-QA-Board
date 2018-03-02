@@ -9,23 +9,32 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="comment", catalog="ewsd")
-public class Comment  implements Serializable{
+public class Comment  implements Serializable, Comparable<Comment>{
 
 	@Id
 	@Column(name="comment_Id", length=20, nullable=false)
 	Long commentId;
 	@Column(name="comment_body", nullable=false)
 	String commentBody;
-	@OneToOne(optional=false)
-	@JoinColumn(name="commented_user_Id", unique = true, nullable = false, updatable = false)
+	@OneToOne
+	@JoinColumn(
+			name="commented_user_id", 
+			nullable = false, 
+			unique=false, updatable=false)
 	UserEntity commentedUser;
+	@ManyToOne
+	@JsonIgnore
+	Idea idea = new Idea();
 	@Column(name="anonymous")
-	boolean isAnonymous;
+	Boolean isAnonymous;
 	@Column
 	Timestamp commentDateTime;
 	public Long getCommentId() {
@@ -46,10 +55,10 @@ public class Comment  implements Serializable{
 	public void setCommentedUser(UserEntity commentedUser) {
 		this.commentedUser = commentedUser;
 	}
-	public boolean isAnonymous() {
+	public Boolean isAnonymous() {
 		return isAnonymous;
 	}
-	public void setAnonymous(boolean isAnonymous) {
+	public void setAnonymous(Boolean isAnonymous) {
 		this.isAnonymous = isAnonymous;
 	}
 	
@@ -59,6 +68,22 @@ public class Comment  implements Serializable{
 	public void setCommentDateTime(Timestamp commentDateTime) {
 		this.commentDateTime = commentDateTime;
 	}
+	
+	public Idea getIdea() {
+		return idea;
+	}
+	public void setIdea(Idea idea) {
+		this.idea = idea;
+	}
+	
+	
+	public Boolean getIsAnonymous() {
+		return isAnonymous;
+	}
+	public void setIsAnonymous(Boolean isAnonymous) {
+		this.isAnonymous = isAnonymous;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,5 +132,10 @@ public class Comment  implements Serializable{
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", commentBody=" + commentBody + ", commentedUser=" + commentedUser
 				+ ", isAnonymous=" + isAnonymous + ", commentDateTime=" + commentDateTime + "]";
+	}
+	@Override
+	public int compareTo(Comment o) {
+		// TODO Auto-generated method stub
+		return Integer.compare(this.hashCode(), o.hashCode());
 	}	
 }

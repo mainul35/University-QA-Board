@@ -446,16 +446,17 @@
 											<!-- /.timeline-label -->
 											<!-- timeline item -->
 											<th:block th:each="timeline : ${date.value}">
+
 												<li>
 
 
-													<div class="timeline-item">
+													<div class="timeline-item post">
 														<span class="time" th:text=" ${timeline.time}"><i
 															class="fa fa-clock-o"></i> </span>
 
 														<h3 class="timeline-header">
 															<a th:href="@{/profile(id=${usr.id})}"
-																th:text="${usr.username}"></a> Posted
+																th:text="${usr.name}"></a> Posted
 														</h3>
 
 														<div class="timeline-body">
@@ -468,14 +469,14 @@
 
 															<ul class="list-inline">
 																<li><a class="link-black text-sm"
-																	th:text="${'View fill post'}"
+																	th:text="${'View full post'}"
 																	th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
 																<th:block>
 																	<li>&nbsp;|&nbsp;&nbsp;<span
 																		th:text="${timeline.totalThumbUp}"
 																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
 																	<li><a href="#" onclick="onThumbUpClick(this)"
-																	th:id="'thumb-up_'+${timeline.idea.ideaId}"
+																		th:id="'thumb-up_'+${timeline.idea.ideaId}"
 																		th:attr="data-pid=${timeline.idea.ideaId},
 																		 data-total-tup=${timeline.totalThumbUp},
 																		  data-user=${usr.username}, 
@@ -493,7 +494,7 @@
 																		 data-total-tdown=${timeline.totalThumbDown},
 																		 data-user=${usr.username}, 
 																		 data-reactionOfCurrentUser=${timeline.reactionOfCurrentUser}"
-																		 class="link-black text-sm"><i
+																		class="link-black text-sm"><i
 																			class="fa fa-thumbs-o-down margin-r-5"></i> Thumb
 																			down</a> <script type="text/javascript"
 																			th:inline="javascript">
@@ -585,6 +586,185 @@
 																		class="fa fa-comments-o margin-r-5"></i> <span
 																		th:text="${'Comments ('+timeline.totalComments+')'}"></span></a></li>
 															</ul>
+															<hr>
+
+															<div class="box-body chat"
+																th:id="'load-comments_'+${timeline.idea.ideaId}">
+																<th:block th:each="comment : ${timeline.idea.comments}">
+																	<th:block th:if="${comment.isAnonymous} == false ">
+																		<div class="item">
+																			<img
+																				th:src="@{/file/(fileId=${comment.commentedUser.userImage.attachmentId})}"
+																				alt="user image" class="offline">
+																			<p class="message">
+																				<a
+																					th:href="@{/profile(id=${comment.commentedUser.username})}"
+																					class="name"> <small
+																					class="text-muted pull-right"><i
+																						class="fa fa-clock-o"></i> <span
+																						th:text="${comment.commentDateTime}"></span></small> <span
+																					th:text="${comment.commentedUser.name}"></span>
+																				</a> <span th:text="${comment.commentBody}"></span>
+																			</p>
+																		</div>
+																	</th:block>
+
+																	<th:block th:if="${comment.isAnonymous} == true ">
+																		<div class="item">
+																			<img
+																				th:src="@{/resources/contents/lib/img/anonymous.jpg}"
+																				alt="user image" class="offline">
+
+																			<p class="message">
+																				<a href="#" class="name"> <small
+																					class="text-muted pull-right"><i
+																						class="fa fa-clock-o"></i> <span
+																						th:text="${comment.commentDateTime}"></span></small> <span
+																					th:text="${'Anonymous User'}"></span>
+																				</a> <span th:text="${comment.commentBody}"></span>
+																			</p>
+																		</div>
+																	</th:block>
+																	<hr>
+																</th:block>
+															</div>
+
+															<th:block th:if="${timeline.tagExpired} == false ">
+																<div>
+																	<input class="form-control input-sm"
+																		th:id="'input-comment_'+${timeline.idea.ideaId}"
+																		type="text" placeholder="Type a comment"
+																		onkeypress="onCommentPost(event, this)">
+																	<hr>
+
+																	<input type="checkbox"
+																		th:id="'anonymous-comment_'+${timeline.idea.ideaId}">
+																	&nbsp;&nbsp;Comment as anonymous <input
+																		class="pull-right btn btn-primary btn-sm btn-flat"
+																		type="submit" value="Comment"
+																		th:id="'button-submit_'+${timeline.idea.ideaId}" />
+
+																</div>
+
+
+																<div class="modal modal-danger fade" id="modal-danger">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<h4 class="modal-title">Ops!</h4>
+																			</div>
+																			<div class="modal-body">
+																				<p>Sorry, the final closure date for this
+																					category has timed out.</p>
+																			</div>
+																			<div class="modal-footer">
+
+																				<button type="button"
+																					th:id="'modal-ok_'+${timeline.idea.ideaId}"
+																					class="btn btn-outline">Ok</button>
+																			</div>
+																		</div>
+																		<!-- /.modal-content -->
+																	</div>
+																	<!-- /.modal-dialog -->
+																</div>
+
+
+																<hr>
+
+																<script type="text/javascript" th:inline="javascript">
+																var ideaId = /*[[${timeline.idea.ideaId}]]*/;
+																function onCommentPost(e, commentBox){
+																	var code = (e.keyCode ? e.keyCode : e.which);
+																	if(code == 13) { //Enter keycode
+																		var ideaId = $(commentBox).attr("id").split("_")[1];
+																		var uid = /*[[${usr.username}]]*/;
+																		var idea = /*[[${timeline.idea}]]*/;
+																		var comment = {};
+																		comment["commentId"] = new Date().getTime();
+																		comment["idea"] = idea;
+																		comment["commentDateTime"] = new Date().getTime();
+																		comment["isAnonymous"] = $("#anonymous-comment_"+ideaId).prop("checked") ? true : false;
+																		comment["commentedUser"] = /*[[${usr}]]*/;
+																		comment["commentBody"] = $(commentBox).val();
+																	 	console.log(comment["isAnonymous"]);
+																		var url = "";
+																		if($("#anonymous-comment_"+ideaId).prop("checked")==true){
+																			url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																		}else{
+																			url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																		}
+																	 	$.ajax({
+																             type: "POST",
+																             contentType: "application/json",
+																             url: url,
+																             data: JSON.stringify(comment),
+																             dataType: 'json',
+																             timeout: 600000,
+																             success: function (data) {
+																                 console.log("Success");
+																                 $(commentBox).val("");
+																                 location.reload();
+																             },
+																             error: function (e) {
+																                 console.log("Error : "+e.status);
+																                 console.log(e);
+																                 if(e.status==406){
+																					$("#modal-ok_"+ideaId).click(function(){
+																						location.reload();
+																					});
+																                 }
+																             }
+																	});
+																		
+																	}
+																}
+
+																
+																document.querySelector("#button-submit_"+ideaId).onclick=function(commentButton){
+																	
+																	var uid = /*[[${usr.username}]]*/;
+																	var idea = /*[[${timeline.idea}]]*/;
+																	var comment = {};
+																	comment["commentId"] = new Date().getTime();
+																	comment["idea"] = idea;
+																	comment["commentDateTime"] = new Date().getTime();
+																	comment["isAnonymous"] = $("#anonymous-comment_"+ideaId).prop("checked") ? true : false;
+																	comment["commentedUser"] = /*[[${usr}]]*/;
+																	comment["commentBody"] = $("#input-comment_"+ideaId).val();
+																 	console.log(comment["isAnonymous"]);
+																	var url = "";
+																	if($("#anonymous-comment_"+ideaId).prop("checked")==true){
+																		url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																	}else{
+																		url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																	}
+																 	$.ajax({
+															             type: "POST",
+															             contentType: "application/json",
+															             url: url,
+															             data: JSON.stringify(comment),
+															             dataType: 'json',
+															             timeout: 600000,
+															             success: function (data) {
+															                 console.log("Success");
+															                 $("#input-comment_"+ideaId).val("");
+															                 location.reload();
+															             },
+															             error: function (e) {
+															                 console.log("Error : "+e.status);
+															                 console.log(e);
+															                 if(e.status==406){
+																				$("#modal-ok_"+ideaId).click(function(){
+																					location.reload();
+																				});
+															                 }
+															             }
+																	});
+																};
+																	
+																</script>
+															</th:block>
 														</div>
 													</div>
 

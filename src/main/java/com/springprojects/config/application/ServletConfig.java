@@ -135,6 +135,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         		"/resources/**",
         		"classpath:/resources/"
         		).addResourceLocations("/resources/");
+        registry.addResourceHandler("/temp/**").addResourceLocations("C:/temp/");
     }
 
 }

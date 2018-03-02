@@ -9,6 +9,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,11 +20,6 @@ public class ResourceRestController {
 
     @Autowired
     Utils utils;
-//
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public ArrayList<UserEntity> getAllUsers(){
-//        return (ArrayList<UserEntity>) userService.usersWithRole("ROLE_POTENTIAL_TEACHER");
-//    }
 
 	@RequestMapping(value="/terms-and-conditions", method=RequestMethod.GET)
 	@ResponseBody
@@ -33,4 +30,17 @@ public class ResourceRestController {
 		return tndc;
 	}
 	
+	@RequestMapping(value="/file", method=RequestMethod.GET)
+	@ResponseBody
+	public byte[] resourceInDrive_GET(@RequestParam(name="fileId") Long fileId) {
+		System.out.println("---------------------------------------------");
+		byte[] bs = null;
+		try {
+			bs = utils.readFile(fileId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return bs;
+	}
 }

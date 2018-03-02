@@ -167,6 +167,9 @@ public class StudentController {
 					}
 				}
 				
+				if(idea.getTag().getFinalClosingDate().getTime()<new Date().getTime()) {
+					timeline.setTagExpired(true);
+				}
 				timeline.setTotalComments(idea.getComments().size());
 				
 				dates.get(dateTimeString.split(" ")[0]).add(timeline);
@@ -182,7 +185,7 @@ public class StudentController {
         
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("dates", dates);
-//		model.addAttribute("reactions", attributeValue);
+		model.addAttribute("utils", utils);
 		logger.info("Student -> timeline : ");
 
 		return "/student_template/timeline";

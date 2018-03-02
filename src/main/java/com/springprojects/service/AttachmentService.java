@@ -65,4 +65,7 @@ public class AttachmentService {
 		attachmentRepository.save(attachment);
 	}
 	
+	public Attachment readAttachment(Long id) {
+		return attachmentRepository.findOne(id);
+	}
 }

@@ -21,7 +21,10 @@ public class Reaction  implements Serializable, Comparable<Reaction>{
 	@Column(name="reaction_Id", length=20, nullable=false)
 	Long reactionId;
 	@OneToOne
-	@JoinColumn(name="reacted_user_Id", nullable = false, updatable=false)
+	@JoinColumn(
+			name="reacted_user_Id", 
+			nullable = false, 
+			updatable=false)
 	UserEntity reactedUser;
 	@ManyToOne
 	@JsonIgnore

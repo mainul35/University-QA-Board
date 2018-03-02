@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "idea", catalog = "ewsd")
-public class Idea  implements Serializable{
+public class Idea implements Serializable {
 
 	@Id
 	@Column(name = "idea_id", length = 20, nullable = false)
@@ -36,18 +36,16 @@ public class Idea  implements Serializable{
 	Integer countViews;
 	@Column
 	Timestamp publishingDate;
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinTable(name = "idea_comments")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idea", cascade = CascadeType.ALL)
 	Set<Comment> comments = new HashSet<>(0);
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="idea", cascade = CascadeType.ALL)
-//	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idea", cascade = CascadeType.ALL)
 	Set<Reaction> reactions = new HashSet<>(0);
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="idea_attachments")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "idea_attachments")
 	Set<Attachment> attachments = new HashSet<>(0);
 	@ManyToOne
 	Tag tag = new Tag();
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idea_seen_by", joinColumns = {
 			@JoinColumn(name = "idea_id", referencedColumnName = "idea_id") }, inverseJoinColumns = {
 					@JoinColumn(name = "user_id", referencedColumnName = "user_uuid") })
@@ -227,9 +225,8 @@ public class Idea  implements Serializable{
 	@Override
 	public String toString() {
 		return "Idea [ideaId=" + ideaId + ", ideaTitle=" + ideaTitle + ", ideaBody=" + ideaBody + ", authorEmail="
-				+ authorEmail + ", countViews=" + countViews + ", publishingDate=" + publishingDate + ", comments="
-				+ comments + ", attachments=" + attachments + ", tag=" + tag + ", seenBy="
-				+ seenBy + "]";
+				+ authorEmail + ", countViews=" + countViews + ", publishingDate=" + publishingDate + ", attachments="
+				+ attachments + ", tag=" + tag + ", seenBy=" + seenBy + "]";
 	}
 
 }

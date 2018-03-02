@@ -3,10 +3,12 @@ package com.springprojects.config;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.sql.Timestamp;
@@ -14,19 +16,32 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletContext;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.springprojects.service.AttachmentService;
 
 public class Utils {
 
+	@Autowired
+	AttachmentService attachmentService;
+
+	@Autowired
+	private ServletContext servletContext;
+	
 	private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
 	public Timestamp convertStringToTimestamp(String dateTime, String format) {
 		Timestamp timestamp = null;
 		try {
-		    DateFormat dateFormat = new SimpleDateFormat(format);
-		    Date parsedDate = dateFormat.parse(dateTime);
-		    return timestamp = new java.sql.Timestamp(parsedDate.getTime());
-		} catch(Exception e) { //this generic but you can control another types of exception
-		    // look the origin of excption 
+			DateFormat dateFormat = new SimpleDateFormat(format);
+			Date parsedDate = dateFormat.parse(dateTime);
+			return timestamp = new java.sql.Timestamp(parsedDate.getTime());
+		} catch (Exception e) { // this generic but you can control another types of exception
+			// look the origin of excption
 			e.printStackTrace();
 		}
 		return timestamp;
@@ -38,7 +53,7 @@ public class Utils {
 		String formattedDate = new SimpleDateFormat(format).format(date);
 		return formattedDate;
 	}
-	
+
 	public String readFile(String fileName) {
 		BufferedReader br = null;
 		String content = null;
@@ -50,9 +65,9 @@ public class Utils {
 				dir.mkdirs();
 			}
 			dir = new File(Properties.TEMP_PATH + fileName);
-			
+
 			if (dir.isFile()) {
-				
+
 				br = new BufferedReader(new FileReader(dir));
 
 				StringBuilder sb = new StringBuilder();
@@ -78,6 +93,19 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return content;
+	}
+
+	@SuppressWarnings("resource")
+	public byte[] readFile(Long fileId) throws IOException {
+		String attachmentUrl = attachmentService.readAttachment(fileId).getFileURL();
+		InputStream in = null;
+		if(servletContext.getResourceAsStream(attachmentUrl)==null) {
+			in = new FileInputStream(new File(attachmentUrl));
+		}else {
+			in = servletContext.getResourceAsStream(attachmentUrl);
+		}
+				
+	    return IOUtils.toByteArray(in);
 	}
 
 	public String writeFile(String fileName, String content) {

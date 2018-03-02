@@ -10,6 +10,7 @@ public class Timeline implements Comparable<Timeline>{
 	int totalComments = 0;
 	int totalSeenBy = 0;
 	int reactionOfCurrentUser = 0;
+	boolean tagExpired = false;
 	public Timeline() {
 		super();
 	}
@@ -55,16 +56,25 @@ public class Timeline implements Comparable<Timeline>{
 		this.totalSeenBy = totalSeenBy;
 	}
 	
+	public boolean isTagExpired() {
+		return tagExpired;
+	}
+	public void setTagExpired(boolean tagExpired) {
+		this.tagExpired = tagExpired;
+	}
 	@Override
 	public String toString() {
 		return "Timeline [time=" + time + ", idea=" + idea + ", totalThumbUp=" + totalThumbUp + ", totalThumbDown="
-				+ totalThumbDown + ", totalComments=" + totalComments + ", totalSeenBy=" + totalSeenBy + "]";
+				+ totalThumbDown + ", totalComments=" + totalComments + ", totalSeenBy=" + totalSeenBy
+				+ ", reactionOfCurrentUser=" + reactionOfCurrentUser + ", tagExpired=" + tagExpired + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((idea == null) ? 0 : idea.hashCode());
+		result = prime * result + reactionOfCurrentUser;
+		result = prime * result + (tagExpired ? 1231 : 1237);
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
 		result = prime * result + totalComments;
 		result = prime * result + totalSeenBy;
@@ -85,6 +95,10 @@ public class Timeline implements Comparable<Timeline>{
 			if (other.idea != null)
 				return false;
 		} else if (!idea.equals(other.idea))
+			return false;
+		if (reactionOfCurrentUser != other.reactionOfCurrentUser)
+			return false;
+		if (tagExpired != other.tagExpired)
 			return false;
 		if (time == null) {
 			if (other.time != null)
