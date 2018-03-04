@@ -125,7 +125,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").setCachePeriod(31556926);
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/").setCachePeriod(999999999);
         registry.addResourceHandler(
         		"/admin/resources/**",
         		"/staff/resources/**",
@@ -134,8 +134,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         		"/qa_coordinator/resources/**",
         		"/resources/**",
         		"classpath:/resources/"
-        		).addResourceLocations("/resources/");
-        registry.addResourceHandler("/temp/**").addResourceLocations("C:/temp/");
+        		).addResourceLocations("/resources/").setCachePeriod(999999999);
     }
 
 }

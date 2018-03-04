@@ -2,7 +2,9 @@ package com.springprojects.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -37,19 +39,19 @@ public class Idea implements Serializable {
 	@Column
 	Timestamp publishingDate;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idea", cascade = CascadeType.ALL)
-	Set<Comment> comments = new HashSet<>(0);
+	List<Comment> comments;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idea", cascade = CascadeType.ALL)
-	Set<Reaction> reactions = new HashSet<>(0);
+	Set<Reaction> reactions;
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idea_attachments")
-	Set<Attachment> attachments = new HashSet<>(0);
+	Set<Attachment> attachments;
 	@ManyToOne
 	Tag tag = new Tag();
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idea_seen_by", joinColumns = {
 			@JoinColumn(name = "idea_id", referencedColumnName = "idea_id") }, inverseJoinColumns = {
 					@JoinColumn(name = "user_id", referencedColumnName = "user_uuid") })
-	Set<UserEntity> seenBy = new HashSet<>(0);
+	Set<UserEntity> seenBy;
 
 	public Long getIdeaId() {
 		return ideaId;
@@ -99,11 +101,11 @@ public class Idea implements Serializable {
 		this.publishingDate = publishingDate;
 	}
 
-	public Set<Comment> getComments() {
+	public List<Comment> getComments() {
 		return comments;
 	}
 
-	public void setComments(Set<Comment> comments) {
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 

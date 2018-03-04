@@ -33,7 +33,7 @@ public class ResourceRestController {
 	@RequestMapping(value="/file", method=RequestMethod.GET)
 	@ResponseBody
 	public byte[] resourceInDrive_GET(@RequestParam(name="fileId") Long fileId) {
-		System.out.println("---------------------------------------------");
+		System.out.println("Reading resource from drive...");
 		byte[] bs = null;
 		try {
 			bs = utils.readFile(fileId);

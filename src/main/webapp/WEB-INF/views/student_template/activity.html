@@ -213,34 +213,21 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
-								th:src="@{resources/contents/lib/img/user2-160x160.jpg}"
+								th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
 								class="user-image" alt="User Image"> <span
 								class="hidden-xs" th:text="${usr.name}"></span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header"><img
-									th:src="@{resources/contents/lib/img/user2-160x160.jpg}"
+									th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
 									class="img-circle" alt="User Image">
 
 									<p>
 										<th:block th:text="${usr.name}"></th:block>
-										<small>Member since Nov. 2012</small>
 									</p></li>
 								<!-- Menu Body -->
-								<li class="user-body">
-									<div class="row">
-										<div class="col-xs-4 text-center">
-											<a href="#">Followers</a>
-										</div>
-										<div class="col-xs-4 text-center">
-											<a href="#">Sales</a>
-										</div>
-										<div class="col-xs-4 text-center">
-											<a href="#">Friends</a>
-										</div>
-									</div> <!-- /.row -->
-								</li>
+								
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
@@ -275,7 +262,7 @@
 				Sidebar user panel
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img th:src="@{resources/contents/lib/img/user2-160x160.jpg}"
+						<img th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
 							class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
@@ -360,20 +347,50 @@
 						<div class="box box-primary">
 							<div class="box-body box-profile">
 								<img class="profile-user-img img-responsive img-circle"
-									src="../../dist/img/user4-128x128.jpg"
+									th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
 									alt="User profile picture">
 
 								<h3 class="profile-username text-center" th:text="${usr.name}"></h3>
 
-								<p class="text-muted text-center">Software Engineer</p>
+								<p class="text-muted text-center" th:text="${usr.department}"></p>
 
 								<ul class="list-group list-group-unbordered">
 									<li class="list-group-item"><b>Total Ideas</b> <a
-										class="pull-right">1,322</a></li>
+										class="pull-right" th:text="${totalIdeas}"></a></li>
 									<li class="list-group-item"><b>Total Categories</b> <a
-										class="pull-right">543</a></li>
+										class="pull-right" th:text="${totalTags}"></a></li>
 									<li class="list-group-item"><b>Total contributions</b> <a
-										class="pull-right">13,287</a></li>
+										class="pull-right" onmouseover="describeTotalContributions()" th:text="${totalContributions}"></a>
+										<script type="text/javascript" th:inline="javascript">
+										/*
+										*
+										*	Check user Idle time 
+										*
+										*/
+
+										var idleTime = 0;
+										$(document).ready(function () {
+										    //Increment the idle time counter every minute.
+										    var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+										    //Zero the idle timer on mouse movement.
+										    $(this).mousemove(function (e) {
+										        idleTime = 0;
+										    });
+										    $(this).keypress(function (e) {
+										        idleTime = 0;
+										    });
+										});
+
+										function timerIncrement() {
+										    idleTime = idleTime + 1;
+										    console.log(idleTime);
+										    if (idleTime > 19) { // 20 minutes
+										        window.location.reload();
+										    }
+										}
+										</script>
+									</li>
 								</ul>
 
 								<!-- 								<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->

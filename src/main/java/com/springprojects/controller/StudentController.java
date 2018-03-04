@@ -1,6 +1,7 @@
 package com.springprojects.controller;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +13,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -57,18 +60,32 @@ public class StudentController {
 	AttachmentService attachmentService;
 	@Autowired
 	IdeaService ideaService;
-
+	int index = 0;
 	Logger logger = Logger.getLogger(getClass().getName());
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
 	public String studentDashboard_GET() {
 		return "redirect:/student/activity";
 	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/activity")
 	public String studentActivity_GET(Model model, HttpSession session) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		List<Idea> ideas = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
+		Set<Tag> tags = new HashSet<>();
+		int countContributions = 0; 
+		
+		ideas.forEach((idea) -> tags.add(idea.getTag()));
+		for(Idea idea: ideas) {
+			countContributions += idea.getComments().size();
+		}
+		countContributions+=ideas.size();
 		model.addAttribute("usr", userEntity);
+		model.addAttribute("totalIdeas", ideas.size());
+		model.addAttribute("totalTags", tags.size());
+		model.addAttribute("totalContributions", countContributions);
+
 		logger.info("Student -> Activity : ");
 		return "/student_template/activity";
 	}
@@ -82,12 +99,12 @@ public class StudentController {
 		List<Tag> tags = tagService.listAllTags();
 		tags.removeIf(
 				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
-		
+
 		model.addAttribute("categories", tags);
 		logger.info("Student -> Post new idea : ");
 		return "/student_template/post_an_idea";
 	}
-	
+
 	@RequestMapping(value = "/post-new-idea", method = RequestMethod.POST)
 	public String postNewIdea_POST(Model model, HttpSession session, @ModelAttribute("idea") Idea idea,
 			@RequestParam(name = "tagName", defaultValue = "") String tagName,
@@ -131,15 +148,14 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "/timeline", method = RequestMethod.GET)
-	public String timeline_GET(
-			HttpSession session, 
-			Model model, 
+	public String timeline_GET(HttpSession session, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		
+
 		int resultPerPage = 5;
-		
-		List<Idea> ideas = (List<Idea>) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber, resultPerPage);
+
+		List<Idea> ideas = (List<Idea>) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber,
+				resultPerPage);
 
 		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
 
@@ -155,34 +171,41 @@ public class StudentController {
 			}
 			if (dates.containsKey(dateTimeString.split(" ")[0])) {
 				Timeline timeline = new Timeline(time, idea);
-				
-				for(Reaction reaction :idea.getReactions()) {
-					if(reaction.getReactionType()==1) {
-						timeline.setTotalThumbUp(timeline.getTotalThumbUp()+1);
-					}else if(reaction.getReactionType()==2){
-						timeline.setTotalThumbDown(timeline.getTotalThumbDown()+1);
+
+				for (Reaction reaction : idea.getReactions()) {
+					if (reaction.getReactionType() == 1) {
+						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
+					} else if (reaction.getReactionType() == 2) {
+						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
 					}
-					if(reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
+					if (reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
 						timeline.setReactionOfCurrentUser(reaction.getReactionType());
 					}
 				}
-				
-				if(idea.getTag().getFinalClosingDate().getTime()<new Date().getTime()) {
+
+				if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
 					timeline.setTagExpired(true);
 				}
-				timeline.setTotalComments(idea.getComments().size());
 				
+				List<Comment> comments = new ArrayList();
+				
+				idea.getComments().iterator().forEachRemaining(c1->{
+					comments.add(index++, c1);
+				});
+				index = 0;
+				idea.setComments(comments);
+				timeline.setTotalComments(idea.getComments().size());
+
 				dates.get(dateTimeString.split(" ")[0]).add(timeline);
 			}
 		}
 		int totalResults = ideas.size();
-        int pages =(int)Math.ceil(((double)totalResults) / resultPerPage);
-        model.addAttribute("pages",
-                resultPerPage == 5
-                ?ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage)-1:resultPerPage==totalResults
-                ?0:pages-1);
-        model.addAttribute("currentPage", pageNumber);
-        
+		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
+		model.addAttribute("pages",
+				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
+						: resultPerPage == totalResults ? 0 : pages - 1);
+		model.addAttribute("currentPage", pageNumber);
+
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("dates", dates);
 		model.addAttribute("utils", utils);

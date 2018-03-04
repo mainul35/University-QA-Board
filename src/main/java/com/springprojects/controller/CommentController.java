@@ -37,30 +37,33 @@ public class CommentController {
 	private final Logger logger = Logger.getLogger(getClass().getName());
 
 	@RequestMapping(value = "/{usertype}/ideas/{ideaId}/comments", method = RequestMethod.POST, consumes = "application/json")
-	@ResponseBody public ResponseEntity comments_POST(@PathVariable("ideaId") Long ideaId, @RequestParam("uid") String username,
+	@ResponseBody
+	public ResponseEntity comments_POST(@PathVariable("ideaId") Long ideaId, @RequestParam("uid") String username,
 			@RequestParam(name = "anonymous", defaultValue = "false") Boolean isAnonymous,
 			@RequestBody Comment comment) {
 		Set<Comment> comments = new HashSet<>();
 		System.out.println(comment);
 		Idea idea = ideaService.getIdea(ideaId);
-		if(comment.getCommentDateTime().getTime()>idea.getTag().getFinalClosingDate().getTime()==false) {
+		if (comment.getCommentBody().isEmpty() == false
+				&& comment.getCommentDateTime().getTime() > idea.getTag().getFinalClosingDate().getTime() == false) {
 			comment.setIdea(ideaService.getIdea(ideaId));
-			 comment.setAnonymous(isAnonymous);
-			 comment = commentService.save(comment);
-			 comments.add(comment);
-			 idea.getComments().add(comment);
-			 ideaService.update(idea);
+			comment.setAnonymous(isAnonymous);
+			comment = commentService.save(comment);
+			comments.add(comment);
+			idea.getComments().add(comment);
+			ideaService.update(idea);
 			List<Comment> comments2 = new ArrayList<>();
 			for (Comment comment2 : idea.getComments()) {
 				comments2.add(comment2);
 			}
 			logger.info("Comment posted");
 			return new ResponseEntity(comments2, HttpStatus.OK);
-		}else {
+		} else if (comment.getCommentBody().isEmpty()) {
+			return new ResponseEntity(HttpStatus.OK);
+		} else {
 			return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 		}
-		
-		 
+
 	}
 
 	@RequestMapping(value = "/{usertype}/ideas/{ideaId}/comments", method = RequestMethod.GET, produces = "application/json")

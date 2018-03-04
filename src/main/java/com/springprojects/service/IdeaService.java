@@ -33,6 +33,10 @@ public class IdeaService {
 		return (List<Idea>) ideaRepository.findAllByAuthorEmailOrderByPublishingDateDesc(authorEmail, getPage(pageNumber, resultPerPage)).getContent();
 	}
 	
+	public List<Idea> listAllIdeasByAuthorEmail(String authorEmail){
+		return (List<Idea>) ideaRepository.findAllByAuthorEmail(authorEmail);
+	}
+	
 	public PageRequest getPage(int pageNumber, int resultPerPage) {
         PageRequest request = new PageRequest(pageNumber - 1,  resultPerPage, Sort.Direction.ASC, "publishingDate");
         return request;

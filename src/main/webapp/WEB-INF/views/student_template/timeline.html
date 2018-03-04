@@ -213,34 +213,21 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
-								th:src="@{resources/contents/lib/img/user2-160x160.jpg}"
+								th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
 								class="user-image" alt="User Image"> <span
 								class="hidden-xs" th:text="${usr.name}"></span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header"><img
-									th:src="@{resources/contents/lib/img/user2-160x160.jpg}"
+									th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
 									class="img-circle" alt="User Image">
 
 									<p>
 										<th:block th:text="${usr.name}"></th:block>
-										<small>Member since Nov. 2012</small>
 									</p></li>
 								<!-- Menu Body -->
-								<li class="user-body">
-									<div class="row">
-										<div class="col-xs-4 text-center">
-											<a href="#">Followers</a>
-										</div>
-										<div class="col-xs-4 text-center">
-											<a href="#">Sales</a>
-										</div>
-										<div class="col-xs-4 text-center">
-											<a href="#">Friends</a>
-										</div>
-									</div> <!-- /.row -->
-								</li>
+								
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
@@ -275,7 +262,7 @@
 				Sidebar user panel
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img th:src="@{resources/contents/lib/img/user2-160x160.jpg}"
+						<img th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
 							class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
@@ -354,79 +341,9 @@
 
 			<section class="content">
 				<div class="row">
-					<div class="col-md-3">
 
-						<!-- Profile Image -->
-						<div class="box box-primary">
-							<div class="box-body box-profile">
-								<img class="profile-user-img img-responsive img-circle"
-									src="../../dist/img/user4-128x128.jpg"
-									alt="User profile picture">
-
-								<h3 class="profile-username text-center" th:text="${usr.name}"></h3>
-
-								<p class="text-muted text-center">Software Engineer</p>
-
-								<ul class="list-group list-group-unbordered">
-									<li class="list-group-item"><b>Total Ideas</b> <a
-										class="pull-right">1,322</a></li>
-									<li class="list-group-item"><b>Total Categories</b> <a
-										class="pull-right">543</a></li>
-									<li class="list-group-item"><b>Total contributions</b> <a
-										class="pull-right">13,287</a></li>
-								</ul>
-
-								<!-- 								<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
-							</div>
-							<!-- /.box-body -->
-						</div>
-						<!-- /.box -->
-
-						<!-- About Me Box -->
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">About Me</h3>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body">
-								<strong><i class="fa fa-book margin-r-5"></i> Education</strong>
-
-								<p class="text-muted">B.S. in Computer Science from the
-									University of Tennessee at Knoxville</p>
-
-								<hr>
-
-								<strong><i class="fa fa-map-marker margin-r-5"></i>
-									Location</strong>
-
-								<p class="text-muted">Malibu, California</p>
-
-								<hr>
-
-								<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-								<p>
-									<span class="label label-danger">UI Design</span> <span
-										class="label label-success">Coding</span> <span
-										class="label label-info">Javascript</span> <span
-										class="label label-warning">PHP</span> <span
-										class="label label-primary">Node.js</span>
-								</p>
-
-								<hr>
-
-								<strong><i class="fa fa-file-text-o margin-r-5"></i>
-									Notes</strong>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Etiam fermentum enim neque.</p>
-							</div>
-							<!-- /.box-body -->
-						</div>
-						<!-- /.box -->
-					</div>
 					<!-- /.col -->
-					<div class="col-md-9">
+					<div class="col-md-12">
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
 								<li><a th:href="@{/student/activity}">Activity</a></li>
@@ -462,6 +379,11 @@
 														<div class="timeline-body">
 															<h3 th:text="${timeline.idea.ideaTitle}"></h3>
 															<p th:utext="${timeline.idea.ideaBody}"></p>
+															<p>
+																<span>Category: </span>&nbsp; <span
+																	class="label label-danger"
+																	th:text="${timeline.idea.tag.tagName}"></span>
+															</p>
 														</div>
 														<div class="timeline-footer">
 
@@ -471,8 +393,8 @@
 																<li><a class="link-black text-sm"
 																	th:text="${'View full post'}"
 																	th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
-																<th:block>
-																	<li>&nbsp;|&nbsp;&nbsp;<span
+																<th:block>|
+																	<li><span
 																		th:text="${timeline.totalThumbUp}"
 																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
 																	<li><a href="#" onclick="onThumbUpClick(this)"
@@ -484,8 +406,8 @@
 																		class="link-black text-sm"><i
 																			class="fa fa-thumbs-o-up margin-r-5"></i> Thumb up</a></li>
 																</th:block>
-																<th:block>
-																	<li>&nbsp;|&nbsp;&nbsp;<span
+																<th:block>|
+																	<li><span
 																		th:text="${timeline.totalThumbDown}"
 																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbdown_count'"></span></li>
 																	<li><a href="#" onclick="onThumbDownClick(this)"
@@ -580,7 +502,18 @@
 																			}
 																			</script></li>
 																</th:block>
-
+																<br>
+																<li>&nbsp;<a class="link-black text-sm"
+																	th:text="${'Views'}"
+																	th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
+																<li>&nbsp;<span th:text="'100'"></span>
+																</li>
+																
+																<li><a class="link-black text-sm"
+																	th:text="${'Seen By'}"
+																	th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
+																<li>&nbsp;<span th:text="'50'"></span>&nbsp;
+																</li>
 																<li class="pull-right"><a href="#"
 																	class="link-black text-sm"><i
 																		class="fa fa-comments-o margin-r-5"></i> <span
@@ -602,7 +535,7 @@
 																					class="name"> <small
 																					class="text-muted pull-right"><i
 																						class="fa fa-clock-o"></i> <span
-																						th:text="${comment.commentDateTime}"></span></small> <span
+																						th:text="${#dates.format(comment.commentDateTime.time, 'dd-MM-yyyy hh:mm:ss aaa')}"></span></small> <span
 																					th:text="${comment.commentedUser.name}"></span>
 																				</a> <span th:text="${comment.commentBody}"></span>
 																			</p>
@@ -619,7 +552,7 @@
 																				<a href="#" class="name"> <small
 																					class="text-muted pull-right"><i
 																						class="fa fa-clock-o"></i> <span
-																						th:text="${comment.commentDateTime}"></span></small> <span
+																						th:text="${#dates.format(comment.commentDateTime.time, 'dd-MM-yyyy hh:mm:ss aaa')}"></span></small> <span
 																					th:text="${'Anonymous User'}"></span>
 																				</a> <span th:text="${comment.commentBody}"></span>
 																			</p>
@@ -635,9 +568,8 @@
 																		th:id="'input-comment_'+${timeline.idea.ideaId}"
 																		type="text" placeholder="Type a comment"
 																		onkeypress="onCommentPost(event, this)">
-																	<hr>
-
-																	<input type="checkbox"
+																		<br><input
+																		type="checkbox"
 																		th:id="'anonymous-comment_'+${timeline.idea.ideaId}">
 																	&nbsp;&nbsp;Comment as anonymous <input
 																		class="pull-right btn btn-primary btn-sm btn-flat"
@@ -670,10 +602,10 @@
 																</div>
 
 
-																<hr>
+																<br>
 
 																<script type="text/javascript" th:inline="javascript">
-																var ideaId = /*[[${timeline.idea.ideaId}]]*/;
+																
 																function onCommentPost(e, commentBox){
 																	var code = (e.keyCode ? e.keyCode : e.which);
 																	if(code == 13) { //Enter keycode
@@ -687,7 +619,7 @@
 																		comment["isAnonymous"] = $("#anonymous-comment_"+ideaId).prop("checked") ? true : false;
 																		comment["commentedUser"] = /*[[${usr}]]*/;
 																		comment["commentBody"] = $(commentBox).val();
-																	 	console.log(comment["isAnonymous"]);
+																	 	console.log("#anonymous-comment_"+ideaId);
 																		var url = "";
 																		if($("#anonymous-comment_"+ideaId).prop("checked")==true){
 																			url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
@@ -720,9 +652,10 @@
 																	}
 																}
 
+																var ideaId = /*[[${timeline.idea.ideaId}]]*/;
 																
-																document.querySelector("#button-submit_"+ideaId).onclick=function(commentButton){
-																	
+																$("#button-submit_"+ideaId).click(function(){
+																	ideaId = /*[[${timeline.idea.ideaId}]]*/;
 																	var uid = /*[[${usr.username}]]*/;
 																	var idea = /*[[${timeline.idea}]]*/;
 																	var comment = {};
@@ -732,7 +665,7 @@
 																	comment["isAnonymous"] = $("#anonymous-comment_"+ideaId).prop("checked") ? true : false;
 																	comment["commentedUser"] = /*[[${usr}]]*/;
 																	comment["commentBody"] = $("#input-comment_"+ideaId).val();
-																 	console.log(comment["isAnonymous"]);
+																 	console.log(comment);
 																	var url = "";
 																	if($("#anonymous-comment_"+ideaId).prop("checked")==true){
 																		url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
@@ -744,10 +677,10 @@
 															             contentType: "application/json",
 															             url: url,
 															             data: JSON.stringify(comment),
-															             dataType: 'json',
 															             timeout: 600000,
 															             success: function (data) {
 															                 console.log("Success");
+															                 console.log(data);
 															                 $("#input-comment_"+ideaId).val("");
 															                 location.reload();
 															             },
@@ -761,7 +694,7 @@
 															                 }
 															             }
 																	});
-																};
+																});
 																	
 																</script>
 															</th:block>

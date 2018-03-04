@@ -600,9 +600,9 @@ var dates = $("#opening-date, #closure-date, #final-closure-date").datepicker({
 									<tr role="row" class="odd">
 										<td th:text="${iterationStatus.count}"></td>
 										<td th:text=${tag.tagName}></td>
-										<td th:text=${tag.openingDate}></td>
-										<td th:text=${tag.closingDate}></td>
-										<td th:text=${tag.finalClosingDate}></td>
+										<td th:text="${#dates.format(tag.openingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
+										<td th:text="${#dates.format(tag.closingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
+										<td th:text="${#dates.format(tag.finalClosingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
 										<td><a class="btn btn-block btn-default btn-sm" href="#" th:text="${'Linked ideas'}"></a></td>
 									</tr>
 								</th:block>
