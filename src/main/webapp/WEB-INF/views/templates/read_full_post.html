@@ -370,7 +370,7 @@
 														<th:block
 															th:if="${#strings.contains(attachment.fileType,'image')}">
 															<img class="img-responsive" width="80"
-																th:src="@{/file(fileId=${attachment.attachmentId})}"
+																th:src="@{${attachment.fileURL}}"
 																alt="Photo">
 														</th:block>
 														<th:block
@@ -382,7 +382,7 @@
 																th:attr="data-target=${'#view_video_'+attachment.attachmentId}"><video
 																	width="150" controls>
 																	<source
-																		th:src="@{/file(fileId=${attachment.attachmentId})}"
+																		th:src="@{${attachment.fileURL}}"
 																		th:type="${attachment.fileType}">
 																</video></a>
 															<!-- ####################################		Start of View video Modal		############################################ -->
@@ -407,7 +407,7 @@
 																						th:id="${'vid-product'+attachment.attachmentId }"
 																						width="450px" height="380px" controls>
 																						<source id="source"
-																							th:src="@{/file(fileId=${attachment.attachmentId})}"
+																							th:src="@{${attachment.fileURL}}"
 																							th:type="${attachment.fileType}">
 																					</video>
 																				</div>
@@ -428,6 +428,7 @@
 											let videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
 											let vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
 											let closeVidModal = /*[[${'close-vid-modal'+attachment.attachmentId}]]*/;
+											var ideaId = /*[[${timeline.idea.ideaId}]]*/;
 											$('#'+viewVideoAnchor)
 														.click(
 																function() {
@@ -437,17 +438,16 @@
 																	var Form = this;
 																	
 																	$.ajax({
-																				type : "POST",
-																				url : "/ewsd/file?fileId="+attachmentId,
+																				type : "GET",
+																				url : "/ewsd/videos?ideaId="+ideaId,
+																				data: data,
 																				timeout : 100000,
-																				dataType: 'binary',
 																				beforeSend : function() {
 																					if(document.getElementById("video_1")==null){
 																						$('#'+videoListPreviewer).addClass('spinner');																						
 																					}
 																				},
 																				success : function(data) {
-																					
 																					$('#'+videoListPreviewer).removeClass('spinner');
 // 																					data = JSON.parse(data);
 																					$('#'+videoListPreviewer).html("");
@@ -457,7 +457,7 @@
 																					var left = 0;
 																					for (var i = 0; i < len; i++) {
 																						html += ''
-																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="'+data[i].videoUrl+'" id="video_'+i+'" src="'+data[i].videoUrl+'" type="video/mp4"></video>';
+																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="/ewsd/'+data[i]+'" id="video_'+i+'" src="/ewsd/'+data[i]+'" type="video/mp4"></video>';
 																						left = left+20;
 																					}
 																					$('#'+videoListPreviewer).append(html);

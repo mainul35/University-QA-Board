@@ -5,6 +5,7 @@ import com.springprojects.config.Utils;
 import com.springprojects.entity.Attachment;
 import com.springprojects.entity.UserEntity;
 import com.springprojects.service.AttachmentService;
+import com.springprojects.service.IdeaService;
 import com.springprojects.service.UserService;
 
 import org.apache.commons.io.FileUtils;
@@ -18,6 +19,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 //@RequestMapping("/users")
@@ -27,6 +30,8 @@ public class ResourceRestController {
 	private Utils utils;
     @Autowired
     private AttachmentService attachmentService;
+    @Autowired
+    private IdeaService ideaService;
 
 	@RequestMapping(value="/terms-and-conditions", method=RequestMethod.GET)
 	@ResponseBody
@@ -50,5 +55,18 @@ public class ResourceRestController {
 		}
 		return bs;
 	}
-		
+	
+	@RequestMapping(value="/videos", method= {RequestMethod.GET,RequestMethod.POST} )
+	@ResponseBody
+	public List<String> videosOfAnIdea(@RequestParam(name="ideaId") Long ideaId) {
+		List<String> videoURLs = new ArrayList<>();
+		System.out.println("Sending vieo URLs...");
+		Set<Attachment> attachments = ideaService.getIdea(ideaId).getAttachments();
+		for(Attachment attachment : attachments) {
+			if(attachment.getFileType().contains("video")) {
+				videoURLs.add(attachment.getFileURL());
+			}
+		}
+		return videoURLs;
+	}
 }

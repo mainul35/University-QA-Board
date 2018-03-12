@@ -26,7 +26,7 @@ public class DownloadController {
 	@Autowired
 	AttachmentService attachmentService;
 	
-	@RequestMapping(value="/download/", method = RequestMethod.GET)
+	@RequestMapping(value="/download", method = RequestMethod.GET)
     public void downloadFile(HttpServletResponse response, @RequestParam(name="fileId") Long fileId) throws IOException {
      
         File file = new File(attachmentService.readAttachment(fileId).getFileURL());

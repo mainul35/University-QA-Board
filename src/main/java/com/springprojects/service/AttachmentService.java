@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.springprojects.config.Properties;
 import com.springprojects.entity.Attachment;
+import com.springprojects.entity.Idea;
 import com.springprojects.repository.AttachmentRepository;
 
 @Service
@@ -48,6 +50,7 @@ public class AttachmentService {
 			stream.write(bytes);
 			stream.close();
 			logger.info("File written successfully.");
+			url = "/temp/" + userId + "//" + attachment.getAttachmentId() + "." + extension;
 			attachment.setFileURL(url);
 			attachment.setFileType(Files.probeContentType(Paths.get(url)));
 		} catch (IOException e) {
@@ -65,4 +68,5 @@ public class AttachmentService {
 	public Attachment readAttachment(Long id) {
 		return attachmentRepository.findOne(id);
 	}
+
 }

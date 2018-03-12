@@ -309,7 +309,9 @@ public class UserController {
 		
 		List<Attachment> otherAttachments = new ArrayList<>();
 		for(Attachment attachment : idea.getAttachments()) {
-			if(!attachment.getFileType().contains("image") && !attachment.getFileType().contains("video")) {
+			if(null==attachment.getFileType()) {
+				otherAttachments.add(attachment);
+			}else if(!attachment.getFileType().contains("image") && !attachment.getFileType().contains("video")) {
 				otherAttachments.add(attachment);
 			}
 		}
