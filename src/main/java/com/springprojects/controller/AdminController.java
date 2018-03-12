@@ -34,15 +34,15 @@ import java.util.logging.Logger;
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	AuthorityService authorityService;
+	private AuthorityService authorityService;
 	@Autowired
-	TagService tagService;
+	private TagService tagService;
 	@Autowired
-	Utils utils;
+	private Utils utils;
 
-	Logger logger = Logger.getLogger(AdminController.class.getName());
+	private Logger logger = Logger.getLogger(AdminController.class.getName());
 
 	@RequestMapping("/dashboard")
 	public String dashboard(Model model, HttpSession session) {

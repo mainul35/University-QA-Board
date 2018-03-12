@@ -1,16 +1,18 @@
 package com.springprojects.customModel;
 
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.UserEntity;
 
 public class Timeline implements Comparable<Timeline>{
-	String time;
-	Idea idea;
-	int totalThumbUp = 0;
-	int totalThumbDown = 0;
-	int totalComments = 0;
-	int totalSeenBy = 0;
-	int reactionOfCurrentUser = 0;
-	boolean tagExpired = false;
+	private String time;
+	private Idea idea;
+	private int totalThumbUp = 0;
+	private int totalThumbDown = 0;
+	private int totalComments = 0;
+	private int totalSeenBy = 0;
+	private int reactionOfCurrentUser = 0;
+	private UserEntity postedBy;
+	private boolean tagExpired = false;
 	public Timeline() {
 		super();
 	}
@@ -62,17 +64,27 @@ public class Timeline implements Comparable<Timeline>{
 	public void setTagExpired(boolean tagExpired) {
 		this.tagExpired = tagExpired;
 	}
+	
+	public UserEntity getPostedBy() {
+		return postedBy;
+	}
+	public void setPostedBy(UserEntity postedBy) {
+		this.postedBy = postedBy;
+	}
+	
 	@Override
 	public String toString() {
 		return "Timeline [time=" + time + ", idea=" + idea + ", totalThumbUp=" + totalThumbUp + ", totalThumbDown="
 				+ totalThumbDown + ", totalComments=" + totalComments + ", totalSeenBy=" + totalSeenBy
-				+ ", reactionOfCurrentUser=" + reactionOfCurrentUser + ", tagExpired=" + tagExpired + "]";
+				+ ", reactionOfCurrentUser=" + reactionOfCurrentUser + ", postedBy=" + postedBy + ", tagExpired="
+				+ tagExpired + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((idea == null) ? 0 : idea.hashCode());
+		result = prime * result + ((postedBy == null) ? 0 : postedBy.hashCode());
 		result = prime * result + reactionOfCurrentUser;
 		result = prime * result + (tagExpired ? 1231 : 1237);
 		result = prime * result + ((time == null) ? 0 : time.hashCode());
@@ -95,6 +107,11 @@ public class Timeline implements Comparable<Timeline>{
 			if (other.idea != null)
 				return false;
 		} else if (!idea.equals(other.idea))
+			return false;
+		if (postedBy == null) {
+			if (other.postedBy != null)
+				return false;
+		} else if (!postedBy.equals(other.postedBy))
 			return false;
 		if (reactionOfCurrentUser != other.reactionOfCurrentUser)
 			return false;

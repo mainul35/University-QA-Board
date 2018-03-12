@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class AuthorityService {
 
     @Autowired
-    AuthorityRepository authorityRepository;
+    private AuthorityRepository authorityRepository;
 
     public Authority create(Authority authority){
     	

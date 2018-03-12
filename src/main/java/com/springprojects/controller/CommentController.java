@@ -28,11 +28,11 @@ import com.springprojects.service.UserService;
 public class CommentController {
 
 	@Autowired
-	CommentService commentService;
+	private CommentService commentService;
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	IdeaService ideaService;
+	private IdeaService ideaService;
 
 	private final Logger logger = Logger.getLogger(getClass().getName());
 

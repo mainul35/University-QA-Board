@@ -2,8 +2,6 @@ package com.springprojects.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,12 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "idea", catalog = "ewsd")
@@ -27,31 +24,32 @@ public class Idea implements Serializable {
 
 	@Id
 	@Column(name = "idea_id", length = 20, nullable = false)
-	Long ideaId;
+	private Long ideaId;
 	@Column(name = "idea_title", length = 200, nullable = false)
-	String ideaTitle;
-	@Column(name = "idea_body", length = 200, nullable = false)
-	String ideaBody;
+	private String ideaTitle;
+	@Lob
+	@Column(name = "idea_body", nullable = false)
+	private String ideaBody;
 	@Column(name = "author_email", length = 200, nullable = false)
-	String authorEmail;
+	private String authorEmail;
 	@Column(name = "total_viws")
-	Integer countViews;
+	private Integer countViews;
 	@Column
-	Timestamp publishingDate;
+	private Timestamp publishingDate;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idea", cascade = CascadeType.ALL)
-	List<Comment> comments;
+	private List<Comment> comments;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idea", cascade = CascadeType.ALL)
-	Set<Reaction> reactions;
+	private Set<Reaction> reactions;
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idea_attachments")
-	Set<Attachment> attachments;
+	private Set<Attachment> attachments;
 	@ManyToOne
-	Tag tag = new Tag();
+	private Tag tag = new Tag();
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idea_seen_by", joinColumns = {
 			@JoinColumn(name = "idea_id", referencedColumnName = "idea_id") }, inverseJoinColumns = {
 					@JoinColumn(name = "user_id", referencedColumnName = "user_uuid") })
-	Set<UserEntity> seenBy;
+	private Set<UserEntity> seenBy;
 
 	public Long getIdeaId() {
 		return ideaId;

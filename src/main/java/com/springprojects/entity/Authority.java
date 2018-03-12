@@ -20,9 +20,9 @@ public class Authority implements GrantedAuthority, Serializable {
 	@GeneratedValue
 	@Id
     @Column(name = "role_uuid", nullable = false)
-    Long id;
+    private Long id;
     @Column(name = "authority", nullable = false, unique = true)
-    String authority;
+    private String authority;
 
     public Authority() {
     }

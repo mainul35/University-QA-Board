@@ -267,31 +267,30 @@
 
 <th:block th:fragment="postNewIdea(categories='', idea='')">
 	<div class="form-group">
-		<label for="inputIdeaTitle">Idea Title</label> <input type="text"
-			name="ideaTitle" class="form-control" id="inputIdeaTitle"
-			placeholder="Idea Title" th:field="*{ideaTitle}" required />
-	</div>
-	<div class="form-group">
-		<label for="inputIdeaBody">Idea Body</label>
-		<textarea id="inputIdeaBody" name="ideaBody" class="form-control"
-			th:field="*{ideaBody}" placeholder="Idea Body" required></textarea>
-	</div>
-
-	<div class="form-group">
-		<label>Categories</label> <select name="tagName"
+		<label>Categories *</label> <select name="tagName"
 			class="form-control select2" style="width: 100%;">
 			<option th:each="cat : ${categories}" th:value="${cat.tagName}"
 				th:text="${cat.tagName}"></option>
 		</select>
 
 	</div>
+	<div class="form-group">
+		<label for="inputIdeaTitle">Idea Title *</label> <input type="text"
+			name="ideaTitle" class="form-control" id="inputIdeaTitle"
+			placeholder="Idea Title" th:field="*{ideaTitle}" required />
+	</div>
+	<div class="form-group">
+		<label for="inputIdeaBody">Idea Body *</label>
+		<textarea id="inputIdeaBody" name="ideaBody" class="form-control"
+			th:field="*{ideaBody}" placeholder="Idea Body" required></textarea>
+	</div>
 
 	<input type="hidden" name="publishingDateTime"
 		th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm:ss')}" />
 
 	<div class="form-group">
-		<label for="images">Upload Documents: </label> <input type="file"
-			id="images" name="images[]" multiple="multiple" />
+		<label for="images">Upload Documents (Optional): </label> <input type="file"
+			id="images" name="images[]" multiple="multiple" accept=" .wma, .mp3, .mp4, .avi, .wmv, .doc, .docx, image/*" />
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-2 col-lg-2 col-xl-2 col-md-2 col-xs-2">

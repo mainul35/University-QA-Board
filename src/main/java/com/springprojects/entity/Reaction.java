@@ -19,18 +19,18 @@ public class Reaction  implements Serializable, Comparable<Reaction>{
 
 	@Id
 	@Column(name="reaction_Id", length=20, nullable=false)
-	Long reactionId;
+	private Long reactionId;
 	@OneToOne
 	@JoinColumn(
 			name="reacted_user_Id", 
 			nullable = false, 
 			updatable=false)
-	UserEntity reactedUser;
+	private UserEntity reactedUser;
 	@ManyToOne
 	@JsonIgnore
-	Idea idea = new Idea();
+	private Idea idea = new Idea();
 	@Column(name="reaction_type", nullable = false, updatable = true)
-	Integer reactionType;
+	private Integer reactionType;
 	public Long getReactionId() {
 		return reactionId;
 	}

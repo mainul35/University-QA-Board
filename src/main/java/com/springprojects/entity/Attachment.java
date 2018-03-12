@@ -13,14 +13,15 @@ public class Attachment implements Serializable{
 
 	@Id
 	@Column(name="attachment_id", length = 20, nullable = false)
-	Long attachmentId;
+	private Long attachmentId;
 	@Column(name="file_name", nullable = false)
-	String fileName;
+	private String fileName;
 	@Column(name="file_title", nullable = true)
-	String fileTitle;
+	private String fileTitle;
 	@Column(name="file_url", nullable = false)
-	String fileURL;
-	
+	private String fileURL;
+	@Column(name="file_type")
+	private String fileType;
 	
 	public Long getAttachmentId() {
 		return attachmentId;
@@ -47,6 +48,12 @@ public class Attachment implements Serializable{
 	public void setFileURL(String fileURL) {
 		this.fileURL = fileURL;
 	}
+	public String getFileType() {
+		return fileType;
+	}
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,6 +61,7 @@ public class Attachment implements Serializable{
 		result = prime * result + ((attachmentId == null) ? 0 : attachmentId.hashCode());
 		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
 		result = prime * result + ((fileTitle == null) ? 0 : fileTitle.hashCode());
+		result = prime * result + ((fileType == null) ? 0 : fileType.hashCode());
 		result = prime * result + ((fileURL == null) ? 0 : fileURL.hashCode());
 		return result;
 	}
@@ -81,6 +89,11 @@ public class Attachment implements Serializable{
 				return false;
 		} else if (!fileTitle.equals(other.fileTitle))
 			return false;
+		if (fileType == null) {
+			if (other.fileType != null)
+				return false;
+		} else if (!fileType.equals(other.fileType))
+			return false;
 		if (fileURL == null) {
 			if (other.fileURL != null)
 				return false;
@@ -91,7 +104,7 @@ public class Attachment implements Serializable{
 	@Override
 	public String toString() {
 		return "Attachment [attachmentId=" + attachmentId + ", fileName=" + fileName + ", fileTitle=" + fileTitle
-				+ ", fileURL=" + fileURL + "]";
+				+ ", fileURL=" + fileURL + ", fileType=" + fileType + "]";
 	}
 
 }

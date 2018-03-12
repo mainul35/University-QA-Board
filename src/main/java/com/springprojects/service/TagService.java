@@ -12,7 +12,7 @@ import com.springprojects.repository.TagRepository;
 public class TagService {
 
 	@Autowired
-	TagRepository tagRepository;
+	private TagRepository tagRepository;
 	
 	public boolean save(Tag tag) {
 		if(!exists(tag.getTagName())) {

@@ -25,13 +25,13 @@ import java.util.logging.Logger;
 public class UserService implements UserDetailsService {
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	AuthorityService authorityService;
+	private AuthorityService authorityService;
 
-	Logger logger = Logger.getLogger(UserService.class.getName());
+	private Logger logger = Logger.getLogger(UserService.class.getName());
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -49,6 +49,10 @@ public class UserService implements UserDetailsService {
 		return userRepository.findByUsername(username);
 	}
 
+	public UserEntity getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
 	public boolean createUser(UserEntity user, boolean isTeacher) {
 		if (!existsWithEmail(user.getEmail()) || !existsWithUsername(user.getUsername())) {
 			user.setEnabled(true);

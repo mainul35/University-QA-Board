@@ -1,22 +1,25 @@
 package com.springprojects.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springprojects.entity.Comment;
+import com.springprojects.entity.Idea;
 import com.springprojects.repository.CommentRepository;
 
 @Service
 public class CommentService {
 
 	@Autowired
-	CommentRepository commentRepository;
+	private CommentRepository commentRepository;
 	
 	@Autowired
-	IdeaService ideaService;
+	private IdeaService ideaService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	public Comment findOne(Long id) {
 		return commentRepository.findOne(id);
@@ -35,6 +38,10 @@ public class CommentService {
 		return false;
 	}
 
+	public List<Comment> findAllByIdea(Idea idea){
+		return commentRepository.findAllByIdea(idea);
+	}
+	
 	public Comment fetch(Long ideaId, String username) {
 		// TODO Auto-generated method stub
 		return commentRepository.findByIdeaAndCommentedUser(ideaService.getIdea(ideaId), userService.getUserByUsername(username));

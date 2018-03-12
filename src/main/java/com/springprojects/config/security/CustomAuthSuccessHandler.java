@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
-    Logger logger = Logger.getLogger(CustomAuthSuccessHandler.class.getName());
+    private Logger logger = Logger.getLogger(CustomAuthSuccessHandler.class.getName());
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         HttpSession session = httpServletRequest.getSession();

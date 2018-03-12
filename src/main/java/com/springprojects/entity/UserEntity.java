@@ -20,37 +20,37 @@ public class UserEntity implements UserDetails, Serializable {
 	@GeneratedValue
 	@Id
     @Column(name = "user_uuid")
-    Long id;
+	private Long id;
     @Column(name = "name", length = 200, nullable = false)
-    String name;
+	private String name;
     @Column(name = "username", length = 200, unique = true)
-    String username;
+	private String username;
     @Column(name = "password", length = 200, nullable = false)
-    String password;
+	private String password;
     @Column(name = "email", nullable = false, unique = true,length = 200)
-    String email;
+	private String email;
     @Column(name="dept", nullable= false, length = 200)
-    String department;
+	private String department;
     @Column(name="created_on")
-	Timestamp dateTime;
+	private Timestamp dateTime;
 	
     @ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(name="user_authority",
             joinColumns = {@JoinColumn(name="user_id", referencedColumnName="user_uuid")},
             inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="role_uuid")}
     )
-    Set<Authority> authorities;
+	private Set<Authority> authorities;
     @OneToOne(optional=false)
 	@JoinColumn(name="user_image", unique = true, nullable = false, updatable = false)
-	Attachment userImage;
+	private Attachment userImage;
     @Column(nullable = false, name = "enabled")
-    boolean enabled;
+	private boolean enabled;
     @Column(nullable = false, name = "accountNonExpired")
-    boolean accountNonExpired = true;
+	private boolean accountNonExpired = true;
     @Column(nullable = false, name = "accountNonLocked")
-    boolean accountNonLocked = true;
+	private boolean accountNonLocked = true;
     @Column(nullable = false, name = "credentialsNonExpired")
-    boolean credentialsNonExpired = true;
+	private boolean credentialsNonExpired = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

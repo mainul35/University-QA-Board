@@ -23,11 +23,11 @@ import com.springprojects.service.UserService;
 public class ReactionController {
 
 	@Autowired
-	ReactionService reactionService;
-	@Autowired 
-	UserService userService;
+	private ReactionService reactionService;
 	@Autowired
-	IdeaService ideaService;
+	private UserService userService;
+	@Autowired
+	private IdeaService ideaService;
 	
 	private final Logger logger = Logger.getLogger(getClass().getName());
 	

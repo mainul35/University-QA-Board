@@ -227,7 +227,7 @@
 										<th:block th:text="${usr.name}"></th:block>
 									</p></li>
 								<!-- Menu Body -->
-								
+
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
@@ -240,7 +240,7 @@
 								</li>
 							</ul></li>
 						<!-- Control Sidebar Toggle Button -->
-						
+
 					</ul>
 				</div>
 			</nav>
@@ -258,7 +258,7 @@
 		<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
-<!-- 				Sidebar user panel -->
+				Sidebar user panel
 				<div class="user-panel">
 					<div class="pull-left image">
 						<img th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
@@ -340,186 +340,217 @@
 
 			<section class="content">
 				<div class="row">
-					<div class="col-md-3">
 
-						<!-- Profile Image -->
-						<div class="box box-primary">
-							<div class="box-body box-profile">
-								<img class="profile-user-img img-responsive img-circle"
-									th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
-									alt="User profile picture">
-
-								<h3 class="profile-username text-center" th:text="${usr.name}"></h3>
-
-								<p class="text-muted text-center" th:text="${usr.department}"></p>
-
-								<ul class="list-group list-group-unbordered">
-									<li class="list-group-item"><b>Total Ideas</b> <a
-										class="pull-right" th:text="${totalIdeas}"></a></li>
-									<li class="list-group-item"><b>Total Categories</b> <a
-										class="pull-right" th:text="${totalTags}"></a></li>
-									<li class="list-group-item"><b>Total contributions</b> <a
-										class="pull-right" onmouseover="describeTotalContributions()" th:text="${totalContributions}"></a>
-										<script type="text/javascript" th:inline="javascript">
-										/*
-										*
-										*	Check user Idle time 
-										*
-										*/
-
-										var idleTime = 0;
-										$(document).ready(function () {
-										    //Increment the idle time counter every minute.
-										    var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-										    //Zero the idle timer on mouse movement.
-										    $(this).mousemove(function (e) {
-										        idleTime = 0;
-										    });
-										    $(this).keypress(function (e) {
-										        idleTime = 0;
-										    });
-										});
-
-										function timerIncrement() {
-										    idleTime = idleTime + 1;
-										    console.log(idleTime);
-										    if (idleTime > 19) { // 20 minutes
-										        window.location.reload();
-										    }
-										}
-										</script>
-									</li>
-								</ul>
-
-								<!-- 								<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
-							</div>
-							<!-- /.box-body -->
-						</div>
-						<!-- /.box -->
-
-						<!-- About Me Box -->
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">About Me</h3>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body">
-								<strong><i class="fa fa-book margin-r-5"></i> Education</strong>
-
-								<p class="text-muted">B.S. in Computer Science from the
-									University of Tennessee at Knoxville</p>
-
-								<hr>
-
-								<strong><i class="fa fa-map-marker margin-r-5"></i>
-									Location</strong>
-
-								<p class="text-muted">Malibu, California</p>
-
-								<hr>
-
-								<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-								<p>
-									<span class="label label-danger">UI Design</span> <span
-										class="label label-success">Coding</span> <span
-										class="label label-info">Javascript</span> <span
-										class="label label-warning">PHP</span> <span
-										class="label label-primary">Node.js</span>
-								</p>
-
-								<hr>
-
-								<strong><i class="fa fa-file-text-o margin-r-5"></i>
-									Notes</strong>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Etiam fermentum enim neque.</p>
-							</div>
-							<!-- /.box-body -->
-						</div>
-						<!-- /.box -->
-					</div>
 					<!-- /.col -->
-					<div class="col-md-9">
+					<div class="col-md-7">
 						<div class="nav-tabs-custom">
-							<ul class="nav nav-tabs">
-								<li><a th:href="@{/ideas}">Ideas</a></li>
-								<li><a th:href="@{/student/activity}">Activity</a></li>
-								<li class="active"><a th:href="@{/student/timeline}">Timeline</a></li>
-								<li><a th:href="@{/student/post-new-idea}">Post an idea</a></li>
-							</ul>
+
 							<div class="tab-content">
 
-								<!-- /.tab-pane -->
-								<div class="active tab-pane" id="timeline">
-									<!-- The timeline -->
-									<th:block th:each="date : ${dates}">
-										<ul class="timeline timeline-inverse">
-											<!-- timeline time label -->
-											<li class="time-label"><span class="bg-red"
-												th:text="${date.key}"> </span></li>
-											<!-- /.timeline-label -->
-											<!-- timeline item -->
-											<th:block th:each="timeline : ${date.value}">
+								<div class="timeline-item post">
 
-												<li>
+									<h3 class="timeline-header">
+										<a th:href="@{/profile(id=${timeline.postedBy.username})}"
+											th:text="${timeline.postedBy.name}"></a> Posted
+									</h3>
+									<span class="time" th:text=" ${timeline.time}"><i
+										class="fa fa-clock-o"></i> </span>
+									<div class="timeline-body">
+										<h3 th:text="${timeline.idea.ideaTitle}"></h3>
+										<span th:utext="${timeline.idea.ideaBody}"></span>
 
-
-													<div class="timeline-item post">
-														<span class="time" th:text=" ${timeline.time}"><i
-															class="fa fa-clock-o"></i> </span>
-
-														<h3 class="timeline-header">
-															<a th:href="@{/profile(id=${timeline.postedBy.username})}"
-																th:text="${timeline.postedBy.name}"></a></a> Posted
-														</h3>
-
-														<div class="timeline-body">
-															<h3 th:text="${timeline.idea.ideaTitle}"></h3>
-															<p th:utext="${timeline.idea.ideaBody}"></p>
-															<p>
-																<span>Category: </span>&nbsp; <span
-																	class="label label-danger"
-																	th:text="${timeline.idea.tag.tagName}"></span>
-															</p>
-														</div>
-														<div class="timeline-footer">
+										<div class="col-sm-12">
 
 
+											<div class="row">
 
-															<ul class="list-inline">
-																<li><a class="link-black text-sm"
-																	th:text="${'View full post'}"
-																	th:href="@{'/ideas/'+${timeline.idea.ideaId}}"> </a></li>
-																<th:block>|
-																	<li><span
-																		th:text="${timeline.totalThumbUp}"
-																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
-																	<li><a href="#" onclick="onThumbUpClick(this)"
-																		th:id="'thumb-up_'+${timeline.idea.ideaId}"
-																		th:attr="data-pid=${timeline.idea.ideaId},
+												<th:block
+													th:each="attachment : ${timeline.idea.attachments}">
+													<div th:class="col-sm-3">
+														<th:block
+															th:if="${#strings.contains(attachment.fileType,'image')}">
+															<img class="img-responsive" width="80"
+																th:src="@{/file(fileId=${attachment.attachmentId})}"
+																alt="Photo">
+														</th:block>
+														<th:block
+															th:if="${#strings.contains(attachment.fileType,'video')}">
+
+															<a href="#"
+																th:id="${'view_video_anchor_'+attachment.attachmentId}"
+																data-toggle="modal"
+																th:attr="data-target=${'#view_video_'+attachment.attachmentId}"><video
+																	width="150" controls>
+																	<source
+																		th:src="@{/file(fileId=${attachment.attachmentId})}"
+																		th:type="${attachment.fileType}">
+																</video></a>
+															<!-- ####################################		Start of View video Modal		############################################ -->
+															<div class="modal" data-backdrop="static"
+																data-keyboard="false"
+																th:id="${'view_video_'+attachment.attachmentId}"
+																role="dialog">
+																<div class="modal-dialog">
+
+																	<!-- Modal content-->
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<button
+																				th:id="${'close-vid-modal'+attachment.attachmentId}"
+																				type="button" class="close" data-dismiss="modal">&times;</button>
+																			<h4 class="modal-title" id="modal-title">Videos</h4>
+																		</div>
+																		<div class="modal-body" id="modal-body">
+																			<div class="row">
+																				<div class="col-sm-12">
+																					<video
+																						th:id="${'vid-product'+attachment.attachmentId }"
+																						width="450px" height="380px" controls>
+																						<source id="source"
+																							th:src="@{/file(fileId=${attachment.attachmentId})}"
+																							th:type="${attachment.fileType}">
+																					</video>
+																				</div>
+																				&nbsp; &nbsp;
+																				<div class="row">
+																					<div class="col-sm-12">
+																						<div
+																							th:id="${'videoListPreviewer'+attachment.attachmentId}"></div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<script type="text/javascript" th:inline="javascript">
+											let viewVideoAnchor = 	/*[[${'view_video_anchor_'+attachment.attachmentId}]]*/;
+											let attachmentId = /*[[${attachment.attachmentId}]]*/;
+											let videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
+											let vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
+											let closeVidModal = /*[[${'close-vid-modal'+attachment.attachmentId}]]*/;
+											$('#'+viewVideoAnchor)
+														.click(
+																function() {
+																	
+
+																	var data = {}
+																	var Form = this;
+																	
+																	$.ajax({
+																				type : "POST",
+																				url : "/ewsd/file?fileId="+attachmentId,
+																				timeout : 100000,
+																				dataType: 'binary',
+																				beforeSend : function() {
+																					if(document.getElementById("video_1")==null){
+																						$('#'+videoListPreviewer).addClass('spinner');																						
+																					}
+																				},
+																				success : function(data) {
+																					
+																					$('#'+videoListPreviewer).removeClass('spinner');
+// 																					data = JSON.parse(data);
+																					$('#'+videoListPreviewer).html("");
+																					var len = data.length;
+																					console.log(data);
+																					var html = "";
+																					var left = 0;
+																					for (var i = 0; i < len; i++) {
+																						html += ''
+																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="'+data[i].videoUrl+'" id="video_'+i+'" src="'+data[i].videoUrl+'" type="video/mp4"></video>';
+																						left = left+20;
+																					}
+																					$('#'+videoListPreviewer).append(html);
+																					left = 0;
+																					for (var i = 0; i < len; i++) {
+																						var canvas = document.getElementById('canvas_'+ i);
+																						var video = document.getElementById('video_'+ i);
+																						
+																						$("#video_"+ i).one('seeked', function() {
+																						}).prop('currentTime', "30");
+																					}
+																					$("[data-vid_url]").click(
+																							function() {
+																								url = $(this).data("vid_url");
+																								id= $(this).data("vid_id");
+																								
+																								$("[data-vid_url]").css("border","");
+																								$("#"+id).css("border","3px solid #cd5643");
+																								$('#'+vidProduct).attr("src", url);
+																								
+																								setTimeout(function(){
+																								    document.getElementById(vidProduct).play();
+																								}, 1000);
+																							});
+																					
+																					$('#'+closeVidModal).click(function(){
+																						document.getElementById(vidProduct).pause();
+																					});
+																					},
+																					
+																				error : function(e) {
+																					console.log("ERROR: ", e);
+																					$('#'+closeVidModal).click(function(){
+																						document.getElementById(vidProduct).pause();
+																					});
+																				},
+																				done : function(e) {
+																					console.log("DONE");
+																				}
+																				
+																			});
+																});
+
+														</script>
+															</div>
+															<!-- ####################################		End of View video Modal		############################################ -->
+
+														</th:block>
+													</div>
+													<!-- /.col -->
+												</th:block>
+											</div>
+											<!-- /.row -->
+										</div>
+
+										<p>
+											<span>Category: </span>&nbsp; <span
+												class="label label-danger"
+												th:text="${timeline.idea.tag.tagName}"></span>
+										</p>
+									</div>
+									<div class="timeline-footer">
+
+
+
+										<ul class="list-inline">
+											<li><a class="link-black text-sm"
+												th:text="${'View full post'}"
+												th:href="@{'/ideas/'+${timeline.idea.ideaId}}"> </a></li>
+											<th:block>|
+																	<li><span th:text="${timeline.totalThumbUp}"
+													th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
+												<li><a href="#" onclick="onThumbUpClick(this)"
+													th:id="'thumb-up_'+${timeline.idea.ideaId}"
+													th:attr="data-pid=${timeline.idea.ideaId},
 																		 data-total-tup=${timeline.totalThumbUp},
 																		  data-user=${usr.username}, 
 																		  data-reactionOfCurrentUser=${timeline.reactionOfCurrentUser}"
-																		class="link-black text-sm"><i
-																			class="fa fa-thumbs-o-up margin-r-5"></i> Thumb up</a></li>
-																</th:block>
-																<th:block>|
-																	<li><span
-																		th:text="${timeline.totalThumbDown}"
-																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbdown_count'"></span></li>
-																	<li><a href="#" onclick="onThumbDownClick(this)"
-																		th:id="'thumb-down_'+${timeline.idea.ideaId}"
-																		th:attr="data-pid=${timeline.idea.ideaId}, 
+													class="link-black text-sm"><i
+														class="fa fa-thumbs-o-up margin-r-5"></i> Thumb up</a></li>
+											</th:block>
+											<th:block>|
+																	<li><span th:text="${timeline.totalThumbDown}"
+													th:id="'idea_'+${timeline.idea.ideaId}+'_thumbdown_count'"></span></li>
+												<li><a href="#" onclick="onThumbDownClick(this)"
+													th:id="'thumb-down_'+${timeline.idea.ideaId}"
+													th:attr="data-pid=${timeline.idea.ideaId}, 
 																		 data-total-tdown=${timeline.totalThumbDown},
 																		 data-user=${usr.username}, 
 																		 data-reactionOfCurrentUser=${timeline.reactionOfCurrentUser}"
-																		class="link-black text-sm"><i
-																			class="fa fa-thumbs-o-down margin-r-5"></i> Thumb
-																			down</a> <script type="text/javascript"
-																			th:inline="javascript">
+													class="link-black text-sm"><i
+														class="fa fa-thumbs-o-down margin-r-5"></i> Thumb down</a> <script
+														type="text/javascript" th:inline="javascript">
 																			/*<![CDATA[*/
 																		    var ideaId = /*[[${timeline.idea.ideaId}]]*/;
 																			var reactionOfCurrentUser = /*[[${timeline.reactionOfCurrentUser}]]*/;
@@ -601,110 +632,106 @@
 																		
 																			}
 																			</script></li>
-																</th:block>
-																<br>
-																<li>&nbsp;<a class="link-black text-sm"
-																	th:text="${'Views'}"
-																	th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
-																<li>&nbsp;<span th:text="'100'"></span>
-																</li>
-																
-																<li><a class="link-black text-sm"
-																	th:text="${'Seen By'}"
-																	th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
-																<li>&nbsp;<span th:text="'50'"></span>&nbsp;
-																</li>
-																<li class="pull-right"><a href="#"
-																	class="link-black text-sm"><i
-																		class="fa fa-comments-o margin-r-5"></i> <span
-																		th:text="${'Comments ('+timeline.totalComments+')'}"></span></a></li>
-															</ul>
-															<hr>
+											</th:block>
+											<br>
+											<li>&nbsp;<a class="link-black text-sm"
+												th:text="${'Views'}"
+												th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
+											<li>&nbsp;<span th:text="'100'"></span>
+											</li>
 
-															<div class="box-body chat"
-																th:id="'load-comments_'+${timeline.idea.ideaId}">
-																<th:block th:each="comment : ${timeline.idea.comments}">
-																	<th:block th:if="${comment.isAnonymous} == false ">
-																		<div class="item">
-																			<img
-																				th:src="@{/file/(fileId=${comment.commentedUser.userImage.attachmentId})}"
-																				alt="user image" class="offline">
-																			<p class="message">
-																				<a
-																					th:href="@{/profile(id=${comment.commentedUser.username})}"
-																					class="name"> <small
-																					class="text-muted pull-right"><i
-																						class="fa fa-clock-o"></i> <span
-																						th:text="${#dates.format(comment.commentDateTime.time, 'dd-MM-yyyy hh:mm:ss aaa')}"></span></small> <span
-																					th:text="${comment.commentedUser.name}"></span>
-																				</a> <span th:text="${comment.commentBody}"></span>
-																			</p>
-																		</div>
-																	</th:block>
+											<li><a class="link-black text-sm" th:text="${'Seen By'}"
+												th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
+											<li>&nbsp;<span th:text="'50'"></span>&nbsp;
+											</li>
+											<li class="pull-right"><a href="#"
+												class="link-black text-sm"><i
+													class="fa fa-comments-o margin-r-5"></i> <span
+													th:text="${'Comments ('+timeline.totalComments+')'}"></span></a></li>
+										</ul>
+										<hr>
 
-																	<th:block th:if="${comment.isAnonymous} == true ">
-																		<div class="item">
-																			<img
-																				th:src="@{/resources/contents/lib/img/anonymous.jpg}"
-																				alt="user image" class="offline">
+										<div class="box-body chat"
+											th:id="'load-comments_'+${timeline.idea.ideaId}">
+											<th:block th:each="comment : ${timeline.idea.comments}">
+												<th:block th:if="${comment.isAnonymous} == false ">
+													<div class="item">
+														<img
+															th:src="@{/file/(fileId=${comment.commentedUser.userImage.attachmentId})}"
+															alt="user image" class="offline">
+														<p class="message">
+															<a
+																th:href="@{/profile(id=${comment.commentedUser.username})}"
+																class="name"> <small class="text-muted pull-right"><i
+																	class="fa fa-clock-o"></i> <span
+																	th:text="${#dates.format(comment.commentDateTime.time, 'dd-MM-yyyy hh:mm:ss aaa')}"></span></small>
+																<span th:text="${comment.commentedUser.name}"></span>
+															</a> <span th:text="${comment.commentBody}"></span>
+														</p>
+													</div>
+												</th:block>
 
-																			<p class="message">
-																				<a href="#" class="name"> <small
-																					class="text-muted pull-right"><i
-																						class="fa fa-clock-o"></i> <span
-																						th:text="${#dates.format(comment.commentDateTime.time, 'dd-MM-yyyy hh:mm:ss aaa')}"></span></small> <span
-																					th:text="${'Anonymous User'}"></span>
-																				</a> <span th:text="${comment.commentBody}"></span>
-																			</p>
-																		</div>
-																	</th:block>
-																	<hr>
-																</th:block>
-															</div>
+												<th:block th:if="${comment.isAnonymous} == true ">
+													<div class="item">
+														<img th:src="@{/resources/contents/lib/img/anonymous.jpg}"
+															alt="user image" class="offline">
 
-															<th:block th:if="${timeline.tagExpired} == false ">
-																<div>
-																	<input class="form-control input-sm"
-																		th:id="'input-comment_'+${timeline.idea.ideaId}"
-																		type="text" placeholder="Type a comment"
-																		onkeypress="onCommentPost(event, this)">
-																		<br><input
-																		type="checkbox"
-																		th:id="'anonymous-comment_'+${timeline.idea.ideaId}">
-																	&nbsp;&nbsp;Comment as anonymous <input
-																		class="pull-right btn btn-primary btn-sm btn-flat"
-																		type="submit" value="Comment"
-																		th:id="'button-submit_'+${timeline.idea.ideaId}" />
+														<p class="message">
+															<a href="#" class="name"> <small
+																class="text-muted pull-right"><i
+																	class="fa fa-clock-o"></i> <span
+																	th:text="${#dates.format(comment.commentDateTime.time, 'dd-MM-yyyy hh:mm:ss aaa')}"></span></small>
+																<span th:text="${'Anonymous User'}"></span>
+															</a> <span th:text="${comment.commentBody}"></span>
+														</p>
+													</div>
+												</th:block>
+												<hr>
+											</th:block>
+										</div>
 
-																</div>
+										<th:block th:if="${timeline.tagExpired} == false ">
+											<div>
+												<input class="form-control input-sm"
+													th:id="'input-comment_'+${timeline.idea.ideaId}"
+													type="text" placeholder="Type a comment"
+													onkeypress="onCommentPost(event, this)"> <br>
+												<input type="checkbox"
+													th:id="'anonymous-comment_'+${timeline.idea.ideaId}">
+												&nbsp;&nbsp;Comment as anonymous <input
+													class="pull-right btn btn-primary btn-sm btn-flat"
+													type="submit" value="Comment"
+													th:id="'button-submit_'+${timeline.idea.ideaId}" />
+
+											</div>
 
 
-																<div class="modal modal-danger fade" id="modal-danger">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<h4 class="modal-title">Ops!</h4>
-																			</div>
-																			<div class="modal-body">
-																				<p>Sorry, the final closure date for this
-																					category has timed out.</p>
-																			</div>
-																			<div class="modal-footer">
+											<div class="modal modal-danger fade" id="modal-danger">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h4 class="modal-title">Ops!</h4>
+														</div>
+														<div class="modal-body">
+															<p>Sorry, the final closure date for this category
+																has timed out.</p>
+														</div>
+														<div class="modal-footer">
 
-																				<button type="button"
-																					th:id="'modal-ok_'+${timeline.idea.ideaId}"
-																					class="btn btn-outline">Ok</button>
-																			</div>
-																		</div>
-																		<!-- /.modal-content -->
-																	</div>
-																	<!-- /.modal-dialog -->
-																</div>
+															<button type="button"
+																th:id="'modal-ok_'+${timeline.idea.ideaId}"
+																class="btn btn-outline">Ok</button>
+														</div>
+													</div>
+													<!-- /.modal-content -->
+												</div>
+												<!-- /.modal-dialog -->
+											</div>
 
 
-																<br>
+											<br>
 
-																<script type="text/javascript" th:inline="javascript">
+											<script type="text/javascript" th:inline="javascript">
 																
 																function onCommentPost(e, commentBox){
 																	var code = (e.keyCode ? e.keyCode : e.which);
@@ -797,67 +824,66 @@
 																});
 																	
 																</script>
-															</th:block>
-														</div>
-													</div>
-
-												</li>
-											</th:block>
-											<!-- END timeline item -->
-
-										</ul>
-									</th:block>
-
+										</th:block>
+									</div>
 								</div>
-								<!-- /.tab-pane -->
-
-								<!-- 								<div class="box-tools pull-right"> -->
-								<!-- 									<ul class="pagination pagination-sm inline"> -->
-								<!-- 										<li><a href="#">«</a></li> -->
-								<!-- 										<li><a href="#">1</a></li> -->
-								<!-- 										<li><a href="#">2</a></li> -->
-								<!-- 										<li><a href="#">3</a></li> -->
-								<!-- 										<li><a href="#">»</a></li> -->
-								<!-- 									</ul> -->
-								<!-- 								</div> -->
-
 							</div>
 							<!-- /.tab-content -->
 						</div>
 
-						<!-- Pagination -->
-
-						<div class="box-tools pull-right">
-							<ul class="pagination pagination-sm inline">
-								<th:block th:if="${(currentPage-1)>0}">
-									<li><a
-										th:href="@{/student/timeline(page=${currentPage-1})}"
-										th:text="${'&laquo;'}"></a></li>
-									<li><a
-										th:href="@{/student/timeline(page=${currentPage-1})}"
-										th:text="${currentPage-1}"></a></li>
-								</th:block>
-								<li class="active"><a
-									th:href="@{/student/timeline(page=${currentPage})}"
-									th:text="${currentPage}"></a></li>
-
-								<th:block th:unless="${currentPage>pages}">
-									<li><a
-										th:href="@{/student/timeline(page=${currentPage+1})}"
-										th:text="${currentPage+1}"></a></li>
-									<li><a
-										th:href="@{/student/timeline(page=${currentPage+1})}"
-										th:text="${'&raquo;'}"></a></li>
-								</th:block>
-							</ul>
-						</div>
-
-						<!-- ./Pagination -->
 						<!-- /.nav-tabs-custom -->
 					</div>
 					<!-- /.col -->
-				</div>
 
+
+					<div class="col-md-5">
+
+						<!-- ##########################################	Other uploads panel ###################################### -->
+						<div class="box box-primary">
+							<div class="box-body box-profile">
+								<h4>Other uploads</h4>
+								<hr>
+								
+								<th:block th:if="${#lists.size(otherAttachments)<1}">
+									<p>No other attachments available.</p>
+								</th:block>
+								
+								<th:block
+									th:each="attachment, count : ${otherAttachments}">
+									<a th:type="${attachment.fileType}" th:href="@{/download/(fileId=${attachment.attachmentId})}" th:text="${'File '+count.count}"></a>
+								</th:block>
+							</div>
+							<!-- /.box-body -->
+						</div>
+
+
+						<!-- ###############################################	All Ideas of this category	########################################## -->
+						<div class="box box-primary">
+							<div class="box-body box-profile">
+								<th:block th:if="${#lists.size(ideas) > 0}">
+									<h4>
+										Tag : <span th:text="${ideas[0].tag.tagName}"></span>
+									</h4>
+									<h5>
+										Total ideas : <span th:text="${#lists.size(ideas)}"></span>
+									</h5>
+								</th:block>
+								<th:block th:each="idea : ${ideas}">
+									<p>
+										<a th:text="${idea.ideaTitle}"
+											th:href="@{'/ideas/'+${idea.ideaId}}"></a>
+									</p>
+								</th:block>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+
+						<!-- About Me Box -->
+
+						<!-- /.box -->
+					</div>
+				</div>
 			</section>
 
 			<!-- /.Ending Main content -->
@@ -876,7 +902,7 @@
 			</strong> All rights reserved.
 		</footer>
 
-		
+
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>

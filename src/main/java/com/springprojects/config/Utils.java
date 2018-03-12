@@ -27,7 +27,7 @@ import com.springprojects.service.AttachmentService;
 public class Utils {
 
 	@Autowired
-	AttachmentService attachmentService;
+	private AttachmentService attachmentService;
 
 	@Autowired
 	private ServletContext servletContext;

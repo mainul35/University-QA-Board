@@ -11,13 +11,13 @@ import com.springprojects.repository.ReactionRepository;
 public class ReactionService {
 
 	@Autowired
-	ReactionRepository reactionRepository;
+	private ReactionRepository reactionRepository;
 	
 	@Autowired
-	IdeaService ideaService;
+	private IdeaService ideaService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	public Reaction findOne(Long id) {
 		return reactionRepository.findOne(id);

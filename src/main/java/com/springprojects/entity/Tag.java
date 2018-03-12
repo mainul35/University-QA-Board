@@ -13,16 +13,16 @@ import javax.persistence.Table;
 public class Tag  implements Serializable{
 	@Id
 	@Column(nullable=false, length=20)
-	Long tagId;
+	private Long tagId;
 	
 	@Column(name="tagName", length=50, nullable=false)
-	String tagName;
+	private String tagName;
 
 	@Column
-	Timestamp openingDate;
+	private Timestamp openingDate;
 
 	@Column
-	Timestamp closingDate;
+	private Timestamp closingDate;
 	
 	@Column
 	Timestamp finalClosingDate;

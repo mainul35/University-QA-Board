@@ -258,7 +258,7 @@
 		<aside class="main-sidebar">
 			<!-- sidebar: style can be found in sidebar.less -->
 			<section class="sidebar">
-<!-- 				Sidebar user panel -->
+				Sidebar user panel
 				<div class="user-panel">
 					<div class="pull-left image">
 						<img th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
@@ -340,114 +340,14 @@
 
 			<section class="content">
 				<div class="row">
-					<div class="col-md-3">
 
-						<!-- Profile Image -->
-						<div class="box box-primary">
-							<div class="box-body box-profile">
-								<img class="profile-user-img img-responsive img-circle"
-									th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
-									alt="User profile picture">
-
-								<h3 class="profile-username text-center" th:text="${usr.name}"></h3>
-
-								<p class="text-muted text-center" th:text="${usr.department}"></p>
-
-								<ul class="list-group list-group-unbordered">
-									<li class="list-group-item"><b>Total Ideas</b> <a
-										class="pull-right" th:text="${totalIdeas}"></a></li>
-									<li class="list-group-item"><b>Total Categories</b> <a
-										class="pull-right" th:text="${totalTags}"></a></li>
-									<li class="list-group-item"><b>Total contributions</b> <a
-										class="pull-right" onmouseover="describeTotalContributions()" th:text="${totalContributions}"></a>
-										<script type="text/javascript" th:inline="javascript">
-										/*
-										*
-										*	Check user Idle time 
-										*
-										*/
-
-										var idleTime = 0;
-										$(document).ready(function () {
-										    //Increment the idle time counter every minute.
-										    var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-										    //Zero the idle timer on mouse movement.
-										    $(this).mousemove(function (e) {
-										        idleTime = 0;
-										    });
-										    $(this).keypress(function (e) {
-										        idleTime = 0;
-										    });
-										});
-
-										function timerIncrement() {
-										    idleTime = idleTime + 1;
-										    console.log(idleTime);
-										    if (idleTime > 19) { // 20 minutes
-										        window.location.reload();
-										    }
-										}
-										</script>
-									</li>
-								</ul>
-
-								<!-- 								<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
-							</div>
-							<!-- /.box-body -->
-						</div>
-						<!-- /.box -->
-
-						<!-- About Me Box -->
-						<div class="box box-primary">
-							<div class="box-header with-border">
-								<h3 class="box-title">About Me</h3>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body">
-								<strong><i class="fa fa-book margin-r-5"></i> Education</strong>
-
-								<p class="text-muted">B.S. in Computer Science from the
-									University of Tennessee at Knoxville</p>
-
-								<hr>
-
-								<strong><i class="fa fa-map-marker margin-r-5"></i>
-									Location</strong>
-
-								<p class="text-muted">Malibu, California</p>
-
-								<hr>
-
-								<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-								<p>
-									<span class="label label-danger">UI Design</span> <span
-										class="label label-success">Coding</span> <span
-										class="label label-info">Javascript</span> <span
-										class="label label-warning">PHP</span> <span
-										class="label label-primary">Node.js</span>
-								</p>
-
-								<hr>
-
-								<strong><i class="fa fa-file-text-o margin-r-5"></i>
-									Notes</strong>
-
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Etiam fermentum enim neque.</p>
-							</div>
-							<!-- /.box-body -->
-						</div>
-						<!-- /.box -->
-					</div>
 					<!-- /.col -->
-					<div class="col-md-9">
+					<div class="col-md-12">
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
-								<li><a th:href="@{/ideas}">Ideas</a></li>
+							<li class="active"><a th:href="@{/ideas}">Ideas</a></li>
 								<li><a th:href="@{/student/activity}">Activity</a></li>
-								<li class="active"><a th:href="@{/student/timeline}">Timeline</a></li>
+								<li><a th:href="@{/student/timeline}">Timeline</a></li>
 								<li><a th:href="@{/student/post-new-idea}">Post an idea</a></li>
 							</ul>
 							<div class="tab-content">
@@ -473,7 +373,7 @@
 
 														<h3 class="timeline-header">
 															<a th:href="@{/profile(id=${timeline.postedBy.username})}"
-																th:text="${timeline.postedBy.name}"></a></a> Posted
+																th:text="${timeline.postedBy.name}"></a> Posted
 														</h3>
 
 														<div class="timeline-body">
@@ -831,22 +731,22 @@
 							<ul class="pagination pagination-sm inline">
 								<th:block th:if="${(currentPage-1)>0}">
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage-1})}"
+										th:href="@{/ideas(page=${currentPage-1})}"
 										th:text="${'&laquo;'}"></a></li>
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage-1})}"
+										th:href="@{/ideas(page=${currentPage-1})}"
 										th:text="${currentPage-1}"></a></li>
 								</th:block>
 								<li class="active"><a
-									th:href="@{/student/timeline(page=${currentPage})}"
+									th:href="@{/ideas(page=${currentPage})}"
 									th:text="${currentPage}"></a></li>
 
 								<th:block th:unless="${currentPage>pages}">
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage+1})}"
+										th:href="@{/ideas(page=${currentPage+1})}"
 										th:text="${currentPage+1}"></a></li>
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage+1})}"
+										th:href="@{/ideas(page=${currentPage+1})}"
 										th:text="${'&raquo;'}"></a></li>
 								</th:block>
 							</ul>
@@ -876,7 +776,6 @@
 			</strong> All rights reserved.
 		</footer>
 
-		
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>

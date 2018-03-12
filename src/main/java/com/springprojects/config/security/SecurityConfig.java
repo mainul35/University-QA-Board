@@ -20,9 +20,9 @@ import java.util.logging.Logger;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DriverManagerDataSource dataSource;
+    private DriverManagerDataSource dataSource;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("QA_MANAGER")
                 .antMatchers("/student/**")
                 .hasRole("STUDENT")
-                .antMatchers("/dashboard")
+                .antMatchers("/dashboard", "/ideas", "/ideas/**")
                 .authenticated()
                 .and()
                 .formLogin()

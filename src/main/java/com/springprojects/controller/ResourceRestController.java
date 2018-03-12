@@ -2,8 +2,12 @@ package com.springprojects.controller;
 
 import com.springprojects.config.Properties;
 import com.springprojects.config.Utils;
+import com.springprojects.entity.Attachment;
 import com.springprojects.entity.UserEntity;
+import com.springprojects.service.AttachmentService;
 import com.springprojects.service.UserService;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,7 +24,9 @@ import java.util.ArrayList;
 public class ResourceRestController {
 
     @Autowired
-    Utils utils;
+	private Utils utils;
+    @Autowired
+    private AttachmentService attachmentService;
 
 	@RequestMapping(value="/terms-and-conditions", method=RequestMethod.GET)
 	@ResponseBody
@@ -30,7 +37,7 @@ public class ResourceRestController {
 		return tndc;
 	}
 	
-	@RequestMapping(value="/file", method=RequestMethod.GET)
+	@RequestMapping(value="/file", method= {RequestMethod.GET,RequestMethod.POST} )
 	@ResponseBody
 	public byte[] resourceInDrive_GET(@RequestParam(name="fileId") Long fileId) {
 		System.out.println("Reading resource from drive...");
@@ -43,4 +50,5 @@ public class ResourceRestController {
 		}
 		return bs;
 	}
+		
 }

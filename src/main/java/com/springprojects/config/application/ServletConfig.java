@@ -132,6 +132,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         		"/student/resources/**",
         		"/qa_manager/resources/**",
         		"/qa_coordinator/resources/**",
+        		"/ideas/resources/**",
         		"/resources/**",
         		"classpath:/resources/"
         		).addResourceLocations("/resources/").setCachePeriod(999999999);

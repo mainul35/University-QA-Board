@@ -21,22 +21,22 @@ public class Comment  implements Serializable, Comparable<Comment>{
 
 	@Id
 	@Column(name="comment_Id", length=20, nullable=false)
-	Long commentId;
+	private Long commentId;
 	@Column(name="comment_body", nullable=false)
-	String commentBody;
+	private String commentBody;
 	@OneToOne
 	@JoinColumn(
 			name="commented_user_id", 
 			nullable = false, 
 			unique=false, updatable=false)
-	UserEntity commentedUser;
+	private UserEntity commentedUser;
 	@ManyToOne
 	@JsonIgnore
-	Idea idea = new Idea();
+	private Idea idea = new Idea();
 	@Column(name="anonymous")
-	Boolean isAnonymous;
+	private Boolean isAnonymous;
 	@Column
-	Timestamp commentDateTime;
+	private Timestamp commentDateTime;
 	public Long getCommentId() {
 		return commentId;
 	}
