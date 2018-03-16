@@ -289,8 +289,9 @@
 		th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm:ss')}" />
 
 	<div class="form-group">
-		<label for="images">Upload Documents (Optional): </label> <input type="file"
-			id="images" name="images[]" multiple="multiple" accept=" .wma, .mp3, .mp4, .avi, .wmv, .doc, .docx, image/*" />
+		<label for="images">Upload Documents (Optional): </label> <input
+			type="file" id="images" name="images[]" multiple="multiple"
+			accept=" .wma, .mp3, .mp4, .avi, .wmv, .doc, .docx, image/*" />
 	</div>
 	<div class="row">
 		<div class="form-group col-sm-2 col-lg-2 col-xl-2 col-md-2 col-xs-2">
@@ -306,44 +307,47 @@
 
 
 	<script type="text/javascript">
-	    CKEDITOR.replace( 'inputIdeaBody',{ 
-		    toolbar: [
-			    {
-				    name: 'styles', 
-				    items: [ 'Styles', 'Format', 'Font', 'FontSize' ] 
-			    },
-			    { 
-				    name: 'basicstyles', 
-				    groups: [ 'basicstyles', 'cleanup' ], 
-				    items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ]
-			     },
-			     { 
-				     name: 'links',
-				     items: [ 'Link', 'Unlink', 'Anchor' ]
-			     },
-			     { 
-				     name: 'colors', 
-				     items: [ 'TextColor'] 
-			     },
-			     { 
-				     name: 'paragraph', 
-				     groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] 
-			     },
-			     { 
-				     name: 'links' 
-			     },
-			 	 { 
-				 	 name: 'insert' 
-			 	 }
-			    ]
-	    } );
-	    
+		CKEDITOR.replace('inputIdeaBody',
+				{
+					toolbar : [
+							{
+								name : 'styles',
+								items : [ 'Styles', 'Format', 'Font',
+										'FontSize' ]
+							},
+							{
+								name : 'basicstyles',
+								groups : [ 'basicstyles', 'cleanup' ],
+								items : [ 'Bold', 'Italic', 'Underline',
+										'Strike', 'Subscript', 'Superscript',
+										'-', 'CopyFormatting', 'RemoveFormat' ]
+							},
+							{
+								name : 'links',
+								items : [ 'Link', 'Unlink', 'Anchor' ]
+							},
+							{
+								name : 'colors',
+								items : [ 'TextColor' ]
+							},
+							{
+								name : 'paragraph',
+								groups : [ 'list', 'indent', 'blocks', 'align',
+										'bidi' ]
+							}, {
+								name : 'links'
+							}, {
+								name : 'insert'
+							} ]
+				});
 
-	    
-	    function showTermsAndConditions(){
-	    	$('#myModal').modal({backdrop: 'static', keyboard: false});
-	    	$(".modal-body").load("/ewsd/terms-and-conditions");
-	    }
+		function showTermsAndConditions() {
+			$('#myModal').modal({
+				backdrop : 'static',
+				keyboard : false
+			});
+			$(".modal-body").load("/ewsd/terms-and-conditions");
+		}
 	</script>
 </th:block>
 
@@ -463,22 +467,14 @@
 				</div>
 				<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-				<script>
-var dateToday = new Date();
-var dates = $("#opening-date, #closure-date, #final-closure-date").datepicker({
-    // defaultDate: "+1w",
-    changeMonth: true,
-    numberOfMonths: 1,
-    minDate: dateToday,
-    dateFormat: "d/m/yy",
-    onSelect: function(selectedDate) {
-        var option = this.id == "from" ? "minDate" : "maxDate",
-            instance = $(this).data("datepicker"),
-            date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
-        dates.not(this).datepicker("option", option, date);
-    }
-});
-</script>
+				<script th:inline="javascript">
+					
+					var dateToday = new Date();
+					$("#opening-date, #closure-date, #final-closure-date").datepicker({
+						minDate : dateToday,
+						dateFormat : "d/m/yy"
+					});
+				</script>
 			</div>
 			<!-- /.box-body -->
 			<div class="box-footer">
@@ -582,16 +578,20 @@ var dates = $("#opening-date, #closure-date, #final-closure-date").datepicker({
 										Name</th>
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Opening date</th>
+										aria-label="Platform(s): activate to sort column ascending">Opening
+										date</th>
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Closure Date</th>
+										aria-label="Platform(s): activate to sort column ascending">Closure
+										Date</th>
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Final Closure Date</th>
+										aria-label="Platform(s): activate to sort column ascending">Final
+										Closure Date</th>
 									<th class="sorting" tabindex="0" aria-controls="example2"
 										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Linked Ideas</th>
+										aria-label="Platform(s): activate to sort column ascending">Linked
+										Ideas</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -599,10 +599,14 @@ var dates = $("#opening-date, #closure-date, #final-closure-date").datepicker({
 									<tr role="row" class="odd">
 										<td th:text="${iterationStatus.count}"></td>
 										<td th:text=${tag.tagName}></td>
-										<td th:text="${#dates.format(tag.openingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
-										<td th:text="${#dates.format(tag.closingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
-										<td th:text="${#dates.format(tag.finalClosingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
-										<td><a class="btn btn-block btn-default btn-sm" href="#" th:text="${'Linked ideas'}"></a></td>
+										<td
+											th:text="${#dates.format(tag.openingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
+										<td
+											th:text="${#dates.format(tag.closingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
+										<td
+											th:text="${#dates.format(tag.finalClosingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
+										<td><a class="btn btn-block btn-default btn-sm" href="#"
+											th:text="${'Linked ideas'}"></a></td>
 									</tr>
 								</th:block>
 							</tbody>

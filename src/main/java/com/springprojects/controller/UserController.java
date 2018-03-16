@@ -13,6 +13,7 @@ import com.springprojects.entity.UserEntity;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.AuthorityService;
 import com.springprojects.service.CommentService;
+import com.springprojects.service.ContributionService;
 import com.springprojects.service.IdeaService;
 import com.springprojects.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,8 @@ public class UserController {
 	private Utils utils;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private ContributionService contributionService;
 	private int index = 0;
 
 	// @RequestMapping(value = {"/"})
@@ -293,7 +296,9 @@ public class UserController {
 		Idea idea = ideaService.getIdea(id);
 		idea.getComments().clear();
 		idea.setComments(commentService.findAllByIdea(idea));
-		
+		idea.getSeenBy().add(userEntity.getUsername());
+		idea.setCountViews(idea.getCountViews()+1);
+		ideaService.update(idea);
 		Timeline timeline = new Timeline(utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa"), idea);
 		timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
 		for (Reaction reaction : idea.getReactions()) {
@@ -307,15 +312,13 @@ public class UserController {
 			}
 		}
 		
-		List<Attachment> otherAttachments = new ArrayList<>();
+		Set<Attachment> attachments = new HashSet<Attachment>();
 		for(Attachment attachment : idea.getAttachments()) {
-			if(null==attachment.getFileType()) {
-				otherAttachments.add(attachment);
-			}else if(!attachment.getFileType().contains("image") && !attachment.getFileType().contains("video")) {
-				otherAttachments.add(attachment);
+			if(null!=attachment.getFileType()) {
+				attachments.add(attachment);
 			}
 		}
-		
+		idea.setAttachments(attachments);
 		if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
 			timeline.setTagExpired(true);
 		}
@@ -327,9 +330,101 @@ public class UserController {
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("timeline", timeline);
 		model.addAttribute("totalAttachments", idea.getAttachments().size());
-		model.addAttribute("otherAttachments", otherAttachments);
 		model.addAttribute("ideas", ideasByTag);
-
 		return "/templates/read_full_post";
 	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String profile_GET(
+			HttpSession session, 
+			Model model,
+			@RequestParam("id") String username,
+			@RequestParam(name = "page", defaultValue = "1") int pageNumber
+			) {
+		UserEntity userEntity = userService.getUserByUsername(username);
+		UserEntity userEntity2 = (UserEntity) session.getAttribute("usr");
+		int resultPerPage = 5;
+
+		List<Idea> ideas = new ArrayList<>();
+		ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber,
+				resultPerPage).iterator().forEachRemaining(idea -> {
+					ideas.add(idea);
+				});
+		
+//		Collections.reverse(ideas);
+		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
+
+		String dateTimeString = "";
+
+		for (Idea idea : ideas) {
+
+			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
+			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
+			
+			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
+				dates.put(dateTimeString.split(" ")[0], new ArrayList());
+			}
+			if (dates.containsKey(dateTimeString.split(" ")[0])) {
+				Timeline timeline = new Timeline(time, idea);
+				timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
+				for (Reaction reaction : idea.getReactions()) {
+					if (reaction.getReactionType() == 1) {
+						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
+					} else if (reaction.getReactionType() == 2) {
+						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
+					}
+					if (reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
+						timeline.setReactionOfCurrentUser(reaction.getReactionType());
+					}
+				}
+
+				if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
+					timeline.setTagExpired(true);
+				}
+				
+				List<Comment> comments = new ArrayList();
+				
+				idea.getComments().iterator().forEachRemaining(c1->{
+					comments.add(index++, c1);
+				});
+				index = 0;
+				idea.setComments(comments);
+				timeline.setTotalComments(idea.getComments().size());
+
+				dates.get(dateTimeString.split(" ")[0]).add(timeline);
+				
+			}
+			
+		}
+				
+		int totalResults = ideas.size();
+		
+		// profile side panel items
+		
+		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
+		List<Idea> ideas2 = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
+		Set<Tag> tags = new HashSet<>();
+		
+		ideas2.forEach((idea) -> tags.add(idea.getTag()));
+		
+		model.addAttribute("totalIdeas", ideas2.size());
+		model.addAttribute("totalTags", tags.size());
+		model.addAttribute("totalContributions", contributionService.findContributionsByUser(userEntity).size());
+		
+		// timeline data
+		
+		model.addAttribute("pages",
+				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
+						: resultPerPage == totalResults ? 0 : pages - 1);
+		model.addAttribute("currentPage", pageNumber);
+
+		model.addAttribute("usr", userEntity2);
+		model.addAttribute("requestedUser", userEntity);
+		model.addAttribute("dates", dates);
+		model.addAttribute("utils", utils);
+		logger.info("Student -> profile : ");
+
+		return "/templates/profile";
+	}
+
 }

@@ -41,13 +41,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.springprojects.config.Utils;
 import com.springprojects.customModel.Timeline;
+import com.springprojects.entity.Activity;
 import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Comment;
+import com.springprojects.entity.Contribution;
 import com.springprojects.entity.Idea;
 import com.springprojects.entity.Reaction;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
+import com.springprojects.service.ActivityService;
 import com.springprojects.service.AttachmentService;
+import com.springprojects.service.ContributionService;
 import com.springprojects.service.IdeaService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
@@ -66,35 +70,16 @@ public class StudentController {
 	private IdeaService ideaService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ContributionService contributionService;
+	@Autowired
+	private ActivityService activityService;
 	private int index = 0;
 	private Logger logger = Logger.getLogger(getClass().getName());
 
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
 	public String studentDashboard_GET() {
-		return "redirect:/student/ideas";
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/activity")
-	public String studentActivity_GET(Model model, HttpSession session) {
-
-		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		
-		model.addAttribute("usr", userEntity);
-		List<Idea> ideas = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
-		Set<Tag> tags = new HashSet<>();
-		int countContributions = 0; 
-		
-		ideas.forEach((idea) -> tags.add(idea.getTag()));
-		for(Idea idea: ideas) {
-			countContributions += idea.getComments().size();
-		}
-		countContributions+=ideas.size();
-		model.addAttribute("totalIdeas", ideas.size());
-		model.addAttribute("totalTags", tags.size());
-		model.addAttribute("totalContributions", countContributions);
-
-		logger.info("Student -> Activity : ");
-		return "/student_template/activity";
+		return "redirect:/student/timeline";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/post-new-idea")
@@ -113,10 +98,14 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "/post-new-idea", method = RequestMethod.POST)
-	public String postNewIdea_POST(Model model, HttpSession session, @ModelAttribute("idea") Idea idea,
+	public String postNewIdea_POST(
+			Model model, 
+			HttpSession session, 
+			@ModelAttribute("idea") Idea idea,
 			@RequestParam(name = "tagName", defaultValue = "") String tagName,
 			@RequestParam(name = "publishingDateTime") String publishingDateTime,
-			@RequestParam(name = "images[]") MultipartFile[] files) {
+			@RequestParam(name = "images[]") MultipartFile[] files
+			) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Tag tag = tagService.findByTagName(tagName);
@@ -151,15 +140,24 @@ public class StudentController {
 		tags.removeIf(t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
 
 		idea.setAttachments(attachments);
-		System.out.println(idea.toString());
 		ideaService.save(idea);
+		
+		Contribution contribution = new Contribution(idea.getIdeaId(), userEntity);
+		contributionService.save(contribution );
+		Activity activity = new Activity();
+		activity.setId(userEntity.getId());
+		activity.setLastActivityDateTime(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
+		activityService.saveOrUpdate(activity);
 		logger.info("Student -> Post new idea : ");
 		return "redirect:/student/timeline";
 	}
 
 	@RequestMapping(value = "/timeline", method = RequestMethod.GET)
-	public String timeline_GET(HttpSession session, Model model,
-			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
+	public String timeline_GET(
+			HttpSession session, 
+			Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNumber
+			) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 
 		int resultPerPage = 5;
@@ -223,16 +221,12 @@ public class StudentController {
 		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
 		List<Idea> ideas2 = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
 		Set<Tag> tags = new HashSet<>();
-		int countContributions = 0; 
 		
 		ideas2.forEach((idea) -> tags.add(idea.getTag()));
-		for(Idea idea: ideas2) {
-			countContributions += idea.getComments().size();
-		}
-		countContributions+=ideas2.size();
+		
 		model.addAttribute("totalIdeas", ideas2.size());
 		model.addAttribute("totalTags", tags.size());
-		model.addAttribute("totalContributions", countContributions);
+		model.addAttribute("totalContributions", contributionService.findContributionsByUser(userEntity).size());
 		
 		// timeline data
 		

@@ -4,6 +4,7 @@ import com.springprojects.config.Properties;
 import com.springprojects.config.Utils;
 import com.springprojects.entity.Attachment;
 import com.springprojects.entity.UserEntity;
+import com.springprojects.service.ActivityService;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.IdeaService;
 import com.springprojects.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +34,8 @@ public class ResourceRestController {
     private AttachmentService attachmentService;
     @Autowired
     private IdeaService ideaService;
+    @Autowired
+    private ActivityService activityService;
 
 	@RequestMapping(value="/terms-and-conditions", method=RequestMethod.GET)
 	@ResponseBody
@@ -63,10 +67,41 @@ public class ResourceRestController {
 		System.out.println("Sending vieo URLs...");
 		Set<Attachment> attachments = ideaService.getIdea(ideaId).getAttachments();
 		for(Attachment attachment : attachments) {
-			if(attachment.getFileType().contains("video")) {
+			if(attachment.getFileType()!=null && attachment.getFileType().contains("video")) {
 				videoURLs.add(attachment.getFileURL());
 			}
 		}
 		return videoURLs;
+	}
+	
+	@RequestMapping(value="/other-attachments", method= {RequestMethod.GET,RequestMethod.POST} )
+	@ResponseBody
+	public List<String> otherAtachmentsOfAnIdea(HttpServletResponse response, @RequestParam(name="ideaId") Long ideaId) {
+		List<String> otherAtachmentURLs = new ArrayList<>();
+		System.out.println("Sending attachment URLs...");
+		Set<Attachment> attachments = ideaService.getIdea(ideaId).getAttachments();
+		for(Attachment attachment : attachments) {
+			if(attachment.getFileType()==null) {
+				otherAtachmentURLs.add(attachment.getFileURL());
+			}else if(!attachment.getFileType().contains("image") && !attachment.getFileType().contains("video")) {
+				otherAtachmentURLs.add(attachment.getFileURL());
+			}
+		}
+		return otherAtachmentURLs;
+	}
+	
+	@Autowired
+	UserService userService;
+	
+	@RequestMapping(value="/activity-interval")
+	@ResponseBody
+	public String activityInterval(HttpSession session, @RequestParam(name="id", defaultValue="") String username) {
+		UserEntity userEntity = null;
+		if(username.equals("")) {
+			userEntity = (UserEntity) session.getAttribute("usr");			
+		}else {
+			userEntity = userService.getUserByUsername(username);
+		}
+		return activityService.getLastActivityDifferenceOfUser(userEntity);
 	}
 }

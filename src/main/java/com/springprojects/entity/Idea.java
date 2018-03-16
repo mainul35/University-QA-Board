@@ -2,11 +2,14 @@ package com.springprojects.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -33,7 +36,7 @@ public class Idea implements Serializable {
 	@Column(name = "author_email", length = 200, nullable = false)
 	private String authorEmail;
 	@Column(name = "total_viws")
-	private Integer countViews;
+	private Integer countViews = 0;
 	@Column
 	private Timestamp publishingDate;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idea", cascade = CascadeType.ALL)
@@ -45,11 +48,9 @@ public class Idea implements Serializable {
 	private Set<Attachment> attachments;
 	@ManyToOne
 	private Tag tag = new Tag();
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "idea_seen_by", joinColumns = {
-			@JoinColumn(name = "idea_id", referencedColumnName = "idea_id") }, inverseJoinColumns = {
-					@JoinColumn(name = "user_id", referencedColumnName = "user_uuid") })
-	private Set<UserEntity> seenBy;
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name = "idea_seen_by")
+	private Set<String> seenBy = new HashSet<>();
 
 	public Long getIdeaId() {
 		return ideaId;
@@ -123,11 +124,11 @@ public class Idea implements Serializable {
 		this.tag = tag;
 	}
 
-	public Set<UserEntity> getSeenBy() {
+	public Set<String> getSeenBy() {
 		return seenBy;
 	}
 
-	public void setSeenBy(Set<UserEntity> seenBy) {
+	public void setSeenBy(Set<String> seenBy) {
 		this.seenBy = seenBy;
 	}
 

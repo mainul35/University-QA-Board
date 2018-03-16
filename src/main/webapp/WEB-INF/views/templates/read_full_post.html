@@ -289,29 +289,14 @@
 
 
 
-					<!-- 					<li class="active treeview menu-open"><a href="#"> <i -->
-					<!-- 							class="fa fa-dashboard"></i> <span>Manage Roles</span> <span -->
-					<!-- 							class="pull-right-container"> <i -->
-					<!-- 								class="fa fa-angle-left pull-right"></i> -->
-					<!-- 						</span> -->
-					<!-- 					</a> -->
-					<!-- 						<ul class="treeview-menu"> -->
-					<!-- 							<li class="active"><a th:href="@{/admin/create-role}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> Create Role</a></li> -->
-					<!-- 							<li><a th:href="@{/admin/view-all-roles}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> View All Roles</a></li> -->
-					<!-- 						</ul></li> -->
-					<!-- 					<li class="treeview"><a href="#"> <i class="fa fa-files-o"></i> -->
-					<!-- 							<span>Manage Tags</span> <span class="pull-right-container"> -->
-					<!-- 								<i class="fa fa-angle-left pull-right"></i> -->
-					<!-- 						</span> -->
-					<!-- 					</a> -->
-					<!-- 						<ul class="treeview-menu"> -->
-					<!-- 							<li><a th:href="@{/admin/create-tag}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> Create Tag</a></li> -->
-					<!-- 							<li><a th:href="@{/admin//view-all-tags}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> View Tags</a></li> -->
-					<!-- 						</ul></li> -->
+					<li class=""><a th:href="@{/student/timeline}"> <i
+							class="fa fa-dashboard"></i> <span>Home</span> <span
+							class="pull-right-container"> </span>
+					</a></li>
+					<li class="active"><a th:href="@{/ideas}"> <i
+							class="fa fa-files-o"></i> <span>All Ideas</span> <span
+							class="pull-right-container"> </span>
+					</a></li>
 
 
 
@@ -366,12 +351,11 @@
 
 												<th:block
 													th:each="attachment : ${timeline.idea.attachments}">
-													<div th:class="col-sm-3">
+													<div class="col-sm-4" th:if="${attachment != null}">
 														<th:block
 															th:if="${#strings.contains(attachment.fileType,'image')}">
 															<img class="img-responsive" width="80"
-																th:src="@{${attachment.fileURL}}"
-																alt="Photo">
+																th:src="@{${attachment.fileURL}}" alt="Photo">
 														</th:block>
 														<th:block
 															th:if="${#strings.contains(attachment.fileType,'video')}">
@@ -379,20 +363,18 @@
 															<a href="#"
 																th:id="${'view_video_anchor_'+attachment.attachmentId}"
 																data-toggle="modal"
-																th:attr="data-target=${'#view_video_'+attachment.attachmentId}"><video
-																	width="150" controls>
-																	<source
-																		th:src="@{${attachment.fileURL}}"
-																		th:type="${attachment.fileType}">
-																</video></a>
-															<!-- ####################################		Start of View video Modal		############################################ -->
+																th:attr="data-target=${'#view_video_'+attachment.attachmentId}"><img
+																width="80"
+																src="resources/contents/lib/img/video-file.png"> </a>
+
+<!-- 															####################################		Start of View video Modal		############################################ -->
 															<div class="modal" data-backdrop="static"
 																data-keyboard="false"
 																th:id="${'view_video_'+attachment.attachmentId}"
 																role="dialog">
 																<div class="modal-dialog">
 
-																	<!-- Modal content-->
+																	Modal content
 																	<div class="modal-content">
 																		<div class="modal-header">
 																			<button
@@ -402,14 +384,17 @@
 																		</div>
 																		<div class="modal-body" id="modal-body">
 																			<div class="row">
-																				<div class="col-sm-12">
+																				<div class="col-sm-12" style="text-align: center;">
+																					<div class="popup-video-div"
+																						style="text-aligh: center;"></div>
 																					<video
 																						th:id="${'vid-product'+attachment.attachmentId }"
 																						width="450px" height="380px" controls>
-																						<source id="source"
-																							th:src="@{${attachment.fileURL}}"
-																							th:type="${attachment.fileType}">
+																						<source
+																							th:id="${'source'+attachment.attachmentId}"
+																							src="" th:type="${attachment.fileType}">
 																					</video>
+
 																				</div>
 																				&nbsp; &nbsp;
 																				<div class="row">
@@ -421,91 +406,116 @@
 																			</div>
 																		</div>
 																	</div>
-																</div>
-																<script type="text/javascript" th:inline="javascript">
-											let viewVideoAnchor = 	/*[[${'view_video_anchor_'+attachment.attachmentId}]]*/;
-											let attachmentId = /*[[${attachment.attachmentId}]]*/;
-											let videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
-											let vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
-											let closeVidModal = /*[[${'close-vid-modal'+attachment.attachmentId}]]*/;
-											var ideaId = /*[[${timeline.idea.ideaId}]]*/;
-											$('#'+viewVideoAnchor)
+ 																</div>																<script type="text/javascript" th:inline="javascript"> 
+											var viewVideoAnchor = 	/*[[${'view_video_anchor_'+attachment.attachmentId}]]*/;
+										var attachmentId = /*[[${attachment.attachmentId}]]*/;
+ 											var videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
+ 											var vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
+											var closeVidModal = /*[[${'close-vid-modal'+attachment.attachmentId}]]*/;
+ 											var ideaId = /*[[${timeline.idea.ideaId}]]*/;
+									
+									
+ 											$('#'+viewVideoAnchor)
 														.click(
-																function() {
-																	
-
-																	var data = {}
-																	var Form = this;
-																	
+ 																function() {
+																	videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
+ 																	var sourceId = /*[[${'source'+attachment.attachmentId}]]*/;
+ 																	var src = '/ewsd/'+/*[[${attachment.fileURL}]]*/;
+ 																	vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
+ 																	fileType=/*[[${attachment.fileType}]]*/;
+ 																	$('#'+sourceId).attr('src', src);
+ 																	document.getElementById(vidProduct).innerHTML="<source id='"+sourceId+"' src='"+src+"' type='"+fileType+"'>";
+															
+ 																	$('#'+vidProduct).on('loadstart', function (event) {
+ 																	    $('.popup-video-div').addClass('loader');
+ 																	    console.log(event);
+ 																	  });
+ 																	  $('#'+vidProduct).on('canplay', function (event) {
+ 																	    $('.popup-video-div').removeClass('loader');
+ 																	    console.log(event);
+ 																	  });
+															
+ 																	var data = {}
+ 																	var Form = this;
+															
 																	$.ajax({
-																				type : "GET",
-																				url : "/ewsd/videos?ideaId="+ideaId,
-																				data: data,
-																				timeout : 100000,
-																				beforeSend : function() {
-																					if(document.getElementById("video_1")==null){
-																						$('#'+videoListPreviewer).addClass('spinner');																						
-																					}
-																				},
-																				success : function(data) {
-																					$('#'+videoListPreviewer).removeClass('spinner');
-// 																					data = JSON.parse(data);
-																					$('#'+videoListPreviewer).html("");
-																					var len = data.length;
-																					console.log(data);
-																					var html = "";
-																					var left = 0;
+ 																				type : "GET",
+ 																				url : "/ewsd/videos?ideaId="+ideaId,
+ 																				data: data,
+ 																				timeout : 100000,
+ 																				beforeSend : function() {
+ 																					if(document.getElementById("video_0")==null){
+ 																						$('#'+videoListPreviewer).addClass('loader');																						
+ 																					}
+ 																				},
+ 																				success : function(data) {
+																			
+ 																					viewVideoAnchor = 	/*[[${'view_video_anchor_'+attachment.attachmentId}]]*/;
+ 																					attachmentId = /*[[${attachment.attachmentId}]]*/;
+ 																					videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
+ 																					vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
+ 																					closeVidModal = /*[[${'close-vid-modal'+attachment.attachmentId}]]*/;
+ 																					ideaId = /*[[${timeline.idea.ideaId}]]*/;
+																			
+ 																					$('#'+videoListPreviewer).removeClass('loader');
+// // 																					data = JSON.parse(data);
+ 																					$('#'+videoListPreviewer).html("");
+ 																					var len = data.length;
+ 																					console.log(data);
+ 																					var html = "";
+ 																					var left = 0;
+ 																					for (var i = 0; i < len; i++) {
+ 																						html += ''
+ 																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="/ewsd/'+data[i]+'" id="video_'+i+'" src="/ewsd/'+data[i]+'" type="video/mp4"></video>';
+ 																						left = left+20;
+ 																					}
+																			
+ 																					$('#'+videoListPreviewer).append(html);
+ 																					left = 0;
 																					for (var i = 0; i < len; i++) {
-																						html += ''
-																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="/ewsd/'+data[i]+'" id="video_'+i+'" src="/ewsd/'+data[i]+'" type="video/mp4"></video>';
-																						left = left+20;
-																					}
-																					$('#'+videoListPreviewer).append(html);
-																					left = 0;
-																					for (var i = 0; i < len; i++) {
-																						var canvas = document.getElementById('canvas_'+ i);
-																						var video = document.getElementById('video_'+ i);
-																						
-																						$("#video_"+ i).one('seeked', function() {
-																						}).prop('currentTime', "30");
-																					}
-																					$("[data-vid_url]").click(
-																							function() {
-																								url = $(this).data("vid_url");
-																								id= $(this).data("vid_id");
-																								
-																								$("[data-vid_url]").css("border","");
-																								$("#"+id).css("border","3px solid #cd5643");
-																								$('#'+vidProduct).attr("src", url);
-																								
-																								setTimeout(function(){
-																								    document.getElementById(vidProduct).play();
-																								}, 1000);
-																							});
-																					
-																					$('#'+closeVidModal).click(function(){
-																						document.getElementById(vidProduct).pause();
-																					});
-																					},
-																					
-																				error : function(e) {
-																					console.log("ERROR: ", e);
-																					$('#'+closeVidModal).click(function(){
-																						document.getElementById(vidProduct).pause();
-																					});
-																				},
-																				done : function(e) {
-																					console.log("DONE");
-																				}
+ 																						var canvas = document.getElementById('canvas_'+ i);
+ 																						var video = document.getElementById('video_'+ i);
 																				
-																			});
-																});
+ 																						$("#video_"+ i).one('seeked', function() {
+ 																						}).prop('currentTime', "30");
+ 																					}
+ 																					$("[data-vid_url]").click(
+ 																							function() {
+ 																								url = $(this).data("vid_url");
+ 																								id= $(this).data("vid_id");
+																								
+ 																								$("[data-vid_url]").css("border","");
+ 																								$("#"+id).css("border","3px solid #cd5643");
+ 																								$('#'+vidProduct).attr("src", url);
+																						
+ 																								setTimeout(function(){
+ 																								    document.getElementById(vidProduct).play();
+ 																								}, 1000);
+ 																							});
+																				
+ 																					$('#'+closeVidModal).click(function(){
+ 																						document.getElementById(vidProduct).pause();
+ 																					});
+ 																					},
+																					
+ 																				error : function(e) {
+ 																					console.log("ERROR: ", e);
+ 																					$('#'+closeVidModal).click(function(){
+ 																						document.getElementById(vidProduct).pause();
+ 																					});
+ 																				},
+ 																				done : function(e) {
+ 																					console.log("DONE");
+ 																				}
+																				
+ 																			});
+ 																});
 
-														</script>
-															</div>
-															<!-- ####################################		End of View video Modal		############################################ -->
+ 														</script>
+ 															</div>
+<!-- 															####################################		End of View video Modal		############################################ -->
 
-														</th:block>
+													</th:block>
 													</div>
 													<!-- /.col -->
 												</th:block>
@@ -524,11 +534,9 @@
 
 
 										<ul class="list-inline">
-											<li><a class="link-black text-sm"
-												th:text="${'View full post'}"
-												th:href="@{'/ideas/'+${timeline.idea.ideaId}}"> </a></li>
-											<th:block>|
-																	<li><span th:text="${timeline.totalThumbUp}"
+
+											<th:block>
+												<li><span th:text="${timeline.totalThumbUp}"
 													th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
 												<li><a href="#" onclick="onThumbUpClick(this)"
 													th:id="'thumb-up_'+${timeline.idea.ideaId}"
@@ -634,15 +642,16 @@
 																			</script></li>
 											</th:block>
 											<br>
-											<li>&nbsp;<a class="link-black text-sm"
+											<li>&nbsp;<p class="link-black text-sm"
 												th:text="${'Views'}"
-												th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
-											<li>&nbsp;<span th:text="'100'"></span>
+												> </p></li>
+											<li>&nbsp;<span th:text="${timeline.idea.countViews}"></span>
 											</li>
-
+											|
 											<li><a class="link-black text-sm" th:text="${'Seen By'}"
 												th:href="@{/post(id=${timeline.idea.ideaId})}"> </a></li>
-											<li>&nbsp;<span th:text="'50'"></span>&nbsp;
+											<li>&nbsp;<span
+												th:text="${#lists.size(timeline.idea.seenBy)}"></span>&nbsp;
 											</li>
 											<li class="pull-right"><a href="#"
 												class="link-black text-sm"><i
@@ -843,17 +852,34 @@
 							<div class="box-body box-profile">
 								<h4>Other uploads</h4>
 								<hr>
+
 								
-								<th:block th:if="${#lists.size(otherAttachments)<1}">
-									<p>No other attachments available.</p>
-								</th:block>
-								
-								<th:block
-									th:each="attachment, count : ${otherAttachments}">
-									<a th:type="${attachment.fileType}" th:href="@{/download/(fileId=${attachment.attachmentId})}" th:text="${'File '+count.count}"></a>
+								<div id="doc-container">
+									<script th:inline="javascript">
+									ideaId = /*[[${timeline.idea.ideaId}]]*/;
+									
+									$.get( '/ewsd/other-attachments?ideaId='+ideaId, function( data ) {
+										  $("doc-container").html("");
+										  console.log( data );
+										  var content = "";
+										  if(data.length<1){
+											  content = '<p>No other attachments available.</p>';
+										  }else{
+											  for(i = 0; i<data.length; i++){
+												  content+='<a href="/ewsd/'+data[i]+'">File '+(i+1)+'</a>';
+											  }
+										  }
+										  
+										  $("#doc-container").html(content);
+											console.log(content);
+										});
+									</script>
+								</div>
+								<th:block th:each="attachment, count : ${otherAttachments}">
+									<a th:href="@{${attachment.fileURL}}"
+										th:text="${'File '+count.count}"></a>
 								</th:block>
 							</div>
-							<!-- /.box-body -->
 						</div>
 
 
@@ -868,6 +894,7 @@
 										Total ideas : <span th:text="${#lists.size(ideas)}"></span>
 									</h5>
 								</th:block>
+
 								<th:block th:each="idea : ${ideas}">
 									<p>
 										<a th:text="${idea.ideaTitle}"

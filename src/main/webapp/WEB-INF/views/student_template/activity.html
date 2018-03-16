@@ -227,7 +227,7 @@
 										<th:block th:text="${usr.name}"></th:block>
 									</p></li>
 								<!-- Menu Body -->
-								
+
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
@@ -240,7 +240,7 @@
 								</li>
 							</ul></li>
 						<!-- Control Sidebar Toggle Button -->
-						
+
 					</ul>
 				</div>
 			</nav>
@@ -289,31 +289,12 @@
 
 
 
-					<!-- 					<li class="active treeview menu-open"><a href="#"> <i -->
-					<!-- 							class="fa fa-dashboard"></i> <span>Manage Roles</span> <span -->
-					<!-- 							class="pull-right-container"> <i -->
-					<!-- 								class="fa fa-angle-left pull-right"></i> -->
-					<!-- 						</span> -->
-					<!-- 					</a> -->
-					<!-- 						<ul class="treeview-menu"> -->
-					<!-- 							<li class="active"><a th:href="@{/admin/create-role}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> Create Role</a></li> -->
-					<!-- 							<li><a th:href="@{/admin/view-all-roles}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> View All Roles</a></li> -->
-					<!-- 						</ul></li> -->
-					<!-- 					<li class="treeview"><a href="#"> <i class="fa fa-files-o"></i> -->
-					<!-- 							<span>Manage Tags</span> <span class="pull-right-container"> -->
-					<!-- 								<i class="fa fa-angle-left pull-right"></i> -->
-					<!-- 						</span> -->
-					<!-- 					</a> -->
-					<!-- 						<ul class="treeview-menu"> -->
-					<!-- 							<li><a th:href="@{/admin/create-tag}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> Create Tag</a></li> -->
-					<!-- 							<li><a th:href="@{/admin//view-all-tags}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> View Tags</a></li> -->
-					<!-- 						</ul></li> -->
-
-
+					<li class="active "><a  th:href="@{/student/activity}" > <i
+							class="fa fa-dashboard"></i> <span>Home</span>
+					</a></li>
+					<li class=""><a th:href="@{/ideas}"> <i class="fa fa-files-o"></i>
+							<span>All Ideas</span>
+					</a></li>
 
 				</ul>
 			</section>
@@ -340,141 +321,25 @@
 
 			<section class="content">
 				<div class="row">
-					
+
 					<!-- /.col -->
 					<div class="col-md-12">
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
-								<li><a th:href="@{/ideas}">Ideas</a></li>
+								
 								<li class="active"><a th:href="@{/student/activity}">Activity</a></li>
-								<li ><a th:href="@{/student/timeline}">Timeline</a></li>
+								<li><a th:href="@{/student/timeline}">Timeline</a></li>
 								<li><a th:href="@{/student/post-new-idea}">Post an idea</a></li>
 							</ul>
 							<div class="tab-content">
 								<div class="active tab-pane" id="activity">
 									<!-- Post -->
-									<div class="post">
-										<div class="user-block">
-											<img class="img-circle img-bordered-sm"
-												src="../../dist/img/user1-128x128.jpg" alt="user image">
-											<span class="username"> <a href="#">Jonathan Burke
-													Jr.</a> <a href="#" class="pull-right btn-box-tool"><i
-													class="fa fa-times"></i></a>
-											</span> <span class="description">Shared publicly - 7:30 PM
-												today</span>
-										</div>
-										<!-- /.user-block -->
-										<p>Lorem ipsum represents a long-held tradition for
-											designers, typographers and the like. Some people hate it and
-											argue for its demise, but others ignore the hate as they
-											create awesome tools to help create filler text for everyone
-											from bacon lovers to Charlie Sheen fans.</p>
-										<ul class="list-inline">
-											<li><a href="#" class="link-black text-sm"><i
-													class="fa fa-share margin-r-5"></i> Share</a></li>
-											<li><a href="#" class="link-black text-sm"><i
-													class="fa fa-thumbs-o-up margin-r-5"></i> Like</a></li>
-											<li class="pull-right"><a href="#"
-												class="link-black text-sm"><i
-													class="fa fa-comments-o margin-r-5"></i> Comments (5)</a></li>
-										</ul>
-
-										<input class="form-control input-sm" type="text"
-											placeholder="Type a comment">
-									</div>
-									<!-- /.post -->
-
-									<!-- Post -->
-									<div class="post clearfix">
-										<div class="user-block">
-											<img class="img-circle img-bordered-sm"
-												src="../../dist/img/user7-128x128.jpg" alt="User Image">
-											<span class="username"> <a href="#">Sarah Ross</a> <a
-												href="#" class="pull-right btn-box-tool"><i
-													class="fa fa-times"></i></a>
-											</span> <span class="description">Sent you a message - 3 days
-												ago</span>
-										</div>
-										<!-- /.user-block -->
-										<p>Lorem ipsum represents a long-held tradition for
-											designers, typographers and the like. Some people hate it and
-											argue for its demise, but others ignore the hate as they
-											create awesome tools to help create filler text for everyone
-											from bacon lovers to Charlie Sheen fans.</p>
-
-										<form class="form-horizontal">
-											<div class="form-group margin-bottom-none">
-												<div class="col-sm-9">
-													<input class="form-control input-sm" placeholder="Response">
-												</div>
-												<div class="col-sm-3">
-													<button type="submit"
-														class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-												</div>
-											</div>
-										</form>
-									</div>
-									<!-- /.post -->
-
-									<!-- Post -->
-									<div class="post">
-										<div class="user-block">
-											<img class="img-circle img-bordered-sm"
-												src="../../dist/img/user6-128x128.jpg" alt="User Image">
-											<span class="username"> <a href="#">Adam Jones</a> <a
-												href="#" class="pull-right btn-box-tool"><i
-													class="fa fa-times"></i></a>
-											</span> <span class="description">Posted 5 photos - 5 days
-												ago</span>
-										</div>
-										<!-- /.user-block -->
-										<div class="row margin-bottom">
-											<div class="col-sm-6">
-												<img class="img-responsive" src="../../dist/img/photo1.png"
-													alt="Photo">
-											</div>
-											<!-- /.col -->
-											<div class="col-sm-6">
-												<div class="row">
-													<div class="col-sm-6">
-														<img class="img-responsive"
-															src="../../dist/img/photo2.png" alt="Photo"> <br>
-														<img class="img-responsive"
-															src="../../dist/img/photo3.jpg" alt="Photo">
-													</div>
-													<!-- /.col -->
-													<div class="col-sm-6">
-														<img class="img-responsive"
-															src="../../dist/img/photo4.jpg" alt="Photo"> <br>
-														<img class="img-responsive"
-															src="../../dist/img/photo1.png" alt="Photo">
-													</div>
-													<!-- /.col -->
-												</div>
-												<!-- /.row -->
-											</div>
-											<!-- /.col -->
-										</div>
-										<!-- /.row -->
-
-										<ul class="list-inline">
-											<li><a href="#" class="link-black text-sm"><i
-													class="fa fa-share margin-r-5"></i> Share</a></li>
-											<li><a href="#" class="link-black text-sm"><i
-													class="fa fa-thumbs-o-up margin-r-5"></i> Like</a></li>
-											<li class="pull-right"><a href="#"
-												class="link-black text-sm"><i
-													class="fa fa-comments-o margin-r-5"></i> Comments (5)</a></li>
-										</ul>
-
-										<input class="form-control input-sm" type="text"
-											placeholder="Type a comment">
-									</div>
+									
 									<!-- /.post -->
 								</div>
 								<!-- /.tab-pane -->
 
-								
+
 							</div>
 							<!-- /.tab-content -->
 						</div>
@@ -501,7 +366,7 @@
 			</strong> All rights reserved.
 		</footer>
 
-		
+
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
