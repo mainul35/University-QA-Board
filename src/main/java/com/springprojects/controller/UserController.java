@@ -276,10 +276,14 @@ public class UserController {
 			}
 		}
 		int totalResults = ideas.size();
-		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
+		
+		int pages = (int) Math.ceil(((double) ideaService.count()) / resultPerPage);
+
 		model.addAttribute("pages",
-				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
-						: resultPerPage == totalResults ? 0 : pages - 1);
+				totalResults ==5 ? pages - 1
+						: resultPerPage == totalResults ? 0 : pages-1);
+		
+		
 		model.addAttribute("currentPage", pageNumber);
 
 		model.addAttribute("usr", userEntity);
@@ -373,7 +377,7 @@ public class UserController {
 					} else if (reaction.getReactionType() == 2) {
 						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
 					}
-					if (reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
+					if (reaction.getReactedUser().getUsername().equals(userEntity2.getUsername())) {
 						timeline.setReactionOfCurrentUser(reaction.getReactionType());
 					}
 				}
@@ -401,7 +405,7 @@ public class UserController {
 		
 		// profile side panel items
 		
-		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
+		int pages = (int) Math.ceil(((double) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail()).size()) / resultPerPage);
 		List<Idea> ideas2 = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
 		Set<Tag> tags = new HashSet<>();
 		
@@ -414,8 +418,9 @@ public class UserController {
 		// timeline data
 		
 		model.addAttribute("pages",
-				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
-						: resultPerPage == totalResults ? 0 : pages - 1);
+				totalResults ==5 ? pages - 1
+						: resultPerPage == totalResults ? 0 : pages-1);
+
 		model.addAttribute("currentPage", pageNumber);
 
 		model.addAttribute("usr", userEntity2);

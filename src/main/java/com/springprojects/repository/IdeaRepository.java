@@ -17,7 +17,8 @@ public interface IdeaRepository extends PagingAndSortingRepository<Idea, Long>{
 	Page<Idea> findAllByAuthorEmailOrderByIdeaIdDesc(String email, Pageable pageable);
 
 	List<Idea> findAllByAuthorEmail(String email);
-
+	
+	@Query("select i from Idea i")
 	Page<Idea> findAll(Pageable page);
 
 	List<Idea> findAllByTag(Tag tag);

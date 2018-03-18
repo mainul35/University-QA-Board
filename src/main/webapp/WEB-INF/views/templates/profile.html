@@ -377,11 +377,7 @@
 					<!-- /.col -->
 					<div class="col-md-9">
 						<div class="nav-tabs-custom">
-							<ul class="nav nav-tabs">
-
-								<li class="active"><a th:href="@{/student/timeline}">Timeline</a></li>
-								<li><a th:href="@{/student/post-new-idea}">Post an idea</a></li>
-							</ul>
+						
 							<div class="tab-content">
 
 								<!-- /.tab-pane -->
@@ -762,22 +758,23 @@
 							<ul class="pagination pagination-sm inline">
 								<th:block th:if="${(currentPage-1)>0}">
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage-1})}"
+									@{/profile(id=${timeline.postedBy.username})}
+										th:href="@{/profile(page=${currentPage-1},id=${requestedUser.username})}"
 										th:text="${'&laquo;'}"></a></li>
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage-1})}"
+										th:href="@{/profile(page=${currentPage-1},id=${requestedUser.username})}"
 										th:text="${currentPage-1}"></a></li>
 								</th:block>
 								<li class="active"><a
-									th:href="@{/student/timeline(page=${currentPage})}"
+									th:href="@{/profile(page=${currentPage},id=${requestedUser.username})}"
 									th:text="${currentPage}"></a></li>
 
 								<th:block th:unless="${currentPage>pages}">
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage+1})}"
+										th:href="@{/profile(page=${currentPage+1},id=${requestedUser.username})}"
 										th:text="${currentPage+1}"></a></li>
 									<li><a
-										th:href="@{/student/timeline(page=${currentPage+1})}"
+										th:href="@{/profile(page=${currentPage+1},id=${requestedUser.username})}"
 										th:text="${'&raquo;'}"></a></li>
 								</th:block>
 							</ul>

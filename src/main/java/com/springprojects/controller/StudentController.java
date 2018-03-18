@@ -218,7 +218,7 @@ public class StudentController {
 		
 		// profile side panel items
 		
-		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
+		int pages = (int) Math.ceil(((double) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail()).size()) / resultPerPage);
 		List<Idea> ideas2 = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
 		Set<Tag> tags = new HashSet<>();
 		
@@ -231,8 +231,9 @@ public class StudentController {
 		// timeline data
 		
 		model.addAttribute("pages",
-				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
-						: resultPerPage == totalResults ? 0 : pages - 1);
+				totalResults ==5 ? pages - 1
+						: resultPerPage == totalResults ? 0 : pages-1);
+		
 		model.addAttribute("currentPage", pageNumber);
 
 		model.addAttribute("usr", userEntity);

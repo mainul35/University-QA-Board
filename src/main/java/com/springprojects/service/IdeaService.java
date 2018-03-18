@@ -51,6 +51,10 @@ public class IdeaService {
 	public int count(String authorEmail, int pageNumber, int resultPerPage) {
 		return listAllIdeasByAuthorEmail(authorEmail, pageNumber, resultPerPage).getContent().size();
 	}
+
+	public int count(int pageNumber, int resultPerPage) {
+		return ideaRepository.findAll(getPage(pageNumber, resultPerPage)).getContent().size();
+	}
 	
 	public Idea getIdea(Long ideaId) {
 		return ideaRepository.findOne(ideaId);
