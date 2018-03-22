@@ -5,8 +5,6 @@
  *   License: Open source - MIT
  *           Please visit http://opensource.org/licenses/MIT for more information
  */
- 
-
 html, body {
 	height: 100%
 }
@@ -663,7 +661,7 @@ a:hover, a:active, a:focus {
 }
 
 .sidebar-mini:not (.sidebar-mini-expand-feature ).sidebar-collapse .sidebar-menu>li:hover>a>span:not
-	(.pull-right ), .sidebar-mini:not (.sidebar-mini-expand-feature ).sidebar-collapse .sidebar-menu>li:hover>.treeview-menu
+	 (.pull-right ), .sidebar-mini:not (.sidebar-mini-expand-feature ).sidebar-collapse .sidebar-menu>li:hover>.treeview-menu
 	{
 	display: block !important;
 	position: absolute;
@@ -689,11 +687,39 @@ a:hover, a:active, a:focus {
 	z-index: 900
 }
 
-.sidebar-mini:not (.sidebar-mini-expand-feature ).sidebar-collapse .sidebar-menu>li:hover>a>.pull-right-container>.label:not
-	(:first-of-type ){
-	display: none
-}
+.sidebar-mini
+:not
+ 
+(
+.sidebar-mini-expand-feature
+ 
+)
+.sidebar-collapse
+ 
+.sidebar-menu
+>
+li
+:hover
+>
+a
+>
+.pull-right-container
+>
+.label
+:not
 
+	
+(
+:first-of-type
+ 
+){
+display
+:
+ 
+none
+
+
+}
 .sidebar-mini:not (.sidebar-mini-expand-feature ).sidebar-collapse .sidebar-menu>li:hover>.treeview-menu
 	{
 	top: 44px;
@@ -1345,49 +1371,87 @@ keyframes flipInX { 0%{
 
 40%{
 transform
+
+
 :perspective(400px)
+
  
+
 rotate3d
+
+
 (1
 ,
 0,
 0,
 -20
 deg
-);transition-timing-function
+
+
+);
+transition-timing-function
+
+
 :ease-in
+
+
 }
 60%{
 transform
+
+
 :perspective(400px)
+
  
+
 rotate3d
+
+
 (1
 ,
 0,
 0,
 10
 deg
-);opacity
+
+
+);
+opacity
+
+
 :
+
+
 1
 }
 80%{
 transform
+
+
 :perspective(400px)
+
  
+
 rotate3d
+
+
 (1
 ,
 0,
 0,
 -5
 deg
+
+
 )
 }
 100%{
 transform
+
+
 :perspective(400px)
+
+
 }
 }
 @
@@ -1399,49 +1463,87 @@ transform
 
 40%{
 -webkit-transform
+
+
 :perspective(400px)
+
  
+
 rotate3d
+
+
 (1
 ,
 0,
 0,
 -20
 deg
-);-webkit-transition-timing-function
+
+
+);
+-webkit-transition-timing-function
+
+
 :ease-in
+
+
 }
 60%{
 -webkit-transform
+
+
 :perspective(400px)
+
  
+
 rotate3d
+
+
 (1
 ,
 0,
 0,
 10
 deg
-);opacity
+
+
+);
+opacity
+
+
 :
+
+
 1
 }
 80%{
 -webkit-transform
+
+
 :perspective(400px)
+
  
+
 rotate3d
+
+
 (1
 ,
 0,
 0,
 -5
 deg
+
+
 )
 }
 100%{
 -webkit-transform
+
+
 :perspective(400px)
+
+
 }
 }
 .navbar-custom-menu>.navbar-nav>li {
@@ -3010,7 +3112,7 @@ deg
 }
 
 .nav-tabs-custom>.nav-tabs>li:not (.active )>a:hover, .nav-tabs-custom>.nav-tabs>li:not
-	(.active )>a:focus, .nav-tabs-custom>.nav-tabs>li:not (.active )>a:active
+	 (.active )>a:focus, .nav-tabs-custom>.nav-tabs>li:not (.active )>a:active
 	{
 	border-color: transparent
 }
@@ -6327,3 +6429,4 @@ table.text-center, table.text-center td, table.text-center th {
 		white-space: normal !important
 	}
 }
+

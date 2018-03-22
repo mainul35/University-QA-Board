@@ -14,13 +14,15 @@ import com.springprojects.service.UserService;
 
 public class Initializer {
 
-	public Initializer(AuthorityService authorityService, UserService userService, AttachmentService attachmentService, PasswordEncoder encoder) {
+	public Initializer(AuthorityService authorityService, UserService userService, AttachmentService attachmentService,
+			PasswordEncoder encoder) {
 		// TODO Auto-generated constructor stub
-	
+
 		authorityService.create(new Authority(System.nanoTime(), "ROLE_ADMIN"));
 		authorityService.create(new Authority(System.nanoTime(), "ROLE_QA_MANAGER"));
 		authorityService.create(new Authority(System.nanoTime(), "ROLE_QA_COORDINATOR"));
 		authorityService.create(new Authority(System.nanoTime(), "ROLE_STUDENT"));
+
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(System.nanoTime());
 		userEntity.setName("Admin");
@@ -40,15 +42,16 @@ public class Initializer {
 		userImage.setFileTitle("Admin image");
 		userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
 
-		attachmentService.save(userImage);
-		userEntity.setUserImage(userImage);
-		userService.createUser(userEntity);
+		if (!userService.existsWithUsername(userEntity.getUsername())) {
+			attachmentService.save(userImage);
+			userEntity.setUserImage(userImage);
+			userService.createUser(userEntity);
+		}
 
-		
-		//############################	 Insert Student manager data
-		
-		//Student 1
-		
+		// ############################ Insert Student manager data
+
+		// Student 1
+
 		userEntity = new UserEntity();
 		userEntity.setId(System.nanoTime());
 		userEntity.setName("Mainul Hasan");
@@ -68,13 +71,14 @@ public class Initializer {
 		userImage.setFileTitle("Mainul Image");
 		userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
 
-		attachmentService.save(userImage);
-		userEntity.setUserImage(userImage);
-		userService.createUser(userEntity);
-		
-		
-		//Student 2
-		
+		if (!userService.existsWithUsername(userEntity.getUsername())) {
+			attachmentService.save(userImage);
+			userEntity.setUserImage(userImage);
+			userService.createUser(userEntity);
+		}
+
+		// Student 2
+
 		userEntity = new UserEntity();
 		userEntity.setId(System.nanoTime());
 		userEntity.setName("Sazzad Hossain");
@@ -94,12 +98,14 @@ public class Initializer {
 		userImage.setFileTitle("Sazzad image");
 		userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
 
-		attachmentService.save(userImage);
-		userEntity.setUserImage(userImage);
-		userService.createUser(userEntity);
-		
-		//User 3
-		
+		if (!userService.existsWithUsername(userEntity.getUsername())) {
+			attachmentService.save(userImage);
+			userEntity.setUserImage(userImage);
+			userService.createUser(userEntity);
+		}
+
+		// User 3
+
 		userEntity = new UserEntity();
 		userEntity.setId(System.nanoTime());
 		userEntity.setName("Tanveer Rahman");
@@ -119,12 +125,41 @@ public class Initializer {
 		userImage.setFileTitle("Sazzad image");
 		userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
 
-		attachmentService.save(userImage);
-		userEntity.setUserImage(userImage);
-		userService.createUser(userEntity);
-		
-		//QA Manager
-		
+		if (!userService.existsWithUsername(userEntity.getUsername())) {
+			attachmentService.save(userImage);
+			userEntity.setUserImage(userImage);
+			userService.createUser(userEntity);
+		}
+
+		// Student 4
+
+		userEntity = new UserEntity();
+		userEntity.setId(System.nanoTime());
+		userEntity.setName("Tanjina Akter Tamanna");
+		userEntity.setEmail("tanjina523@gmail.com");
+		userEntity.setDepartment("BIT");
+		authorities = new HashSet<>();
+		authorities.add(authorityService.findByRoleName("ROLE_STUDENT"));
+		userEntity.setAuthorities(authorities);
+		userEntity.setEnabled(true);
+		userEntity.setPassword(encoder.encode("secret"));
+		userEntity.setUsername("tanjina");
+
+		userImage = new Attachment();
+		attachmentId = System.nanoTime();
+		userImage.setAttachmentId(attachmentId);
+		userImage.setFileName(Long.toString(attachmentId));
+		userImage.setFileTitle("Tanjina Image");
+		userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
+
+		if (!userService.existsWithUsername(userEntity.getUsername())) {
+			attachmentService.save(userImage);
+			userEntity.setUserImage(userImage);
+			userService.createUser(userEntity);
+		}
+
+		// QA Manager
+
 		userEntity = new UserEntity();
 		userEntity.setId(System.nanoTime());
 		userEntity.setName("QA Manager");
@@ -144,8 +179,10 @@ public class Initializer {
 		userImage.setFileTitle("qa manager image");
 		userImage.setFileURL("/resources/contents/lib/img/user1-128x128.jpg");
 
-		attachmentService.save(userImage);
-		userEntity.setUserImage(userImage);
-		userService.createUser(userEntity);
+		if (!userService.existsWithUsername(userEntity.getUsername())) {
+			attachmentService.save(userImage);
+			userEntity.setUserImage(userImage);
+			userService.createUser(userEntity);
+		}
 	}
 }

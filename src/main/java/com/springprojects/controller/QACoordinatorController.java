@@ -1,6 +1,5 @@
 package com.springprojects.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -58,8 +57,8 @@ import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
 
 @Controller
-@RequestMapping("/student")
-public class StudentController {
+@RequestMapping("/qa_coordinator")
+public class QACoordinatorController {
 
 	@Autowired
 	private TagService tagService;
@@ -80,7 +79,7 @@ public class StudentController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
 	public String studentDashboard_GET() {
-		return "redirect:/student/timeline";
+		return "redirect:/qa_coordinator/timeline";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/post-new-idea")
@@ -94,7 +93,7 @@ public class StudentController {
 				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
 
 		model.addAttribute("categories", tags);
-		logger.info("Student -> Post new idea : ");
+		logger.info("qa_coordinator -> Post new idea : ");
 		return "/student_template/post_an_idea";
 	}
 
@@ -111,17 +110,9 @@ public class StudentController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Tag tag = tagService.findByTagName(tagName);
 		if (tag.getClosingDate().getTime() < System.currentTimeMillis()) {
-			model.addAttribute("idea", new Idea());
-			model.addAttribute("usr", userEntity);
-			List<Tag> tags = tagService.listAllTags();
-			tags.removeIf(
-					t -> tag.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
-
-			model.addAttribute("categories", tags);
-			
 			model.addAttribute("ok", "false");
 			model.addAttribute("msg", "Sorry, The category expired.");
-			return "/student_template/post_an_idea";
+			return "";
 		}
 		idea.setTag(tagService.findByTagName(tagName));
 		idea.setAuthorEmail(userEntity.getEmail());
@@ -132,44 +123,6 @@ public class StudentController {
 		Set<Attachment> attachments = new HashSet<>();
 		if (files[0].getOriginalFilename().contains(".")) {
 			for (MultipartFile file : files) {
-				if(file.getSize()>25000000L) {
-					model.addAttribute("idea", new Idea());
-					model.addAttribute("usr", userEntity);
-					List<Tag> tags = tagService.listAllTags();
-					tags.removeIf(
-							t -> tag.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
-
-					model.addAttribute("categories", tags);
-					
-					model.addAttribute("ok", "false");
-					model.addAttribute("msg", "Sorry, The file size is too large.");
-					return "/student_template/post_an_idea";					
-				}
-				if(
-						!file.getOriginalFilename().contains(".pdf") 
-						|| !file.getOriginalFilename().contains(".doc")
-						|| !file.getOriginalFilename().contains(".docx")
-						|| !file.getOriginalFilename().contains(".jpg")
-						|| !file.getOriginalFilename().contains(".png")
-						|| !file.getOriginalFilename().contains(".gif")
-						|| !file.getOriginalFilename().contains(".bmp")
-						|| !file.getOriginalFilename().contains(".mp4")
-						|| !file.getOriginalFilename().contains(".wmv")
-						|| !file.getOriginalFilename().contains(".mkv")
-						|| !file.getOriginalFilename().contains(".webm")
-					) {
-					model.addAttribute("idea", new Idea());
-					model.addAttribute("usr", userEntity);
-					List<Tag> tags = tagService.listAllTags();
-					tags.removeIf(
-							t -> tag.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
-
-					model.addAttribute("categories", tags);
-					
-					model.addAttribute("ok", "false");
-					model.addAttribute("msg", "Sorry, Unknown file type found.");
-					return "/student_template/post_an_idea";										
-				}
 				Attachment attachment = new Attachment();
 				Long attachmentId = System.currentTimeMillis();
 				attachment.setAttachmentId(attachmentId);
@@ -195,8 +148,8 @@ public class StudentController {
 		activity.setId(userEntity.getId());
 		activity.setLastActivityDateTime(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
 		activityService.saveOrUpdate(activity);
-		logger.info("Student -> Post new idea : ");
-		return "redirect:/student/timeline";
+		logger.info("qa_coordinator -> Post new idea : ");
+		return "redirect:/qa_coordinator/timeline";
 	}
 
 	@RequestMapping(value = "/timeline", method = RequestMethod.GET)
@@ -287,7 +240,7 @@ public class StudentController {
 		model.addAttribute("dates", dates);
 		model.addAttribute("utils", utils);
 		
-		logger.info("Student -> timeline : ");
+		logger.info("qa_coordinator -> timeline : ");
 
 		return "/student_template/timeline";
 	}

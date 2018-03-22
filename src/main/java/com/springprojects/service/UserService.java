@@ -53,6 +53,10 @@ public class UserService implements UserDetailsService {
 		return userRepository.findByEmail(email);
 	}
 	
+	public List<UserEntity> getAllUsers(){
+		return userRepository.findAll();
+	}
+	
 	public boolean createUser(UserEntity user, boolean isTeacher) {
 		if (!existsWithEmail(user.getEmail()) || !existsWithUsername(user.getUsername())) {
 			user.setEnabled(true);
@@ -122,5 +126,16 @@ public class UserService implements UserDetailsService {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void creteOrUpdate(UserEntity userEntity) {
+		if(existsWithEmail(userEntity.getEmail()) || existsWithUsername(userEntity.getUsername())) {
+			UserEntity userEntity2 = userRepository.findByUsername(userEntity.getUsername());
+			userEntity.setId(userEntity2.getId());
+			userRepository.save(userEntity);
+		}else {
+			userRepository.save(userEntity);
+		}
+		
 	}
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--/*/ <th:block th:include="@{includes/includes} :: head"></th:block> /*/-->
+</head>
+
+<body class="hold-transition login-page">
+
+	<div class="login-box">
+		<div class="login-box-body">
+			<h3>Change Password</h3>
+			<!-- /.login-logo -->
+
+
+
+			<form th:action="@{'/'+${userType}+'/change-password'}" method="post">
+				<div th:class="${cssClass}" th:text="${msg}"></div>
+
+				<div class="form-group has-feedback">
+					<label for="inputOldPassword">Old Password</label> <input
+						type="password" name="oldPassword" id="inputOldPassword"
+						class="form-control" placeholder="Old Password" required autofocus />
+					<label for="inputNewPassword">New Password</label> <input
+						type="password" name="inputNewPassword" id="inputNewPassword"
+						class="form-control" placeholder="New Password" required autofocus />
+					<label for="reInputNewPassword">Re-enter New Password</label> <input
+						type="password" name="reInputNewPassword" id="reInputNewPassword"
+						class="form-control" placeholder="Password" required />
+
+				</div>
+
+				<div class="row">
+					<!-- /.col -->
+					<div class="col-xs-4">
+						<button type="submit" class="btn btn-primary btn-block btn-flat">Submit</button>
+					</div>
+					<!-- /.col -->
+				</div>
+			</form>
+
+			<hr>
+			<h3>Change Profile Picture</h3>
+			<form th:action="@{'/'+${userType}+'/change-profile-picture'}"
+				method="post" enctype="multipart/form-data">
+
+				<div class="form-group">
+					<label for="inputImage">Update Photo</label> <input type="file"
+						name="image" id="inputImage" class="form-control"
+						accept="image/*" placeholder="Profile image" required autofocus />
+
+				</div>
+
+				<div class="row">
+					<!-- /.col -->
+					<div class="col-xs-4">
+						<button type="submit" class="btn btn-primary btn-block btn-flat">Submit</button>
+					</div>
+					<!-- /.col -->
+				</div>
+
+			</form>
+		</div>
+		<!-- /.login-box-body -->
+		<hr>
+		<a th:href="@{/dashboard}" class="btn btn-primary btn-block btn-flat">Return to Dashboard</a>
+	</div>
+	<!-- /.login-box -->
+
+	<!-- jQuery 3 -->
+	<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- iCheck -->
+	<script src="../../plugins/iCheck/icheck.min.js"></script>
+	<script>
+		$(function() {
+			$('input').iCheck({
+				checkboxClass : 'icheckbox_square-blue',
+				radioClass : 'iradio_square-blue',
+				increaseArea : '20%' // optional
+			});
+		});
+	</script>
+
+
+</body>
+
+<!--/*/ <th:block th:include="@{includes/includes} :: js_components_bottom"></th:block> /*/-->
+</html>

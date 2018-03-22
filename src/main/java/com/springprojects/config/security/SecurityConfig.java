@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("QA_MANAGER")
                 .antMatchers("/student/**")
                 .hasRole("STUDENT")
-                .antMatchers("/dashboard", "/ideas", "/ideas/**","/download**")
+                .antMatchers("/dashboard", "/ideas", "/ideas/**","/download**", "/profile**", "/footer", "/main-header", "/post-new-idea")
                 .authenticated()
                 .and()
                 .formLogin()

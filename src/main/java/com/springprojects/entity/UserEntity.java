@@ -9,7 +9,10 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -53,8 +56,12 @@ public class UserEntity implements UserDetails, Serializable {
 	private boolean credentialsNonExpired = true;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+    public List<Authority> getAuthorities() {
+        List<Authority> authorities = new ArrayList<>();
+        this.authorities.forEach(authority->{
+        	authorities.add(authority);
+        });
+    	return authorities;
     }
 
     @Override

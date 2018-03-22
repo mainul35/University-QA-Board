@@ -27,7 +27,7 @@ public class Mailer {
 		
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("garciaplumbing3@gmail.com", "celloviii1");
+                return new PasswordAuthentication("teamg5.bit@gmail.com", "bit12345");
 
             }
         });

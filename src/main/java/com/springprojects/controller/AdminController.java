@@ -1,10 +1,13 @@
 package com.springprojects.controller;
 
+import com.springprojects.config.Mailer;
 import com.springprojects.config.Utils;
 import com.springprojects.entity.Authority;
+import com.springprojects.entity.Notification;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
 import com.springprojects.service.AuthorityService;
+import com.springprojects.service.NotificationService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -41,7 +47,9 @@ public class AdminController {
 	private TagService tagService;
 	@Autowired
 	private Utils utils;
-
+	@Autowired
+	private NotificationService notificationService;
+	
 	private Logger logger = Logger.getLogger(AdminController.class.getName());
 
 	@RequestMapping("/dashboard")
@@ -155,6 +163,36 @@ public class AdminController {
 			model.addAttribute("isOk", "false");
 		} else {
 			model.addAttribute("isOk", "true");
+			InetAddress IP = null;
+			try {
+				IP = Inet4Address.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			List<UserEntity> userEntities = userService.getAllUsers();
+			
+			for (UserEntity userEntity2 : userEntities) {
+				Mailer.sendMail(
+						userEntity2.getEmail(), 
+						"EWSD - A new category has been opened.",
+						"A new category has been opened. \n To post an idea, please click on the link below. \n http://" + IP.getHostAddress() + ":8080/ewsd/post-new-idea");
+			
+				Notification notification = new Notification();
+				notification.setNotificationId(tag.getTagId());
+				notification.setNotificationMsg("A new category has been opened.");
+				notification.setNotificationType("announcement");
+				notification.setNotificationUrl("http://" + IP.getHostAddress() + ":8080/ewsd/post-new-idea");
+				notification.setNotifyTo(userEntity2);
+				notification.setNotificationFrom(userEntity);
+				notification.setSeen("no");
+				
+				notificationService.save(notification);
+			
+			}
+			
+			
+			
 		}
 		model.addAttribute("tag", tag);
 		return "/admin_template/index";

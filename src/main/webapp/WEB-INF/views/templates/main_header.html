@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<header class="main-header">
+	<!-- Logo -->
+	<a th:href="@{/}" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+		<span class="logo-mini"><b>A</b>LT</span> <!-- logo for regular state and mobile devices -->
+		<span class="logo-lg"><b>EWSD</b></span>
+	</a>
+	<!-- Header Navbar: style can be found in header.less -->
+	<nav class="navbar navbar-static-top">
+		<!-- Sidebar toggle button-->
+		<a href="#" class="sidebar-toggle" data-toggle="push-menu"
+			role="button"> <span class="sr-only">Toggle navigation</span>
+		</a>
+
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav">
+				<!-- Messages: style can be found in dropdown.less-->
+				
+				<!-- ###################################	Notifications	############################################### -->
+				
+				<li class="dropdown notifications-menu"  sec:authorize="!hasRole('ROLE_ADMIN')"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"> <i
+						class="fa fa-bell-o"></i> <span class="label label-warning" th:text="${unreadNotifications}"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li class="header">You have <span th:text="${unreadNotifications}"></span> unread notifications</li>
+						
+						<li>
+							<!-- inner menu: contains the actual data -->
+							<ul class="menu">
+								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='no'" style="background-color:#cccccc;">
+									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
+										<div class="pull-left">
+											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+										</div>
+										<h4>
+											<span th:text="${notification.notificationFrom.name}"></span>
+										</h4>
+										<p th:text="${notification.notificationMsg}"></p>
+										
+								</a>
+								
+								</li>
+								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='yes'">
+									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
+										<div class="pull-left">
+											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+										</div>
+										<h4>
+											<span th:text="${notification.notificationFrom.name}"></span>
+										</h4>
+										<p th:text="${notification.notificationMsg}"></p>
+										
+								</a>
+								
+								</li>
+							</ul>
+						</li>
+						<li class="footer"><a th:href="@{/all-notifications}">View all Notifications</a></li>
+					</ul></li>
+				
+				<!-- ###################################	Announcements	############################################### -->
+				
+				<li class="dropdown notifications-menu"  sec:authorize="!hasRole('ROLE_ADMIN')"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"> <i
+						class="fa fa-bell-o"></i> <span class="label label-warning" th:text="${unreadAnnouncements}"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li class="header">You have <span th:text="${unreadAnnouncements}"></span> unread announcements</li>
+						
+						<li>
+							<!-- inner menu: contains the actual data -->
+							<ul class="menu">
+								<li  th:each="notification : ${announcements}"   th:if="${notification.seen}=='no'" style="background-color:#cccccc;">
+									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
+										<div class="pull-left">
+											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+										</div>
+										<h4>
+											<span th:text="${notification.notificationFrom.name}"></span>
+										</h4>
+										<p th:text="${notification.notificationMsg}"></p>
+										
+								</a>
+								
+								</li>
+								
+								<li  th:each="notification : ${announcements}" th:if="${notification.seen}=='yes'">
+									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
+										<div class="pull-left">
+											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+										</div>
+										<h4>
+											<span th:text="${notification.notificationFrom.name}"></span>
+										</h4>
+										<p th:text="${notification.notificationMsg}"></p>
+										
+								</a>
+								
+								</li>
+							</ul>
+						</li>
+						<li class="footer"><a th:href="@{/all-notifications}">View all Announcements</a></li>
+					</ul></li>
+					
+					
+				<!-- User Account: style can be found in dropdown.less -->
+				<li class="dropdown user user-menu"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"> <img
+						th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
+						class="user-image" alt="User Image"> <span class="hidden-xs"
+						th:text="${usr.name}"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<!-- User image -->
+						<li class="user-header"><img
+							th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
+							class="img-circle" alt="User Image">
+							<p>
+								<th:block th:text="${usr.name}"></th:block>
+							</p></li>
+						<!-- Menu Body -->
+
+						<!-- Menu Footer-->
+						<li class="user-footer">
+							<div class="pull-left">
+								<a th:href="@{'/'+${userType}+'/update-profile'}"
+									class="btn btn-default btn-flat">Update Profile</a>
+							</div>
+							<div class="pull-right">
+								<a th:href="@{/logout}" class="btn btn-default btn-flat">Sign
+									out</a>
+							</div>
+						</li>
+					</ul></li>
+				<!-- Control Sidebar Toggle Button -->
+
+			</ul>
+		</div>
+	</nav>
+</header>
+</html>

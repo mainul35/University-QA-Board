@@ -7,6 +7,7 @@ import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Authority;
 import com.springprojects.entity.Comment;
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.Notification;
 import com.springprojects.entity.Reaction;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
@@ -15,12 +16,14 @@ import com.springprojects.service.AuthorityService;
 import com.springprojects.service.CommentService;
 import com.springprojects.service.ContributionService;
 import com.springprojects.service.IdeaService;
+import com.springprojects.service.NotificationService;
 import com.springprojects.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DevicePlatform;
 import org.springframework.mobile.device.DeviceType;
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -63,6 +67,8 @@ public class UserController {
 	private CommentService commentService;
 	@Autowired
 	private ContributionService contributionService;
+	@Autowired
+	private NotificationService notificationService;
 	private int index = 0;
 
 	// @RequestMapping(value = {"/"})
@@ -143,8 +149,8 @@ public class UserController {
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String dashboard_GET(HttpSession session, Model model) {
-		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
 		model.addAttribute("username", session.getAttribute("username").toString());
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
 		for (Authority authority : authorities) {
 			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
 				logger.info("Redirecting to Admin Dashboard ");
@@ -218,13 +224,165 @@ public class UserController {
 		return "/templates/update_password";
 	}
 
+	@RequestMapping(value = "/main-header", method = RequestMethod.GET)
+	public String mainHeader_GET(Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
+		List<Notification> notifications = new ArrayList<>();
+		int x = 0;
+		String userType = "";
+		for (Authority authority : authorities) {
+			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
+				userType = "admin";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")) {
+				userType = "student";
+				List<Notification> notifications2 = notificationService.findNotificationsByUser(userEntity);
+				for (Notification notification : notifications2) {
+					if(notification.getNotificationType().equalsIgnoreCase("notification")) {
+						for (GrantedAuthority authority2 : notification.getNotificationFrom().getAuthorities()) {
+							if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+								notifications.add(notification);
+								x++;
+							}
+						}
+					}
+					if(x>10) {
+						break;
+					}
+				}
+
+			}
+			
+			if (authority.getAuthority().toUpperCase().equals("ROLE_STAFF")) {
+				List<Notification> notifications2 = notificationService.findNotificationsByUser(userEntity);
+				for (Notification notification : notifications2) {
+					if(notification.getNotificationType().equalsIgnoreCase("notification")  && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+						notifications.add(notification);
+						x++;
+					}					
+					if(x>10) {
+						break;
+					}
+				}
+			}
+		}
+		
+		
+		List<Notification> announcements = new ArrayList<>();
+		x = 0;
+		for (Notification notification : notificationService.findNotificationsByUser(userEntity)) {
+			if(notification.getNotificationType().equalsIgnoreCase("announcement")) {
+				announcements.add(notification);
+				x++;
+			}
+			
+			if(x>10) {
+				break;
+			}
+		}
+		
+		int unreadNotifications = 0;
+		int unreadAnnouncements = 0;
+		for (Notification notification : notificationService.findNotificationsByUser(userEntity)) {
+			if(notification.getNotificationType().equalsIgnoreCase("notification") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+				unreadNotifications++;
+			}
+			
+			if(notification.getNotificationType().equalsIgnoreCase("announcement") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+				unreadAnnouncements++;
+			}
+		}
+		model.addAttribute("notifications", notifications);
+		model.addAttribute("unreadNotifications", unreadNotifications);
+		model.addAttribute("unreadAnnouncements", unreadAnnouncements);
+		model.addAttribute("announcements", announcements);
+		model.addAttribute("id", userEntity.getId());
+		model.addAttribute("usr", userEntity);
+		model.addAttribute("userType", userType);
+		return "/templates/main_header";
+	}
+
+	@RequestMapping(value = {"/footer"}, method = RequestMethod.GET)
+	public String footer_GET() {
+		
+		return "/templates/footer";
+	}
+	
+	@RequestMapping(value="/post-new-idea", method=RequestMethod.GET)
+	public String postAnIdea(HttpSession session) {
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
+		for (Authority authority : authorities) {
+			if (authority.getAuthority().toUpperCase().equals("ROLE_STAFF")) {
+				return "redirect:/staff/post-new-idea";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")) {
+				return "redirect:/student/post-new-idea";
+			}
+		}
+		return "redirect:/dashboard";
+	}
+	@RequestMapping(value = {"/{userType}/update-profile","/{userType}/change-password","/{userType}/change-profile-picture"}, method = RequestMethod.GET)
+	public String updateProfile_GET(@PathVariable("userType") String userType, Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("userType", userType);
+		model.addAttribute("msg", "");
+		model.addAttribute("cssClass", "");
+		return "/templates/update_profile";
+	}
+
+	@RequestMapping(value = "/{userType}/change-password", method = RequestMethod.POST)
+	public String changePassword_POST(
+			Model model,
+			@PathVariable("userType") String userType,
+			@RequestParam("oldPassword") String oldPassword, 
+			@RequestParam("inputNewPassword") String newPassword, 
+			@RequestParam("reInputNewPassword") String reNewPassword, 
+			HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		if (encoder.matches(oldPassword,userEntity.getPassword())) {
+			if(newPassword.equals(reNewPassword)) {
+				userEntity.setPassword(encoder.encode(newPassword));
+				userService.updateUser(userEntity);
+				model.addAttribute("msg", "Password changed successfully.");
+				model.addAttribute("cssClass", "alert alert-success");
+				System.out.println("Password changed");
+			}else {
+				model.addAttribute("msg", "Sorry, the new passphrases did not match.");
+				model.addAttribute("cssClass", "alert alert-danger");
+				System.out.println("Password not changed");
+			}
+		} else {
+			model.addAttribute("msg", "Sorry, the old password you entered doesn't exist.");
+			model.addAttribute("cssClass", "alert alert-danger");
+		}
+		model.addAttribute("userType", userType);
+		return "/templates/update_profile";
+	}
+
+	@RequestMapping(value = {"/{userType}/change-profile-picture"}, method = RequestMethod.POST)
+	public String updateProfilePhoto_POST(Model model, HttpSession session, @RequestParam(name = "image") MultipartFile file) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		Attachment attachment = new Attachment();
+		attachment.setAttachmentId(userEntity.getUserImage().getAttachmentId());
+		attachment.setFileName("" + userEntity.getUserImage().getAttachmentId());
+		attachment.setFileTitle(Long.toString(userEntity.getId()));
+		attachmentService.save(attachment,file,userEntity.getId());
+		userEntity.setUserImage(attachment);
+		userService.creteOrUpdate(userEntity);
+		return "redirect:/dashboard";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/control-sidebar")
+	public String controlSideBar_GET() {
+		return "templates/control_sidebar";
+	}
+	
 	@RequestMapping(value = "/ideas", method = RequestMethod.GET)
 	public String ideas_GET(HttpSession session, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 
 		int resultPerPage = 5;
-
+		
 		List<Idea> ideas = new ArrayList<>();
 		ideaService.getPageOfIdeas(pageNumber, resultPerPage).iterator().forEachRemaining(idea -> {
 			ideas.add(idea);
@@ -295,7 +453,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/ideas/{id}")
-	public String readFullPost_GET(HttpSession session, Model model, @PathVariable("id") Long id) {
+	public String readFullPost_GET(HttpSession session, Model model, @PathVariable("id") Long id, @RequestParam(name="notif_id", defaultValue="") String notificationId) {
+		
+		if(!notificationId.isEmpty() && Character.isDigit(notificationId.charAt(0))) {
+			Notification notification = notificationService.findById(Long.parseLong(notificationId)); 
+			notification.setSeen("yes");
+			notificationService.update(notification);
+		}
+		
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Idea idea = ideaService.getIdea(id);
 		idea.getComments().clear();
