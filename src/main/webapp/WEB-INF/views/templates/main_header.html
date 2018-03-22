@@ -24,7 +24,7 @@
 				
 				<li class="dropdown notifications-menu"  sec:authorize="!hasRole('ROLE_ADMIN')"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <i
-						class="fa fa-bell-o"></i> <span class="label label-warning" th:text="${unreadNotifications}"></span>
+						class="fa fa-bell-o"></i> <span th:if="${unreadNotifications}!=0" class="label label-warning" th:text="${unreadNotifications}"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li class="header">You have <span th:text="${unreadNotifications}"></span> unread notifications</li>
@@ -60,14 +60,16 @@
 								</li>
 							</ul>
 						</li>
-						<li class="footer"><a th:href="@{/all-notifications}">View all Notifications</a></li>
+						<li class="footer">
+						<a href="#">View all Notifications</a>
+						</li>
 					</ul></li>
 				
 				<!-- ###################################	Announcements	############################################### -->
 				
 				<li class="dropdown notifications-menu"  sec:authorize="!hasRole('ROLE_ADMIN')"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <i
-						class="fa fa-bell-o"></i> <span class="label label-warning" th:text="${unreadAnnouncements}"></span>
+						class="fa  fa-bullhorn"></i> <span class="label label-warning" th:if="${unreadNotifications}!=0" th:text="${unreadAnnouncements}"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li class="header">You have <span th:text="${unreadAnnouncements}"></span> unread announcements</li>
@@ -104,7 +106,7 @@
 								</li>
 							</ul>
 						</li>
-						<li class="footer"><a th:href="@{/all-notifications}">View all Announcements</a></li>
+						<li class="footer"><a href="#">View all Announcements</a></li>
 					</ul></li>
 					
 					

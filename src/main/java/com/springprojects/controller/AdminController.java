@@ -176,13 +176,13 @@ public class AdminController {
 				Mailer.sendMail(
 						userEntity2.getEmail(), 
 						"EWSD - A new category has been opened.",
-						"A new category has been opened. \n To post an idea, please click on the link below. \n http://" + IP.getHostAddress() + ":8080/ewsd/post-new-idea");
+						"A new category has been opened. \n To post an idea, please click on the link below. \n http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
 			
 				Notification notification = new Notification();
 				notification.setNotificationId(tag.getTagId());
 				notification.setNotificationMsg("A new category has been opened.");
 				notification.setNotificationType("announcement");
-				notification.setNotificationUrl("http://" + IP.getHostAddress() + ":8080/ewsd/post-new-idea");
+				notification.setNotificationUrl("http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
 				notification.setNotifyTo(userEntity2);
 				notification.setNotificationFrom(userEntity);
 				notification.setSeen("no");
