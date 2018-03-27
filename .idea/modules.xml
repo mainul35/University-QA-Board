@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/ewsd-project.iml" filepath="$PROJECT_DIR$/.idea/ewsd-project.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/ewsd.iml" filepath="$PROJECT_DIR$/ewsd.iml" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     </modules>
   </component>
 </project>

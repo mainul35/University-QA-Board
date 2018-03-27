@@ -109,6 +109,5 @@
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.0" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.0" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.sociaal:freetts:1.2.2" level="project" />
   </component>
 </module>

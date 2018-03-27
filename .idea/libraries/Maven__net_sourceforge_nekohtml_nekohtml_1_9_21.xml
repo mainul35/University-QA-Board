@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <component name="libraryTable">
   <library name="Maven: net.sourceforge.nekohtml:nekohtml:1.9.21">
     <CLASSES>
@@ -10,4 +11,18 @@
       <root url="jar://$MAVEN_REPOSITORY$/net/sourceforge/nekohtml/nekohtml/1.9.21/nekohtml-1.9.21-sources.jar!/" />
     </SOURCES>
   </library>
+=======
+<component name="libraryTable">
+  <library name="Maven: net.sourceforge.nekohtml:nekohtml:1.9.21">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sourceforge/nekohtml/nekohtml/1.9.21/nekohtml-1.9.21.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sourceforge/nekohtml/nekohtml/1.9.21/nekohtml-1.9.21-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sourceforge/nekohtml/nekohtml/1.9.21/nekohtml-1.9.21-sources.jar!/" />
+    </SOURCES>
+  </library>
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
 </component>

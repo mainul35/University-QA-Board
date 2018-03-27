@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="ewsd-project:war exploded" />
@@ -44,6 +45,11 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/springprojects/service/AuthorityService.class" afterPath="$PROJECT_DIR$/target/classes/com/springprojects/service/AuthorityService.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/springprojects/service/UserService.class" afterPath="$PROJECT_DIR$/target/classes/com/springprojects/service/UserService.class" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ResourceMonitor.class" afterPath="$PROJECT_DIR$/target/test-classes/ResourceMonitor.class" />
+=======
+  <component name="ChangeListManager">
+    <list default="true" id="0589a335-b9ae-41ee-ad7c-b1effb3585fc" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ewsd.iml" afterPath="" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,6 +60,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
     <leaf>
       <file leaf-file-name="manage_tags.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/qa_manager_template/manage_tags.html">
@@ -108,6 +115,9 @@
         </entry>
       </file>
     </leaf>
+=======
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -117,6 +127,7 @@
       <projects_view />
     </option>
   </component>
+<<<<<<< HEAD
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -127,12 +138,15 @@
       </list>
     </option>
   </component>
+=======
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+<<<<<<< HEAD
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -146,6 +160,15 @@
     <option name="width" value="1386" />
     <option name="height" value="788" />
   </component>
+=======
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="615" />
+    <option name="y" value="85" />
+    <option name="width" value="1370" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -161,10 +184,15 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+=======
+      <pane id="PackagesPane" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
+<<<<<<< HEAD
               <item name="ewsd-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -176,31 +204,60 @@
             <path>
               <item name="ewsd-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ewsd" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ewsd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ewsd" type="462c0819:PsiDirectoryNode" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
+<<<<<<< HEAD
               <item name="ewsd-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ewsd" type="462c0819:PsiDirectoryNode" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
+<<<<<<< HEAD
               <item name="ewsd-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ewsd" type="462c0819:PsiDirectoryNode" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="springprojects" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
+<<<<<<< HEAD
               <item name="ewsd-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ewsd" type="462c0819:PsiDirectoryNode" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="springprojects" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -236,20 +293,30 @@
               <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="qa_manager_template" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
       <pane id="Scratches" />
       <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
+=======
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< HEAD
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="" />
@@ -257,6 +324,9 @@
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="SearchEverywhereHistoryKey" value="ta&#9;PSI&#9;JAVA://com.springprojects.entity.Tag" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -272,11 +342,18 @@
   </component>
   <component name="RunManager">
     <configuration default="true" type="Applet" factoryName="Applet">
+<<<<<<< HEAD
       <module />
+=======
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+<<<<<<< HEAD
+=======
+      <module />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -303,7 +380,11 @@
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
+<<<<<<< HEAD
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+=======
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
@@ -312,6 +393,15 @@
       <envs />
       <patterns />
     </configuration>
+<<<<<<< HEAD
+=======
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -332,7 +422,11 @@
       <option name="TEST_OBJECT" value="CLASS" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
+<<<<<<< HEAD
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+=======
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
       <option name="OUTPUT_DIRECTORY" />
       <option name="ANNOTATION_TYPE" />
       <option name="ENV_VARIABLES" />
@@ -346,6 +440,7 @@
       <properties />
       <listeners />
     </configuration>
+<<<<<<< HEAD
     <configuration name="Unnamed" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.5" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
@@ -425,10 +520,13 @@
       <option name="PROGRAM_PARAMETERS" />
       <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
+=======
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+<<<<<<< HEAD
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -440,10 +538,23 @@
       <option name="presentableId" value="Default" />
       <updated>1521818277216</updated>
       <workItem from="1521818280247" duration="2545000" />
+=======
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0589a335-b9ae-41ee-ad7c-b1effb3585fc" name="Default" comment="" />
+      <created>1521962703411</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1521962703411</updated>
+      <workItem from="1521962707155" duration="992000" />
+      <workItem from="1521965145183" duration="1334000" />
+      <workItem from="1521978929507" duration="1285000" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="2545000" />
   </component>
   <component name="ToolWindowManager">
@@ -480,6 +591,42 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+=======
+    <option name="totallyTimeSpent" value="3611000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="54" y="-8" width="1320" height="784" extended-state="6" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25396827" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,6 +640,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/qa_manager_template/manage_tags.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -532,6 +680,83 @@
         <state relative-caret-position="1052">
           <caret line="65" column="58" lean-forward="true" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="58" />
           <folding />
+=======
+    <entry file="uml://JAVA/com.springprojects.repository">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>com.springprojects.repository</OriginalElement>
+          <nodes>
+            <node x="0.0" y="423.0">com.springprojects.repository.ReactionRepository</node>
+            <node x="0.0" y="304.0">com.springprojects.repository.CommentRepository</node>
+            <node x="0.0" y="163.0">com.springprojects.repository.NotificationRepository</node>
+            <node x="280.0" y="617.0">com.springprojects.repository.TagRepository</node>
+            <node x="392.0" y="520.0">com.springprojects.repository.AuthorityRepository</node>
+            <node x="388.0" y="163.0">com.springprojects.repository.UserRepository</node>
+            <node x="0.0" y="520.0">com.springprojects.repository.ContributionRepository</node>
+            <node x="0.0" y="617.0">com.springprojects.repository.ActivityRepository</node>
+            <node x="0.0" y="0.0">com.springprojects.repository.IdeaRepository</node>
+            <node x="0.0" y="714.0">com.springprojects.repository.AttachmentRepository</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="-36.0" y="107.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JavaScript-modules-diagram/D:/bitewsd/ewsd/src/main/java/com/springprojects/entity">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JavaScript-modules-diagram</ID>
+          <OriginalElement>$PROJECT_DIR$/src/main/java/com/springprojects/entity</OriginalElement>
+          <nodes />
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="240.0" y="240.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>All</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>Details</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/com.springprojects.entity">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>com.springprojects.entity</OriginalElement>
+          <nodes>
+            <node x="" y="">com.springprojects.entity.Idea</node>
+            <node x="" y="">com.springprojects.entity.Activity</node>
+            <node x="" y="">com.springprojects.entity.Authority</node>
+            <node x="" y="">com.springprojects.entity.Reaction</node>
+            <node x="" y="">com.springprojects.entity.Notification</node>
+            <node x="" y="">com.springprojects.entity.Attachment</node>
+            <node x="" y="">com.springprojects.entity.UserEntity</node>
+            <node x="" y="">com.springprojects.entity.Comment</node>
+            <node x="" y="">com.springprojects.entity.Tag</node>
+            <node x="" y="">com.springprojects.entity.Contribution</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="334.0" y="165.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
         </state>
       </provider>
     </entry>
@@ -540,7 +765,11 @@
     <states>
       <state key="ProjectJDKs.UI">
         <settings>
+<<<<<<< HEAD
           <last-edited>9.0</last-edited>
+=======
+          <last-edited>1.8</last-edited>
+>>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
           <splitter-proportions>
             <option name="proportions">
               <list>
