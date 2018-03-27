@@ -39,4 +39,15 @@ public class TagService {
 		// TODO Auto-generated method stub
 		return tagRepository.findAll();
 	}
+
+	public Tag findById(Long tagId) {
+		// TODO Auto-generated method stub
+		return tagRepository.findOne(tagId);
+	}
+
+	public boolean delete(Tag tag) {
+		// TODO Auto-generated method stub
+		tagRepository.delete(tag);
+		return true;
+	}
 }

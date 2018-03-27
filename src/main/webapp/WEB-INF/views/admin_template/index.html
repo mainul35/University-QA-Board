@@ -60,29 +60,13 @@
 
 
 					<li class="header">MAIN NAVIGATION</li>
-					<!-- 					<li class="active treeview menu-open"><a href="#"> <i -->
-					<!-- 							class="fa fa-dashboard"></i> <span>Manage Roles</span> <span -->
-					<!-- 							class="pull-right-container"> <i -->
-					<!-- 								class="fa fa-angle-left pull-right"></i> -->
-					<!-- 						</span> -->
-					<!-- 					</a> -->
-					<!-- 						<ul class="treeview-menu"> -->
-					<!-- 							<li class="active"><a th:href="@{/admin/create-role}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> Create Role</a></li> -->
-					<!-- 							<li><a th:href="@{/admin/view-all-roles}"><i -->
-					<!-- 									class="fa fa-circle-o"></i> View All Roles</a></li> -->
-					<!-- 						</ul></li> -->
-					<li class="treeview"><a href="#"> <i class="fa fa-files-o"></i>
-							<span>Manage Tags</span> <span class="pull-right-container">
-								<i class="fa fa-angle-left pull-right"></i>
-						</span>
-					</a>
-						<ul class="treeview-menu">
-							<li><a th:href="@{/admin/create-tag}"><i
-									class="fa fa-circle-o"></i> Create Tag</a></li>
-							<li><a th:href="@{/admin//view-all-tags}"><i
-									class="fa fa-circle-o"></i> View Tags</a></li>
-						</ul></li>
+					
+					<li><a th:href="@{/admin/manage-batch}">
+							<i class="fa fa-dashboard"></i> <span>Manage Batch</span>
+					</a></li>
+					<li><a th:href="@{/admin/manage-department}">
+							<i class="fa fa-dashboard"></i> <span>Manage Department</span>
+					</a></li>
 
 					<li><a th:href="@{/admin/set-terms-and-conditions}"> <i
 							class="fa fa-th"></i> <span>Set Terms and Conditions</span>

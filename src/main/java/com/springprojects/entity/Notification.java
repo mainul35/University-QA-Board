@@ -23,6 +23,8 @@ public class Notification {
 	private UserEntity notificationFrom;
 	@Column(name="notification_seen")
 	private String seen;
+	@Column(name="notifiable_departments")
+	private String notifiableDepartments;
 	public Long getNotificationId() {
 		return notificationId;
 	}
@@ -59,10 +61,17 @@ public class Notification {
 	public void setNotificationFrom(UserEntity notificationFrom) {
 		this.notificationFrom = notificationFrom;
 	}
+	public String getNotifiableDepartments() {
+		return notifiableDepartments;
+	}
+	public void setNotifiableDepartments(String notifiableDepartments) {
+		this.notifiableDepartments = notifiableDepartments;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((notifiableDepartments == null) ? 0 : notifiableDepartments.hashCode());
 		result = prime * result + ((notificationFrom == null) ? 0 : notificationFrom.hashCode());
 		result = prime * result + ((notificationId == null) ? 0 : notificationId.hashCode());
 		result = prime * result + ((notificationMsg == null) ? 0 : notificationMsg.hashCode());
@@ -72,7 +81,6 @@ public class Notification {
 		result = prime * result + ((seen == null) ? 0 : seen.hashCode());
 		return result;
 	}
-	
 	public String getSeen() {
 		return seen;
 	}
@@ -88,6 +96,11 @@ public class Notification {
 		if (getClass() != obj.getClass())
 			return false;
 		Notification other = (Notification) obj;
+		if (notifiableDepartments == null) {
+			if (other.notifiableDepartments != null)
+				return false;
+		} else if (!notifiableDepartments.equals(other.notifiableDepartments))
+			return false;
 		if (notificationFrom == null) {
 			if (other.notificationFrom != null)
 				return false;
@@ -129,7 +142,8 @@ public class Notification {
 	public String toString() {
 		return "Notification [notificationId=" + notificationId + ", notificationType=" + notificationType
 				+ ", notificationMsg=" + notificationMsg + ", notificationUrl=" + notificationUrl + ", notifyTo="
-				+ notifyTo + ", notificationFrom=" + notificationFrom + ", seen=" + seen + "]";
+				+ notifyTo + ", notificationFrom=" + notificationFrom + ", seen=" + seen + ", notifiableDepartments="
+				+ notifiableDepartments + "]";
 	}
 	
 }

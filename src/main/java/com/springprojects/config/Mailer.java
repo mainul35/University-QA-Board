@@ -41,7 +41,7 @@ public class Mailer {
             Transport.send(message);
             System.out.println("Message sent successfully!");
         } catch (AuthenticationFailedException e) {
-        	Logger.getLogger(Mailer.class.getName()).log(Level.SEVERE, "Error: Username or password didn't match!");
+        	Logger.getLogger(Mailer.class.getName()).log(Level.SEVERE, e.getMessage());
         } catch (MessagingException ex) {
             Logger.getLogger(Mailer.class.getName()).log(Level.SEVERE, null, ex);
         }

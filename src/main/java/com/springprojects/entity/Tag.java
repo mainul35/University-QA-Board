@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,7 +26,10 @@ public class Tag  implements Serializable{
 	private Timestamp closingDate;
 	
 	@Column
-	Timestamp finalClosingDate;
+	private Timestamp finalClosingDate;
+	
+	@Column(name="departments")
+	private String departments;
 	
 	public Long getTagId() {
 		return tagId;
@@ -67,11 +71,21 @@ public class Tag  implements Serializable{
 		this.finalClosingDate = finalClosingDate;
 	}
 
+
+	public String getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(String departments) {
+		this.departments = departments;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((closingDate == null) ? 0 : closingDate.hashCode());
+		result = prime * result + ((departments == null) ? 0 : departments.hashCode());
 		result = prime * result + ((finalClosingDate == null) ? 0 : finalClosingDate.hashCode());
 		result = prime * result + ((openingDate == null) ? 0 : openingDate.hashCode());
 		result = prime * result + ((tagId == null) ? 0 : tagId.hashCode());
@@ -92,6 +106,11 @@ public class Tag  implements Serializable{
 			if (other.closingDate != null)
 				return false;
 		} else if (!closingDate.equals(other.closingDate))
+			return false;
+		if (departments == null) {
+			if (other.departments != null)
+				return false;
+		} else if (!departments.equals(other.departments))
 			return false;
 		if (finalClosingDate == null) {
 			if (other.finalClosingDate != null)
@@ -119,7 +138,7 @@ public class Tag  implements Serializable{
 	@Override
 	public String toString() {
 		return "Tag [tagId=" + tagId + ", tagName=" + tagName + ", openingDate=" + openingDate + ", closingDate="
-				+ closingDate + ", finalClosingDate=" + finalClosingDate + "]";
+				+ closingDate + ", finalClosingDate=" + finalClosingDate + ", departments=" + departments + "]";
 	}
 	
 	

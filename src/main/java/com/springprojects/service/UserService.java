@@ -138,4 +138,8 @@ public class UserService implements UserDetailsService {
 		}
 		
 	}
+	
+	public List<UserEntity> getUsersByDepartment(String department){
+		return userRepository.findByDepartment(department);
+	}
 }

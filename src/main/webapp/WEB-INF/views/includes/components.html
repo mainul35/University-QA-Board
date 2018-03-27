@@ -294,9 +294,9 @@
 			accept=" .wma, .mp3, .mp4, .avi, .wmv, .doc, .docx, image/*" />
 	</div>
 	<div class="row">
-		<div class="form-group col-sm-2 col-lg-2 col-xl-2 col-md-2 col-xs-2">
+		<div class="form-group col-sm-2">
 			<a onclick="showTermsAndConditions();"
-				class="btn btn-block btn-primary">Post</a>
+				class="btn btn-block btn-primary btn-sm">Post</a>
 		</div>
 	</div>
 
@@ -373,18 +373,17 @@
 		</div>
 	</div>
 	<script type="text/javascript" th:inline="javascript">
-		let tagName = $('#tagName option:selected').val();
+		var tagName = $('#tagName option:selected').val();
 		let tags = /*[[${categories}]]*/;
 		let tagEndingDate = '';
 		for(var i = 0; i<tags.length; i++){
-			if(tags[i].tagName==tagname){
+			if(tags[i].tagName==tagName){
 				tagEndingDate = tags[i].finalClosingDate;
 			}
 		}
 		
 		let submissionDateTime = new Date();
-		
-		if(submissionDateTime.getTime() > tagEndingDate.getTime()){
+		if(submissionDateTime.getTime() > tagEndingDate){
 			$("#agree-and-post-idea").click(function(e) { e.preventDefault(); });
 		}
 		
@@ -565,75 +564,6 @@
 <!-- Start of listAllTags -->
 
 <th:block th:fragment="listAllTags(tags='')">
-	<div class="box">
-		<div class="box-header">
-			<h4 class="box-title">All Tags</h4>
-		</div>
-		<!-- /.box-header -->
-		<div class="box-body">
-			<div id="example2_wrapper"
-				class="dataTables_wrapper form-inline dt-bootstrap">
-				<div class="row">
-					<div class="col-sm-6"></div>
-					<div class="col-sm-6"></div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<table id="example2"
-							class="table table-bordered table-hover dataTable" role="grid"
-							aria-describedby="example2_info">
-							<thead>
-								<tr role="row">
-
-									<th class="sorting" tabindex="0" aria-controls="example2"
-										rowspan="1" colspan="1"
-										aria-label="Browser: activate to sort column ascending">No</th>
-
-									<th class="sorting" tabindex="0" aria-controls="example2"
-										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Tag
-										Name</th>
-									<th class="sorting" tabindex="0" aria-controls="example2"
-										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Opening
-										date</th>
-									<th class="sorting" tabindex="0" aria-controls="example2"
-										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Closure
-										Date</th>
-									<th class="sorting" tabindex="0" aria-controls="example2"
-										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Final
-										Closure Date</th>
-									<th class="sorting" tabindex="0" aria-controls="example2"
-										rowspan="1" colspan="1"
-										aria-label="Platform(s): activate to sort column ascending">Linked
-										Ideas</th>
-								</tr>
-							</thead>
-							<tbody>
-								<th:block th:each="tag,iterationStatus  : ${tags}">
-									<tr role="row" class="odd">
-										<td th:text="${iterationStatus.count}"></td>
-										<td th:text=${tag.tagName}></td>
-										<td
-											th:text="${#dates.format(tag.openingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
-										<td
-											th:text="${#dates.format(tag.closingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
-										<td
-											th:text="${#dates.format(tag.finalClosingDate, 'dd-MM-yyyy hh:mm:ss aaa')}"></td>
-										<td><a class="btn btn-block btn-default btn-sm" href="#"
-											th:text="${'Linked ideas'}"></a></td>
-									</tr>
-								</th:block>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /.box-body -->
-	</div>
 </th:block>
 
 <!-- End of listAllRoles -->

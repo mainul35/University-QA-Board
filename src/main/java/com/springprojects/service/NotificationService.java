@@ -42,4 +42,9 @@ public class NotificationService {
 		// TODO Auto-generated method stub
 		notificationRepository.save(notificaiton);
 	}
+
+	public void delete(Notification notification) {
+		// TODO Auto-generated method stub
+		notificationRepository.delete(notification);
+	}
 }

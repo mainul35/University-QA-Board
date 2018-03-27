@@ -15,6 +15,7 @@ import com.springprojects.service.AttachmentService;
 import com.springprojects.service.AuthorityService;
 import com.springprojects.service.CommentService;
 import com.springprojects.service.ContributionService;
+import com.springprojects.service.DepartmentService;
 import com.springprojects.service.IdeaService;
 import com.springprojects.service.NotificationService;
 import com.springprojects.service.UserService;
@@ -69,6 +70,10 @@ public class UserController {
 	private ContributionService contributionService;
 	@Autowired
 	private NotificationService notificationService;
+	@Autowired
+	private DepartmentService departmentService;
+
+
 	private int index = 0;
 
 	// @RequestMapping(value = {"/"})
@@ -97,7 +102,7 @@ public class UserController {
 		if (sitePreference == SitePreference.NORMAL) {
 			log(request);
 			model.addAttribute("msg", "some message");
-			Initializer initializer = new Initializer(authorityService, userService, attachmentService, encoder);
+			Initializer initializer = new Initializer(authorityService, userService, attachmentService, departmentService, encoder);
 			return "/templates/login";
 		} else if (sitePreference == SitePreference.MOBILE) {
 			logger.info("Site preference is mobile");
@@ -158,6 +163,12 @@ public class UserController {
 			} else if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")) {
 				logger.info("Redirecting to Student Dashboard ");
 				return "redirect:/student/dashboard";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_MANAGER")) {
+				logger.info("Redirecting to QA Manager Dashboard ");
+				return "redirect:/qa_manager/dashboard";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_COORDINATOR")) {
+				logger.info("Redirecting to QA Coordinator Dashboard ");
+				return "redirect:/qa_coordinator/dashboard";
 			}
 		}
 		logger.info("Redirecting to Default user Dashboard ");
@@ -284,12 +295,14 @@ public class UserController {
 		int unreadNotifications = 0;
 		int unreadAnnouncements = 0;
 		for (Notification notification : notificationService.findNotificationsByUser(userEntity)) {
-			if(notification.getNotificationType().equalsIgnoreCase("notification") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
-				unreadNotifications++;
-			}
-			
-			if(notification.getNotificationType().equalsIgnoreCase("announcement") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
-				unreadAnnouncements++;
+			if(notification.getNotifiableDepartments()!=null && notification.getNotifiableDepartments().contains(userEntity.getDepartment())) {
+				if(notification.getNotificationType().equalsIgnoreCase("notification") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+					unreadNotifications++;
+				}
+				
+				if(notification.getNotificationType().equalsIgnoreCase("announcement") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+					unreadAnnouncements++;
+				}
 			}
 		}
 		model.addAttribute("notifications", notifications);
@@ -376,6 +389,7 @@ public class UserController {
 		return "templates/control_sidebar";
 	}
 	
+	@SuppressWarnings({ "unchecked", "unused" })
 	@RequestMapping(value = "/ideas", method = RequestMethod.GET)
 	public String ideas_GET(HttpSession session, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
@@ -435,6 +449,20 @@ public class UserController {
 		}
 		int totalResults = ideas.size();
 		
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
+		String userType = "";
+		for (Authority authority : authorities) {
+			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
+				userType = "admin";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")) {
+				userType = "student";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_MANAGER")) {
+				userType = "qa_manager";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_COORDINATOR")) {
+				userType = "qa_coordinator";
+			}
+		}
+		
 		int pages = (int) Math.ceil(((double) ideaService.count()) / resultPerPage);
 
 		model.addAttribute("pages",
@@ -447,6 +475,7 @@ public class UserController {
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("dates", dates);
 		model.addAttribute("utils", utils);
+		model.addAttribute("userType", userType);
 		logger.info("templates -> ideas : ");
 
 		return "/templates/ideas";
@@ -455,6 +484,8 @@ public class UserController {
 	@RequestMapping(value = "/ideas/{id}")
 	public String readFullPost_GET(HttpSession session, Model model, @PathVariable("id") Long id, @RequestParam(name="notif_id", defaultValue="") String notificationId) {
 		
+		@SuppressWarnings("unchecked")
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
 		if(!notificationId.isEmpty() && Character.isDigit(notificationId.charAt(0))) {
 			Notification notification = notificationService.findById(Long.parseLong(notificationId)); 
 			notification.setSeen("yes");
@@ -494,15 +525,29 @@ public class UserController {
 	
 		timeline.setTotalComments(idea.getComments().size());		
 		
+		String userType = "";
+		for (Authority authority : authorities) {
+			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
+				userType = "admin";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")) {
+				userType = "student";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_MANAGER")) {
+				userType = "qa_manager";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_COORDINATOR")) {
+				userType = "qa_coordinator";
+			}
+		}
 		List<Idea> ideasByTag = ideaService.ideasByTag(idea.getTag());
 		model.addAttribute("ideaSubmittedBy", userService.getUserByEmail(idea.getAuthorEmail()));
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("timeline", timeline);
+		model.addAttribute("userType", userType);
 		model.addAttribute("totalAttachments", idea.getAttachments().size());
 		model.addAttribute("ideas", ideasByTag);
 		return "/templates/read_full_post";
 	}
 	
+	@SuppressWarnings({ "unused", "unchecked", "rawtypes" })
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profile_GET(
 			HttpSession session, 
@@ -575,6 +620,19 @@ public class UserController {
 		Set<Tag> tags = new HashSet<>();
 		
 		ideas2.forEach((idea) -> tags.add(idea.getTag()));
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
+		String userType = "";
+		for (Authority authority : authorities) {
+			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
+				userType = "admin";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")) {
+				userType = "student";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_MANAGER")) {
+				userType = "qa_manager";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_COORDINATOR")) {
+				userType = "qa_coordinator";
+			}
+		}
 		
 		model.addAttribute("totalIdeas", ideas2.size());
 		model.addAttribute("totalTags", tags.size());
@@ -590,6 +648,7 @@ public class UserController {
 
 		model.addAttribute("usr", userEntity2);
 		model.addAttribute("requestedUser", userEntity);
+		model.addAttribute("userType", userType);
 		model.addAttribute("dates", dates);
 		model.addAttribute("utils", utils);
 		logger.info("Student -> profile : ");
@@ -597,4 +656,22 @@ public class UserController {
 		return "/templates/profile";
 	}
 
+	
+	@RequestMapping("/side-nav")
+	public String sideNav(Model model, HttpSession session) {
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
+		
+		for (Authority authority : authorities) {
+			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
+				return "/templates/side_nav_admin";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_MANAGER")) {
+				return "/templates/side_nav_qa_manager";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_QA_COORDINATOR")) {
+				return "/templates/side_nav_qa_coordinator";
+			} else if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")) {
+				return "/templates/side_nav_student";
+			}
+		}
+		return "/templates/side_nav_student";
+	}
 }

@@ -3,10 +3,13 @@ package com.springprojects.controller;
 import com.springprojects.config.Mailer;
 import com.springprojects.config.Utils;
 import com.springprojects.entity.Authority;
+import com.springprojects.entity.Batch;
+import com.springprojects.entity.Department;
 import com.springprojects.entity.Notification;
-import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
 import com.springprojects.service.AuthorityService;
+import com.springprojects.service.BatchService;
+import com.springprojects.service.DepartmentService;
 import com.springprojects.service.NotificationService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
@@ -20,19 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -49,8 +39,11 @@ public class AdminController {
 	private Utils utils;
 	@Autowired
 	private NotificationService notificationService;
-	
+	@Autowired
+	private BatchService batchService;
 	private Logger logger = Logger.getLogger(AdminController.class.getName());
+	@Autowired
+	private DepartmentService departmentService;
 
 	@RequestMapping("/dashboard")
 	public String dashboard(Model model, HttpSession session) {
@@ -80,6 +73,13 @@ public class AdminController {
 		return "/admin_template/index";
 	}
 
+	/**
+	 * 
+	 * 
+	 * Manage Role
+	 * 
+	 * 
+	 */
 	@RequestMapping(value = "/create-role", method = RequestMethod.GET)
 	public String createRole_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
@@ -115,95 +115,109 @@ public class AdminController {
 		return "/admin_template/index";
 	}
 
-	@RequestMapping(value = "/create-tag", method = RequestMethod.GET)
-	public String createTag_GET(Model model, HttpSession session) {
+	/**
+	 * 
+	 * 
+	 * Manage Batch
+	 * 
+	 * 
+	 */
+
+	@RequestMapping(value = "/manage-batch", method = RequestMethod.GET)
+	public String manageBatch_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
-		model.addAttribute("pageName", "create-tag");
-		model.addAttribute("tag", new Tag());
-		return "/admin_template/index";
+		return "/admin_template/manage_batch";
+	}
+	
+	@RequestMapping(value = "/create-batch", method = RequestMethod.GET)
+	public String createBatch_GET(Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("usr", userEntity);
+		Batch batch = new Batch();
+		model.addAttribute("batch", batch);
+		return "/admin_template/create_batch";
 	}
 
-	@RequestMapping(value = "/create-tag", method = RequestMethod.POST)
-	public String createTag_POST(Model model, HttpSession session, @ModelAttribute("tag") Tag tag,
-			@RequestParam(name = "opening-date", required = true) String openingDate,
-			@RequestParam(name = "closure-date", required = true) String closureDate,
-			@RequestParam(name = "final-closure-date", required = true, defaultValue = "") String finalClosureDate) {
-
+	@RequestMapping(value = "/create-batch", method = RequestMethod.POST)
+	public String createBatch_POST(Model model, HttpSession session, @ModelAttribute("batch") Batch batch) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
-		model.addAttribute("pageName", "create-tag");
+		batch.setBatchId(System.currentTimeMillis());
+		batchService.save(batch);
+		
+		model.addAttribute("batch", batch);
+		return "/admin_template/manage_batch";
+	}
+	
+	@RequestMapping(value = "/view-batches", method = RequestMethod.GET)
+	public String viewBatches_GET(Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("msg", "");
+		model.addAttribute("usr", userEntity);
+		model.addAttribute("batches", batchService.findAllBatches());
+		logger.info("Admin -> view-batches[GET] : ");
 
-		tag.setTagId(System.currentTimeMillis());
-		System.out.println(openingDate);
-		tag.setOpeningDate(utils.convertStringToTimestamp(openingDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-		tag.setClosingDate(utils.convertStringToTimestamp(closureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-//		if (finalClosureDate.equals("")) {
-//			SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-//			Calendar c = Calendar.getInstance();
-//			System.out.println(Integer.parseInt(closureDate.split("/")[2]) + " "
-//					+ Integer.parseInt(closureDate.split("/")[1]) + " " + Integer.parseInt(closureDate.split("/")[0]));
-//			c.set(Calendar.YEAR, Integer.parseInt(closureDate.split("/")[2]));
-//			c.set(Calendar.MONTH, Integer.parseInt(closureDate.split("/")[1]));
-//			c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(closureDate.split("/")[0]));
-//			c.add(Calendar.DATE, 15); // Adding 5 days
-//			String output = sdf.format(c.getTime());
-//			
-//			System.out.println(LocalDateTime.from(c.getTime().toInstant().atZone(ZoneId.of("UTC"))).plusDays(1));
-//			
-//			System.out.println(output);
-//			tag.setFinalClosingDate(utils.convertDateTimeToTimestamp(output + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-//		} else {
-			tag.setFinalClosingDate(
-					utils.convertStringToTimestamp(finalClosureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-//		}
-
-		System.out.println(tag.getOpeningDate() + "\t" + tag.getClosingDate() + "\t" + tag.getFinalClosingDate());
-		if (tagService.save(tag) == false) {
-			model.addAttribute("isOk", "false");
-		} else {
-			model.addAttribute("isOk", "true");
-			InetAddress IP = null;
-			try {
-				IP = Inet4Address.getLocalHost();
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			List<UserEntity> userEntities = userService.getAllUsers();
-			
-			for (UserEntity userEntity2 : userEntities) {
-				Mailer.sendMail(
-						userEntity2.getEmail(), 
-						"EWSD - A new category has been opened.",
-						"A new category has been opened. \n To post an idea, please click on the link below. \n http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
-			
-				Notification notification = new Notification();
-				notification.setNotificationId(tag.getTagId());
-				notification.setNotificationMsg("A new category has been opened.");
-				notification.setNotificationType("announcement");
-				notification.setNotificationUrl("http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
-				notification.setNotifyTo(userEntity2);
-				notification.setNotificationFrom(userEntity);
-				notification.setSeen("no");
-				
-				notificationService.save(notification);
-			
-			}
-			
-			
-			
-		}
-		model.addAttribute("tag", tag);
-		return "/admin_template/index";
+		return "/admin_template/view_all_batches";
 	}
 
-	@RequestMapping(value = "/view-all-tags", method = RequestMethod.GET)
-	public String viewAllTags_GET(Model model, HttpSession session) {
+	
+	/**
+	 * 
+	 * 
+	 * Manage Department
+	 * 
+	 * 
+	 */
+
+	@RequestMapping(value = "/manage-department", method = RequestMethod.GET)
+	public String manageDepartment_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
-		model.addAttribute("pageName", "view-all-tags");
-		model.addAttribute("tags", tagService.listAllTags());
-		return "/admin_template/index";
+		return "/admin_template/manage_department";
+	}
+	
+	@RequestMapping(value = "/create-department", method = RequestMethod.GET)
+	public String createDepartment_GET(Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("usr", userEntity);
+		Department department = new Department();
+		model.addAttribute("department", department);
+		model.addAttribute("batches", batchService.findAllBatches());
+		
+		return "/admin_template/create_department";
+	}
+
+	@RequestMapping(value = "/create-department", method = RequestMethod.POST)
+	public String createDepartment_POST(Model model, HttpSession session, @ModelAttribute("department") Department department) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("usr", userEntity);
+		department.setDepartmentId(System.currentTimeMillis());
+		String status = departmentService.saveOrUpdate(department);
+
+		Notification notification = new Notification();
+		notification.setNotificationId(department.getDepartmentId());
+		notification.setNotificationMsg("EWSD - A new department has been added.");
+		notification.setNotifiableDepartments("QA");
+		notification.setNotificationFrom(userEntity);
+		notification.setNotificationType("notification");
+		notification.setNotificationUrl("#");
+		notification.setNotifyTo(userService.getUserByUsername("qa_manager"));
+		notification.setSeen("no");
+		notificationService.save(notification);		
+		
+		model.addAttribute("department", department);
+		return "/admin_template/manage_department";
+	}
+	
+	@RequestMapping(value = "/view-departments", method = RequestMethod.GET)
+	public String viewDestinations_GET(Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("msg", "");
+		model.addAttribute("usr", userEntity);
+		model.addAttribute("departments", departmentService.getAllDepartments());
+		logger.info("Admin -> view-departments[GET] : ");
+
+		return "/admin_template/view_all_departments";
 	}
 }

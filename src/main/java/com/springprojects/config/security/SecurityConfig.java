@@ -36,6 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("ADMIN")
                 .antMatchers("/qa_manager/**")
                 .hasRole("QA_MANAGER")
+                .antMatchers("/qa_coordinator/**")
+                .hasRole("QA_COORDINATOR")
+                .antMatchers("/staff/**")
+                .hasRole("STAFF")
                 .antMatchers("/student/**")
                 .hasRole("STUDENT")
                 .antMatchers(

@@ -2,6 +2,8 @@ package com.springprojects.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
@@ -40,13 +42,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springprojects.config.Mailer;
 import com.springprojects.config.Utils;
 import com.springprojects.customModel.Timeline;
 import com.springprojects.entity.Activity;
 import com.springprojects.entity.Attachment;
+import com.springprojects.entity.Authority;
 import com.springprojects.entity.Comment;
 import com.springprojects.entity.Contribution;
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.Notification;
 import com.springprojects.entity.Reaction;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
@@ -54,6 +59,7 @@ import com.springprojects.service.ActivityService;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.ContributionService;
 import com.springprojects.service.IdeaService;
+import com.springprojects.service.NotificationService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
 
@@ -75,6 +81,8 @@ public class StudentController {
 	private ContributionService contributionService;
 	@Autowired
 	private ActivityService activityService;
+	@Autowired
+	private NotificationService notificationService;
 	private int index = 0;
 	private Logger logger = Logger.getLogger(getClass().getName());
 
@@ -91,7 +99,9 @@ public class StudentController {
 		model.addAttribute("usr", userEntity);
 		List<Tag> tags = tagService.listAllTags();
 		tags.removeIf(
-				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
+				tag -> tag.getClosingDate() == null 
+				|| tag.getClosingDate().getTime() < System.currentTimeMillis()
+				|| !tag.getDepartments().contains(userEntity.getDepartment()));
 
 		model.addAttribute("categories", tags);
 		logger.info("Student -> Post new idea : ");
@@ -115,7 +125,9 @@ public class StudentController {
 			model.addAttribute("usr", userEntity);
 			List<Tag> tags = tagService.listAllTags();
 			tags.removeIf(
-					t -> tag.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
+					t -> t.getClosingDate() == null 
+					|| t.getClosingDate().getTime() < System.currentTimeMillis()
+					|| !t.getDepartments().contains(userEntity.getDepartment()));
 
 			model.addAttribute("categories", tags);
 			
@@ -129,6 +141,30 @@ public class StudentController {
 		idea.setIdeaId(System.currentTimeMillis());
 		idea.setPublishingDate(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
 
+		Notification notification = new Notification();
+		notification.setNotificationId(idea.getIdeaId());
+		notification.setNotifiableDepartments(userEntity.getDepartment());
+		notification.setNotificationFrom(userEntity);
+		notification.setNotificationType("notification");
+		notification.setNotificationMsg("EWSD - A new idea is submitted from your department.");
+		notification.setNotificationUrl("http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/ideas/"+idea.getIdeaId());
+		notification.setSeen("no");
+		userService.getUsersByDepartment(userEntity.getDepartment()).forEach(user->{
+			for (Authority authority : user.getAuthorities()) {
+				if(authority.getAuthority().equalsIgnoreCase("ROLE_QA_COORDINATOR")) {
+					notification.setNotifyTo(user);
+				}
+			}
+		});
+		
+		notificationService.save(notification);
+		
+		Mailer.sendMail(
+				notification.getNotifyTo().getEmail(),
+				"EWSD - A new idea is submitted from your department.",
+				"To read the comment, please click on the link below. \n http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/ideas/"+idea.getIdeaId());
+		
+		
 		Set<Attachment> attachments = new HashSet<>();
 		if (files[0].getOriginalFilename().contains(".")) {
 			for (MultipartFile file : files) {
@@ -145,19 +181,15 @@ public class StudentController {
 					model.addAttribute("msg", "Sorry, The file size is too large.");
 					return "/student_template/post_an_idea";					
 				}
+				System.out.println(file.getContentType());
 				if(
-						!file.getOriginalFilename().contains(".pdf") 
-						|| !file.getOriginalFilename().contains(".doc")
-						|| !file.getOriginalFilename().contains(".docx")
-						|| !file.getOriginalFilename().contains(".jpg")
-						|| !file.getOriginalFilename().contains(".png")
-						|| !file.getOriginalFilename().contains(".gif")
-						|| !file.getOriginalFilename().contains(".bmp")
-						|| !file.getOriginalFilename().contains(".mp4")
-						|| !file.getOriginalFilename().contains(".wmv")
-						|| !file.getOriginalFilename().contains(".mkv")
-						|| !file.getOriginalFilename().contains(".webm")
+						!file.getContentType().contains("image") 
+						&& !file.getOriginalFilename().contains(".doc")
+						&& !file.getOriginalFilename().contains(".docx")
+						&& !file.getContentType().contains("video")
+						&& !file.getOriginalFilename().contains(".pdf")
 					) {
+					System.out.println(file.getOriginalFilename());
 					model.addAttribute("idea", new Idea());
 					model.addAttribute("usr", userEntity);
 					List<Tag> tags = tagService.listAllTags();
@@ -292,80 +324,80 @@ public class StudentController {
 		return "/student_template/timeline";
 	}
 	
-	@RequestMapping(value = "/ideas", method = RequestMethod.GET)
-	public String ideas_GET(HttpSession session, Model model,
-			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
-		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-
-		int resultPerPage = 5;
-
-		List<Idea> ideas = new ArrayList<>();
-		ideaService.getPageOfIdeas(pageNumber,
-				resultPerPage).iterator().forEachRemaining(idea -> {
-					ideas.add(idea);
-				});
-		
-		Collections.reverse(ideas);
-		
-		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
-
-		String dateTimeString = "";
-
-		for (Idea idea : ideas) {
-
-			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
-			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
-
-			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
-				dates.put(dateTimeString.split(" ")[0], new ArrayList());
-			}
-			if (dates.containsKey(dateTimeString.split(" ")[0])) {
-				Timeline timeline = new Timeline(time, idea);
-				timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
-				for (Reaction reaction : idea.getReactions()) {
-					if (reaction.getReactionType() == 1) {
-						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
-					} else if (reaction.getReactionType() == 2) {
-						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
-					}
-					if (reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
-						timeline.setReactionOfCurrentUser(reaction.getReactionType());
-					}
-				}
-
-				if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
-					timeline.setTagExpired(true);
-				}
-				
-				List<Comment> comments = new ArrayList();
-				
-				idea.getComments().iterator().forEachRemaining(c1->{
-					comments.add(index++, c1);
-				});
-				index = 0;
-				idea.setComments(comments);
-				timeline.setTotalComments(idea.getComments().size());
-
-				dates.get(dateTimeString.split(" ")[0]).add(timeline);
-				
-				Collections.reverse(dates.get(dateTimeString.split(" ")[0]));
-				Collections.reverse(dates.get(dateTimeString.split(" ")[0]));
-
-			}
-		}
-		int totalResults = ideas.size();
-		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
-		model.addAttribute("pages",
-				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
-						: resultPerPage == totalResults ? 0 : pages - 1);
-		model.addAttribute("currentPage", pageNumber);
-
-		model.addAttribute("usr", userEntity);
-		model.addAttribute("dates", dates);
-		model.addAttribute("utils", utils);
-		logger.info("templates -> ideas : ");
-
-		return "/templates/ideas";
-	}
+//	@RequestMapping(value = "/ideas", method = RequestMethod.GET)
+//	public String ideas_GET(HttpSession session, Model model,
+//			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
+//		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+//
+//		int resultPerPage = 5;
+//
+//		List<Idea> ideas = new ArrayList<>();
+//		ideaService.getPageOfIdeas(pageNumber,
+//				resultPerPage).iterator().forEachRemaining(idea -> {
+//					ideas.add(idea);
+//				});
+//		
+//		Collections.reverse(ideas);
+//		
+//		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
+//
+//		String dateTimeString = "";
+//
+//		for (Idea idea : ideas) {
+//
+//			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
+//			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
+//
+//			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
+//				dates.put(dateTimeString.split(" ")[0], new ArrayList());
+//			}
+//			if (dates.containsKey(dateTimeString.split(" ")[0])) {
+//				Timeline timeline = new Timeline(time, idea);
+//				timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
+//				for (Reaction reaction : idea.getReactions()) {
+//					if (reaction.getReactionType() == 1) {
+//						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
+//					} else if (reaction.getReactionType() == 2) {
+//						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
+//					}
+//					if (reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
+//						timeline.setReactionOfCurrentUser(reaction.getReactionType());
+//					}
+//				}
+//
+//				if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
+//					timeline.setTagExpired(true);
+//				}
+//				
+//				List<Comment> comments = new ArrayList();
+//				
+//				idea.getComments().iterator().forEachRemaining(c1->{
+//					comments.add(index++, c1);
+//				});
+//				index = 0;
+//				idea.setComments(comments);
+//				timeline.setTotalComments(idea.getComments().size());
+//
+//				dates.get(dateTimeString.split(" ")[0]).add(timeline);
+//				
+//				Collections.reverse(dates.get(dateTimeString.split(" ")[0]));
+//				Collections.reverse(dates.get(dateTimeString.split(" ")[0]));
+//
+//			}
+//		}
+//		int totalResults = ideas.size();
+//		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
+//		model.addAttribute("pages",
+//				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
+//						: resultPerPage == totalResults ? 0 : pages - 1);
+//		model.addAttribute("currentPage", pageNumber);
+//
+//		model.addAttribute("usr", userEntity);
+//		model.addAttribute("dates", dates);
+//		model.addAttribute("utils", utils);
+//		logger.info("templates -> ideas : ");
+//
+//		return "/templates/ideas";
+//	}
 
 }

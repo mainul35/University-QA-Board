@@ -31,6 +31,10 @@ public class IdeaService {
 		return (List<Idea>) ideaRepository.findAll();
 	}
 	
+	public List<Idea> listIdeasByTag(Tag tag){
+		return (List<Idea>) ideaRepository.findByTag(tag);
+	}
+	
 	public Page<Idea> listAllIdeasByAuthorEmail(String authorEmail, int pageNumber, int resultPerPage){
 		return ideaRepository.findAllByAuthorEmailOrderByIdeaIdDesc(authorEmail, getPage(pageNumber, resultPerPage));
 	}

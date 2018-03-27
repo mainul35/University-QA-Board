@@ -22,4 +22,6 @@ public interface IdeaRepository extends PagingAndSortingRepository<Idea, Long>{
 	Page<Idea> findAll(Pageable page);
 
 	List<Idea> findAllByTag(Tag tag);
+
+	List<Idea> findByTag(Tag tag);
 }

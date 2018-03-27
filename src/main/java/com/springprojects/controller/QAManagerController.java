@@ -1,58 +1,35 @@
 package com.springprojects.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.collections4.set.MapBackedSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.springprojects.config.Mailer;
 import com.springprojects.config.Utils;
-import com.springprojects.customModel.Timeline;
-import com.springprojects.entity.Activity;
-import com.springprojects.entity.Attachment;
-import com.springprojects.entity.Comment;
-import com.springprojects.entity.Contribution;
-import com.springprojects.entity.Idea;
-import com.springprojects.entity.Reaction;
+import com.springprojects.entity.Notification;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
 import com.springprojects.service.ActivityService;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.ContributionService;
+import com.springprojects.service.DepartmentService;
 import com.springprojects.service.IdeaService;
+import com.springprojects.service.NotificationService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
 
@@ -76,249 +53,119 @@ public class QAManagerController {
 	private ActivityService activityService;
 	private int index = 0;
 	private Logger logger = Logger.getLogger(getClass().getName());
+	@Autowired
+	private NotificationService notificationService;
+	@Autowired
+	private DepartmentService departmentService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
-	public String studentDashboard_GET() {
-		return "redirect:/qa_manager/timeline";
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/post-new-idea")
-	public String postNewIdea_GET(Model model, HttpSession session) {
-
+	public String qaManagerDashboard_GET(HttpSession session, Model model) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		model.addAttribute("idea", new Idea());
 		model.addAttribute("usr", userEntity);
-		List<Tag> tags = tagService.listAllTags();
-		tags.removeIf(
-				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
-
-		model.addAttribute("categories", tags);
-		logger.info("qa_manager -> Post new idea : ");
-		return "/qa_manager/post_an_idea";
+		return "/qa_manager_template/index";
 	}
 
-	@RequestMapping(value = "/post-new-idea", method = RequestMethod.POST)
-	public String postNewIdea_POST(
-			Model model, 
-			HttpSession session, 
-			@ModelAttribute("idea") Idea idea,
-			@RequestParam(name = "tagName", defaultValue = "") String tagName,
-			@RequestParam(name = "publishingDateTime") String publishingDateTime,
-			@RequestParam(name = "images[]") MultipartFile[] files
-			) {
+	/**
+	 * 
+	 * 
+	 * Manage tags
+	 * 
+	 * 
+	 */
 
+	@RequestMapping(value = "/manage-tags", method = RequestMethod.GET)
+	public String manageTag_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		Tag tag = tagService.findByTagName(tagName);
-		if (tag.getClosingDate().getTime() < System.currentTimeMillis()) {
-			model.addAttribute("ok", "false");
-			model.addAttribute("msg", "Sorry, The category expired.");
-			return "";
-		}
-		idea.setTag(tagService.findByTagName(tagName));
-		idea.setAuthorEmail(userEntity.getEmail());
-		idea.setCountViews(0);
-		idea.setIdeaId(System.currentTimeMillis());
-		idea.setPublishingDate(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
-
-		Set<Attachment> attachments = new HashSet<>();
-		if (files[0].getOriginalFilename().contains(".")) {
-			for (MultipartFile file : files) {
-				Attachment attachment = new Attachment();
-				Long attachmentId = System.currentTimeMillis();
-				attachment.setAttachmentId(attachmentId);
-				attachment.setFileName("" + attachmentId);
-				attachment.setFileTitle(idea.getIdeaTitle());
-				
-				attachment = attachmentService.save(attachment, file, userEntity.getId());
-				
-				attachments.add(attachment);
-			}
-
-		}
-
-		List<Tag> tags = tagService.listAllTags();
-		tags.removeIf(t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
-
-		idea.setAttachments(attachments);
-		ideaService.save(idea);
-		
-		Contribution contribution = new Contribution(idea.getIdeaId(), userEntity);
-		contributionService.save(contribution );
-		Activity activity = new Activity();
-		activity.setId(userEntity.getId());
-		activity.setLastActivityDateTime(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
-		activityService.saveOrUpdate(activity);
-		logger.info("qa_manager -> Post new idea : ");
-		return "redirect:/qa_manager/timeline";
-	}
-
-	@RequestMapping(value = "/timeline", method = RequestMethod.GET)
-	public String timeline_GET(
-			HttpSession session, 
-			Model model,
-			@RequestParam(name = "page", defaultValue = "1") int pageNumber
-			) {
-		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-
-		int resultPerPage = 5;
-
-		List<Idea> ideas = new ArrayList<>();
-		ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber,
-				resultPerPage).iterator().forEachRemaining(idea -> {
-					ideas.add(idea);
-				});
-		
-//		Collections.reverse(ideas);
-		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
-
-		String dateTimeString = "";
-
-		for (Idea idea : ideas) {
-
-			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
-			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
-			
-			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
-				dates.put(dateTimeString.split(" ")[0], new ArrayList());
-			}
-			if (dates.containsKey(dateTimeString.split(" ")[0])) {
-				Timeline timeline = new Timeline(time, idea);
-				timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
-				for (Reaction reaction : idea.getReactions()) {
-					if (reaction.getReactionType() == 1) {
-						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
-					} else if (reaction.getReactionType() == 2) {
-						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
-					}
-					if (reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
-						timeline.setReactionOfCurrentUser(reaction.getReactionType());
-					}
-				}
-
-				if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
-					timeline.setTagExpired(true);
-				}
-				
-				List<Comment> comments = new ArrayList();
-				
-				idea.getComments().iterator().forEachRemaining(c1->{
-					comments.add(index++, c1);
-				});
-				index = 0;
-				idea.setComments(comments);
-				timeline.setTotalComments(idea.getComments().size());
-
-				dates.get(dateTimeString.split(" ")[0]).add(timeline);
-				
-			}
-			
-		}
-				
-		int totalResults = ideas.size();
-		
-		// profile side panel items
-		
-		int pages = (int) Math.ceil(((double) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail()).size()) / resultPerPage);
-		List<Idea> ideas2 = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
-		Set<Tag> tags = new HashSet<>();
-		
-		ideas2.forEach((idea) -> tags.add(idea.getTag()));
-		
-		model.addAttribute("totalIdeas", ideas2.size());
-		model.addAttribute("totalTags", tags.size());
-		model.addAttribute("totalContributions", contributionService.findContributionsByUser(userEntity).size());
-		
-		// timeline data
-		
-		model.addAttribute("pages",
-				totalResults ==5 ? pages - 1
-						: resultPerPage == totalResults ? 0 : pages-1);
-		
-		model.addAttribute("currentPage", pageNumber);
-
 		model.addAttribute("usr", userEntity);
-		model.addAttribute("dates", dates);
-		model.addAttribute("utils", utils);
-		
-		logger.info("qa_manager -> timeline : ");
+		model.addAttribute("tag", new Tag());
+		List<String> departments = new ArrayList<>();
+		departmentService.getAllDepartments().forEach(department -> {
+			String departmentName = department.getDepartmentName();
+			departments.add(departmentName);
+		});
+		model.addAttribute("departments", departments);
+		return "/qa_manager_template/manage_tags";
+	}
 
-		return "/student_template/timeline";
+	@RequestMapping(value = "/create-tag", method = RequestMethod.POST)
+	public String createTag_POST(Model model, HttpSession session, @ModelAttribute("tag") Tag tag,
+			@RequestParam(name = "opening-date", required = true) String openingDate,
+			@RequestParam(name = "closure-date", required = true) String closureDate,
+			@RequestParam(name = "final-closure-date", required = true, defaultValue = "") String finalClosureDate,
+			@RequestParam(name="inputVisibleToDepartments", required=true, defaultValue="") String departments) {
+
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("usr", userEntity);
+
+		tag.setTagId(System.currentTimeMillis());
+		tag.setOpeningDate(utils.convertStringToTimestamp(openingDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+		tag.setClosingDate(utils.convertStringToTimestamp(closureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+		tag.setDepartments(departments);
+		tag.setFinalClosingDate(utils.convertStringToTimestamp(finalClosureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+
+		System.out.println(tag.getOpeningDate() + "\t" + tag.getClosingDate() + "\t" + tag.getFinalClosingDate());
+		if (tagService.save(tag) == false) {
+			model.addAttribute("isOk", "false");
+		} else {
+			model.addAttribute("isOk", "true");
+			InetAddress IP = null;
+			try {
+				IP = Inet4Address.getLocalHost();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			List<UserEntity> userEntities = userService.getAllUsers();
+			
+			for (UserEntity userEntity2 : userEntities) {
+				if(tag.getDepartments().contains(userEntity2.getDepartment())) {
+					Mailer.sendMail(userEntity2.getEmail(), "EWSD - A new category has been opened.",
+							"A new category has been opened. \n To post an idea, please click on the link below. \n http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
+
+					Notification notification = new Notification();
+					notification.setNotificationId(tag.getTagId());
+					notification.setNotificationMsg("A new category has been opened.");
+					notification.setNotificationType("announcement");
+					notification.setNotificationUrl(
+							"http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
+					notification.setNotifyTo(userEntity2);
+					notification.setNotificationFrom(userEntity);
+					notification.setNotifiableDepartments(tag.getDepartments());
+					notification.setSeen("no");
+
+					notificationService.save(notification);
+				}
+			}
+		}
+
+		model.addAttribute("tag", tag);
+		return "redirect:/qa_manager/manage-tags";
+	}
+
+	@RequestMapping(value = "/view-all-tags", method = RequestMethod.GET)
+	public String viewAllTags_GET(Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("usr", userEntity);
+		model.addAttribute("pageName", "view-all-tags");
+		List<Tag> tags = tagService.listAllTags();
+		List<Integer> totalIdeasOfTag = new ArrayList<>();
+		tags.forEach(tag->{
+			totalIdeasOfTag.add(ideaService.listIdeasByTag(tag).size());
+		});
+		
+		model.addAttribute("tags", tags);
+		model.addAttribute("totalIdeas", totalIdeasOfTag);
+		return "/qa_manager_template/view_all_tags";
 	}
 	
-	@RequestMapping(value = "/ideas", method = RequestMethod.GET)
-	public String ideas_GET(HttpSession session, Model model,
-			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
-		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-
-		int resultPerPage = 5;
-
-		List<Idea> ideas = new ArrayList<>();
-		ideaService.getPageOfIdeas(pageNumber,
-				resultPerPage).iterator().forEachRemaining(idea -> {
-					ideas.add(idea);
-				});
-		
-		Collections.reverse(ideas);
-		
-		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
-
-		String dateTimeString = "";
-
-		for (Idea idea : ideas) {
-
-			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
-			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
-
-			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
-				dates.put(dateTimeString.split(" ")[0], new ArrayList());
-			}
-			if (dates.containsKey(dateTimeString.split(" ")[0])) {
-				Timeline timeline = new Timeline(time, idea);
-				timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
-				for (Reaction reaction : idea.getReactions()) {
-					if (reaction.getReactionType() == 1) {
-						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
-					} else if (reaction.getReactionType() == 2) {
-						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
-					}
-					if (reaction.getReactedUser().getUsername().equals(userEntity.getUsername())) {
-						timeline.setReactionOfCurrentUser(reaction.getReactionType());
-					}
-				}
-
-				if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
-					timeline.setTagExpired(true);
-				}
-				
-				List<Comment> comments = new ArrayList();
-				
-				idea.getComments().iterator().forEachRemaining(c1->{
-					comments.add(index++, c1);
-				});
-				index = 0;
-				idea.setComments(comments);
-				timeline.setTotalComments(idea.getComments().size());
-
-				dates.get(dateTimeString.split(" ")[0]).add(timeline);
-				
-				Collections.reverse(dates.get(dateTimeString.split(" ")[0]));
-				Collections.reverse(dates.get(dateTimeString.split(" ")[0]));
-
-			}
-		}
-		int totalResults = ideas.size();
-		int pages = (int) Math.ceil(((double) totalResults) / resultPerPage);
-		model.addAttribute("pages",
-				resultPerPage == 5 ? ideaService.count(userEntity.getEmail(), pageNumber, resultPerPage) - 1
-						: resultPerPage == totalResults ? 0 : pages - 1);
-		model.addAttribute("currentPage", pageNumber);
-
-		model.addAttribute("usr", userEntity);
-		model.addAttribute("dates", dates);
-		model.addAttribute("utils", utils);
-		logger.info("templates -> ideas : ");
-
-		return "/templates/ideas";
+	@RequestMapping(value="/tag-status/{tagId}", method=RequestMethod.GET)
+	public @ResponseBody Integer totalIdeasOfTag(@PathVariable("tagId") Long tagId){
+		return ideaService.listIdeasByTag(tagService.findById(tagId)).size();
 	}
-
+	
+	@RequestMapping(value="/delete-tag/{tagId}", method=RequestMethod.GET)
+	public @ResponseBody boolean deleteTag(@PathVariable("tagId") Long tagId){
+		notificationService.delete(notificationService.findById(tagId));
+		return ideaService.listIdeasByTag(tagService.findById(tagId)).size()==0?tagService.delete(tagService.findById(tagId)):false;
+	}
 }
