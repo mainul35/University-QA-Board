@@ -37,7 +37,7 @@
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
-				
+
 				<!-- 				/.search form sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 
@@ -46,8 +46,8 @@
 
 
 
-					<li class=" "><a th:href="@{/${userType}/timeline}"> <i
-							class="fa fa-dashboard"></i> <span>Home</span>
+					<li class=" "><a th:href="@{'/'+${userType}+'/timeline'}">
+							<i class="fa fa-dashboard"></i> <span>Home</span>
 					</a></li>
 					<li class="active"><a th:href="@{/ideas}"> <i
 							class="fa fa-files-o"></i> <span>All Ideas</span>
@@ -86,9 +86,13 @@
 						<div class="nav-tabs-custom">
 
 							<div class="tab-content">
-
 								<!-- /.tab-pane -->
 								<div class="active tab-pane" id="timeline">
+
+									<th:block th:if="${dates.empty}">
+										<h1>Nothing to show!</h1>
+									</th:block>
+
 									<!-- The timeline -->
 									<th:block th:each="date : ${dates}">
 										<ul class="timeline timeline-inverse">
@@ -498,14 +502,10 @@
 
 		</div>
 		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-			</div>
-			<strong>Copyright &copy; 2014-2016 <a
-				href="https://adminlte.io">Almsaeed Studio</a>.
-			</strong> All rights reserved.
-		</footer>
+		<div id="footer"></div>
+		<script type="text/javascript">
+			$("#footer").load("/ewsd/footer");
+		</script>
 
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->

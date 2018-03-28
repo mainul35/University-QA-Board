@@ -29,6 +29,7 @@ import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Comment;
 import com.springprojects.entity.Contribution;
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.Notification;
 import com.springprojects.entity.Reaction;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
@@ -36,6 +37,7 @@ import com.springprojects.service.ActivityService;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.ContributionService;
 import com.springprojects.service.IdeaService;
+import com.springprojects.service.NotificationService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
 
@@ -57,6 +59,8 @@ public class QACoordinatorController {
 	private ContributionService contributionService;
 	@Autowired
 	private ActivityService activityService;
+	@Autowired
+	private NotificationService notificationService;
 	private int index = 0;
 	private int countIdeas = 0;
 	private Logger logger = Logger.getLogger(getClass().getName());
@@ -71,7 +75,7 @@ public class QACoordinatorController {
 	public String qaCoordinatorDashboard_GET(HttpSession session, Model model) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
-		return "redirect:/qa_coordinator/";
+		return "redirect:/qa_coordinator/activities";
 	}
 	
 	/**
@@ -97,9 +101,14 @@ public class QACoordinatorController {
 	 * 
 	 * */
 	@RequestMapping(method = RequestMethod.GET, value = "/post-new-idea")
-	public String postNewIdea_GET(Model model, HttpSession session) {
+	public String postNewIdea_GET(Model model, HttpSession session, @RequestParam(name="notif_id", defaultValue="") String notificationId) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		if(Character.isDigit(notificationId.charAt(0))) {
+			Notification notification = notificationService.findById(Long.parseLong(notificationId));
+			notification.setSeen("yes");
+			notificationService.save(notification);
+		}
 		model.addAttribute("idea", new Idea());
 		model.addAttribute("usr", userEntity);
 		List<Tag> tags = tagService.listAllTags();

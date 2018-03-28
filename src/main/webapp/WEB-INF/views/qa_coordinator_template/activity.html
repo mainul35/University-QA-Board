@@ -103,19 +103,192 @@
 							<div class="tab-content">
 								<div class="active tab-pane" id="activity">
 									<div class="row">
-										<div class="col-md-3 col-sm-6 col-xs-12">
+										<div class="col-md-4 col-sm-12 col-xs-12">
 											<div class="info-box">
 												<span class="info-box-icon bg-aqua"><i
-													class="fa fa-envelope-o"></i></span>
+													class="fa fa-lightbulb-o"></i></span>
 
 												<div class="info-box-content">
-													<span class="info-box-text">Messages</span> <span
-														class="info-box-number">1,410</span>
+													<span class="info-box-text">Number of ideas</span> <span
+														class="info-box-number ideas-in-number"></span>
 												</div>
 												<!-- /.info-box-content -->
 											</div>
 											<!-- /.info-box -->
+											<script type="text/javascript" th:inline="javascript">
+											var departmentName = /*[[${usr.department}]]*/;
+											$.ajax({
+												url:'/ewsd/number-of-ideas-by-department?departmentName='+departmentName,
+												data:'',
+												method:'GET',
+												success:function(data){
+													$(".ideas-in-number").text(data);
+												}
+											});
+											setTimeout(function(){
+												var departmentName = /*[[${usr.department}]]*/;
+												$.ajax({
+													url:'/ewsd/number-of-ideas-by-department?departmentName='+departmentName,
+													data:'',
+													method:'GET',
+													success:function(data){
+														$(".ideas-in-number").text(data);
+													}
+												});
+											}, 3000);	
+											
+											</script>
 										</div>
+										
+										
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="info-box">
+												<span class="info-box-icon bg-aqua"><i
+													class="fa fa-pie-chart"></i></span>
+
+												<div class="info-box-content">
+													<span class="info-box-text">Percentage of ideas</span> <span
+														class="info-box-number ideas-in-percentage"></span>
+												</div>
+												<!-- /.info-box-content -->
+											</div>
+											<!-- /.info-box -->
+											<script type="text/javascript" th:inline="javascript">
+											var departmentName = /*[[${usr.department}]]*/;
+											$.ajax({
+												url:'/ewsd/percentage-of-ideas-by-department?departmentName='+departmentName,
+												data:'',
+												method:'GET',
+												success:function(data){
+													$(".ideas-in-percentage").text(data+"%");
+												}
+											});
+											setTimeout(function(){
+												var departmentName = /*[[${usr.department}]]*/;
+												$.ajax({
+													url:'/ewsd/percentage-of-ideas-by-department?departmentName='+departmentName,
+													data:'',
+													method:'GET',
+													success:function(data){
+														$(".ideas-in-percentage").text(data+"%");
+													}
+												});
+											}, 3000);	
+											
+											</script>
+										</div>
+										
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="info-box">
+												<span class="info-box-icon bg-aqua"><i
+													class="fa fa-connectdevelop"></i></span>
+
+												<div class="info-box-content">
+													<span class="info-box-text">Number of Contributions</span> <span
+														class="info-box-number contribution-in-number"></span>
+												</div>
+												<!-- /.info-box-content -->
+											</div>
+											<!-- /.info-box -->
+											<script type="text/javascript" th:inline="javascript">
+											var departmentName = /*[[${usr.department}]]*/;
+											$.ajax({
+												url:'/ewsd/number-of-contributions-by-department?departmentName='+departmentName,
+												data:'',
+												method:'GET',
+												success:function(data){
+													$(".contribution-in-number").text(data);
+												}
+											});
+											setTimeout(function(){
+												var departmentName = /*[[${usr.department}]]*/;
+												$.ajax({
+													url:'/ewsd/number-of-contributions-by-department?departmentName='+departmentName,
+													data:'',
+													method:'GET',
+													success:function(data){
+														$(".contribution-in-number").text(data);
+													}
+												});
+											}, 3000);	
+											
+											</script>
+										</div>
+										
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="info-box">
+												<span class="info-box-icon bg-aqua"><i
+													class="fa fa-comments-o"></i></span>
+
+												<div class="info-box-content">
+													<span class="info-box-text">Ideas without a comment</span> <span
+														class="info-box-number ideas-without-a-comment"></span>
+												</div>
+												<!-- /.info-box-content -->
+											</div>
+											<!-- /.info-box -->
+											<script type="text/javascript" th:inline="javascript">
+											var departmentName = /*[[${usr.department}]]*/;
+											$.ajax({
+												url:'/ewsd/number-of-ideas-without-comment?departmentName='+departmentName,
+												data:'',
+												method:'GET',
+												success:function(data){
+													$(".ideas-without-a-comment").text(data);
+												}
+											});
+											setTimeout(function(){
+												var departmentName = /*[[${usr.department}]]*/;
+												$.ajax({
+													url:'/ewsd/number-of-ideas-without-comment?departmentName='+departmentName,
+													data:'',
+													method:'GET',
+													success:function(data){
+														$(".ideas-without-a-comment").text(data);
+													}
+												});
+											}, 3000);	
+											
+											</script>
+										</div>
+										
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="info-box">
+												<span class="info-box-icon bg-aqua"><i
+													class="fa fa-comments-o"></i></span>
+
+												<div class="info-box-content">
+													<span class="info-box-text">Anonymous comments</span> <span
+														class="info-box-number anonymous-comments"></span>
+												</div>
+												<!-- /.info-box-content -->
+											</div>
+											<!-- /.info-box -->
+											<script type="text/javascript" th:inline="javascript">
+											var departmentName = /*[[${usr.department}]]*/;
+											$.ajax({
+												url:'/ewsd/number-of-anonymous-comments?departmentName='+departmentName,
+												data:'',
+												method:'GET',
+												success:function(data){
+													$(".anonymous-comments").text(data);
+												}
+											});
+											setTimeout(function(){
+												var departmentName = /*[[${usr.department}]]*/;
+												$.ajax({
+													url:'/ewsd/number-of-anonymous-comments?departmentName='+departmentName,
+													data:'',
+													method:'GET',
+													success:function(data){
+														$(".anonymous-comments").text(data);
+													}
+												});
+											}, 3000);	
+											
+											</script>
+										</div>
+										
 									</div>
 
 
@@ -138,15 +311,10 @@
 
 		</div>
 		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-			</div>
-			<strong>Copyright &copy; 2014-2016 <a
-				href="https://adminlte.io">Almsaeed Studio</a>.
-			</strong> All rights reserved.
-		</footer>
-
+		<div id="footer"></div>
+		<script type="text/javascript">
+			$("#footer").load("/ewsd/footer");
+		</script>
 
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->

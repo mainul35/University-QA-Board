@@ -37,7 +37,7 @@
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
-				
+
 				<!-- 				/.search form sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 
@@ -103,9 +103,9 @@
 													was submitted successfully.</div>
 												<div th:if="${isOk=='true'}" class="alert alert-success"
 													th:text="${msg}"></div>
-												<div th:if="${ok=='false'}" class="alert alert-danger" th:text="${msg}">Idea
-													was submitted successfully.</div>
-												
+												<div th:if="${ok=='false'}" class="alert alert-danger"
+													th:text="${msg}">Idea was submitted successfully.</div>
+
 												<!--/*/ <th:block th:include="@{includes/components} :: postNewIdea(${categories}, ${idea})"></th:block> /*/-->
 											</form>
 										</div>
@@ -131,15 +131,10 @@
 
 		</div>
 		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-			</div>
-			<strong>Copyright &copy; 2014-2016 <a
-				href="https://adminlte.io">Almsaeed Studio</a>.
-			</strong> All rights reserved.
-		</footer>
-
+		<div id="footer"></div>
+		<script type="text/javascript">
+			$("#footer").load("/ewsd/footer");
+		</script>
 		<!-- Control Sidebar -->
 
 		<!-- /.control-sidebar -->

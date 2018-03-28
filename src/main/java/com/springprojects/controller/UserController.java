@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,7 +74,6 @@ public class UserController {
 	@Autowired
 	private DepartmentService departmentService;
 
-
 	private int index = 0;
 
 	// @RequestMapping(value = {"/"})
@@ -102,7 +102,8 @@ public class UserController {
 		if (sitePreference == SitePreference.NORMAL) {
 			log(request);
 			model.addAttribute("msg", "some message");
-			Initializer initializer = new Initializer(authorityService, userService, attachmentService, departmentService, encoder);
+			Initializer initializer = new Initializer(authorityService, userService, attachmentService,
+					departmentService, encoder);
 			return "/templates/login";
 		} else if (sitePreference == SitePreference.MOBILE) {
 			logger.info("Site preference is mobile");
@@ -249,58 +250,64 @@ public class UserController {
 				userType = "student";
 				List<Notification> notifications2 = notificationService.findNotificationsByUser(userEntity);
 				for (Notification notification : notifications2) {
-					if(notification.getNotificationType().equalsIgnoreCase("notification")) {
+					if (notification.getNotificationType().equalsIgnoreCase("notification")) {
 						for (GrantedAuthority authority2 : notification.getNotificationFrom().getAuthorities()) {
-							if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+							if (authority.getAuthority().toUpperCase().equals("ROLE_STUDENT")
+									&& !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
 								notifications.add(notification);
 								x++;
 							}
 						}
 					}
-					if(x>10) {
+					if (x > 10) {
 						break;
 					}
 				}
 
 			}
-			
+
 			if (authority.getAuthority().toUpperCase().equals("ROLE_STAFF")) {
 				List<Notification> notifications2 = notificationService.findNotificationsByUser(userEntity);
 				for (Notification notification : notifications2) {
-					if(notification.getNotificationType().equalsIgnoreCase("notification")  && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+					if (notification.getNotificationType().equalsIgnoreCase("notification")
+							&& !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
 						notifications.add(notification);
 						x++;
-					}					
-					if(x>10) {
+					}
+					if (x > 10) {
 						break;
 					}
 				}
 			}
 		}
-		
-		
+
 		List<Notification> announcements = new ArrayList<>();
 		x = 0;
 		for (Notification notification : notificationService.findNotificationsByUser(userEntity)) {
-			if(notification.getNotificationType().equalsIgnoreCase("announcement")) {
+			if (notification.getNotificationType().equalsIgnoreCase("announcement")) {
 				announcements.add(notification);
 				x++;
 			}
-			
-			if(x>10) {
+
+			if (x > 10) {
 				break;
 			}
 		}
-		
+
 		int unreadNotifications = 0;
 		int unreadAnnouncements = 0;
 		for (Notification notification : notificationService.findNotificationsByUser(userEntity)) {
-			if(notification.getNotifiableDepartments()!=null && notification.getNotifiableDepartments().contains(userEntity.getDepartment())) {
-				if(notification.getNotificationType().equalsIgnoreCase("notification") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+			if (notification.getNotifiableDepartments() != null
+					&& notification.getNotifiableDepartments().contains(userEntity.getDepartment())) {
+				if (notification.getNotificationType().equalsIgnoreCase("notification")
+						&& notification.getSeen().equalsIgnoreCase("no")
+						&& !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
 					unreadNotifications++;
 				}
-				
-				if(notification.getNotificationType().equalsIgnoreCase("announcement") && notification.getSeen().equalsIgnoreCase("no") && !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
+
+				if (notification.getNotificationType().equalsIgnoreCase("announcement")
+						&& notification.getSeen().equalsIgnoreCase("no")
+						&& !notification.getNotificationFrom().equals(notification.getNotifyTo())) {
 					unreadAnnouncements++;
 				}
 			}
@@ -315,13 +322,13 @@ public class UserController {
 		return "/templates/main_header";
 	}
 
-	@RequestMapping(value = {"/footer"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/footer" }, method = RequestMethod.GET)
 	public String footer_GET() {
-		
+
 		return "/templates/footer";
 	}
-	
-	@RequestMapping(value="/post-new-idea", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/post-new-idea", method = RequestMethod.GET)
 	public String postAnIdea(HttpSession session) {
 		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
 		for (Authority authority : authorities) {
@@ -333,7 +340,9 @@ public class UserController {
 		}
 		return "redirect:/dashboard";
 	}
-	@RequestMapping(value = {"/{userType}/update-profile","/{userType}/change-password","/{userType}/change-profile-picture"}, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/{userType}/update-profile", "/{userType}/change-password",
+			"/{userType}/change-profile-picture" }, method = RequestMethod.GET)
 	public String updateProfile_GET(@PathVariable("userType") String userType, Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("userType", userType);
@@ -343,22 +352,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{userType}/change-password", method = RequestMethod.POST)
-	public String changePassword_POST(
-			Model model,
-			@PathVariable("userType") String userType,
-			@RequestParam("oldPassword") String oldPassword, 
-			@RequestParam("inputNewPassword") String newPassword, 
-			@RequestParam("reInputNewPassword") String reNewPassword, 
-			HttpSession session) {
+	public String changePassword_POST(Model model, @PathVariable("userType") String userType,
+			@RequestParam("oldPassword") String oldPassword, @RequestParam("inputNewPassword") String newPassword,
+			@RequestParam("reInputNewPassword") String reNewPassword, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		if (encoder.matches(oldPassword,userEntity.getPassword())) {
-			if(newPassword.equals(reNewPassword)) {
+		if (encoder.matches(oldPassword, userEntity.getPassword())) {
+			if (newPassword.equals(reNewPassword)) {
 				userEntity.setPassword(encoder.encode(newPassword));
 				userService.updateUser(userEntity);
 				model.addAttribute("msg", "Password changed successfully.");
 				model.addAttribute("cssClass", "alert alert-success");
 				System.out.println("Password changed");
-			}else {
+			} else {
 				model.addAttribute("msg", "Sorry, the new passphrases did not match.");
 				model.addAttribute("cssClass", "alert alert-danger");
 				System.out.println("Password not changed");
@@ -371,24 +376,25 @@ public class UserController {
 		return "/templates/update_profile";
 	}
 
-	@RequestMapping(value = {"/{userType}/change-profile-picture"}, method = RequestMethod.POST)
-	public String updateProfilePhoto_POST(Model model, HttpSession session, @RequestParam(name = "image") MultipartFile file) {
+	@RequestMapping(value = { "/{userType}/change-profile-picture" }, method = RequestMethod.POST)
+	public String updateProfilePhoto_POST(Model model, HttpSession session,
+			@RequestParam(name = "image") MultipartFile file) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Attachment attachment = new Attachment();
 		attachment.setAttachmentId(userEntity.getUserImage().getAttachmentId());
 		attachment.setFileName("" + userEntity.getUserImage().getAttachmentId());
 		attachment.setFileTitle(Long.toString(userEntity.getId()));
-		attachmentService.save(attachment,file,userEntity.getId());
+		attachmentService.save(attachment, file, userEntity.getId());
 		userEntity.setUserImage(attachment);
 		userService.creteOrUpdate(userEntity);
 		return "redirect:/dashboard";
 	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/control-sidebar")
+
+	@RequestMapping(method = RequestMethod.GET, value = "/control-sidebar")
 	public String controlSideBar_GET() {
 		return "templates/control_sidebar";
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "unused" })
 	@RequestMapping(value = "/ideas", method = RequestMethod.GET)
 	public String ideas_GET(HttpSession session, Model model,
@@ -396,7 +402,7 @@ public class UserController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 
 		int resultPerPage = 5;
-		
+
 		List<Idea> ideas = new ArrayList<>();
 		ideaService.getPageOfIdeas(pageNumber, resultPerPage).iterator().forEachRemaining(idea -> {
 			ideas.add(idea);
@@ -448,7 +454,7 @@ public class UserController {
 			}
 		}
 		int totalResults = ideas.size();
-		
+
 		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
 		String userType = "";
 		for (Authority authority : authorities) {
@@ -462,14 +468,11 @@ public class UserController {
 				userType = "qa_coordinator";
 			}
 		}
-		
+
 		int pages = (int) Math.ceil(((double) ideaService.count()) / resultPerPage);
 
-		model.addAttribute("pages",
-				totalResults ==5 ? pages - 1
-						: resultPerPage == totalResults ? 0 : pages-1);
-		
-		
+		model.addAttribute("pages", totalResults == 5 ? pages - 1 : resultPerPage == totalResults ? 0 : pages - 1);
+
 		model.addAttribute("currentPage", pageNumber);
 
 		model.addAttribute("usr", userEntity);
@@ -482,24 +485,26 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/ideas/{id}")
-	public String readFullPost_GET(HttpSession session, Model model, @PathVariable("id") Long id, @RequestParam(name="notif_id", defaultValue="") String notificationId) {
-		
+	public String readFullPost_GET(HttpSession session, Model model, @PathVariable("id") Long id,
+			@RequestParam(name = "notif_id", defaultValue = "") String notificationId) {
+
 		@SuppressWarnings("unchecked")
 		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
-		if(!notificationId.isEmpty() && Character.isDigit(notificationId.charAt(0))) {
-			Notification notification = notificationService.findById(Long.parseLong(notificationId)); 
+		if (!notificationId.isEmpty() && Character.isDigit(notificationId.charAt(0))) {
+			Notification notification = notificationService.findById(Long.parseLong(notificationId));
 			notification.setSeen("yes");
 			notificationService.update(notification);
 		}
-		
+
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Idea idea = ideaService.getIdea(id);
 		idea.getComments().clear();
 		idea.setComments(commentService.findAllByIdea(idea));
 		idea.getSeenBy().add(userEntity.getUsername());
-		idea.setCountViews(idea.getCountViews()+1);
+		idea.setCountViews(idea.getCountViews() + 1);
 		ideaService.update(idea);
-		Timeline timeline = new Timeline(utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa"), idea);
+		Timeline timeline = new Timeline(
+				utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa"), idea);
 		timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
 		for (Reaction reaction : idea.getReactions()) {
 			if (reaction.getReactionType() == 1) {
@@ -511,10 +516,10 @@ public class UserController {
 				timeline.setReactionOfCurrentUser(reaction.getReactionType());
 			}
 		}
-		
+
 		Set<Attachment> attachments = new HashSet<Attachment>();
-		for(Attachment attachment : idea.getAttachments()) {
-			if(null!=attachment.getFileType()) {
+		for (Attachment attachment : idea.getAttachments()) {
+			if (null != attachment.getFileType()) {
 				attachments.add(attachment);
 			}
 		}
@@ -522,9 +527,9 @@ public class UserController {
 		if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
 			timeline.setTagExpired(true);
 		}
-	
-		timeline.setTotalComments(idea.getComments().size());		
-		
+
+		timeline.setTotalComments(idea.getComments().size());
+
 		String userType = "";
 		for (Authority authority : authorities) {
 			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
@@ -546,26 +551,22 @@ public class UserController {
 		model.addAttribute("ideas", ideasByTag);
 		return "/templates/read_full_post";
 	}
-	
+
 	@SuppressWarnings({ "unused", "unchecked", "rawtypes" })
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public String profile_GET(
-			HttpSession session, 
-			Model model,
-			@RequestParam("id") String username,
-			@RequestParam(name = "page", defaultValue = "1") int pageNumber
-			) {
+	public String profile_GET(HttpSession session, Model model, @RequestParam("id") String username,
+			@RequestParam(name = "page", defaultValue = "1") int pageNumber) {
 		UserEntity userEntity = userService.getUserByUsername(username);
 		UserEntity userEntity2 = (UserEntity) session.getAttribute("usr");
 		int resultPerPage = 5;
 
 		List<Idea> ideas = new ArrayList<>();
-		ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber,
-				resultPerPage).iterator().forEachRemaining(idea -> {
+		ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber, resultPerPage).iterator()
+				.forEachRemaining(idea -> {
 					ideas.add(idea);
 				});
-		
-//		Collections.reverse(ideas);
+
+		// Collections.reverse(ideas);
 		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
 
 		String dateTimeString = "";
@@ -574,7 +575,7 @@ public class UserController {
 
 			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
 			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
-			
+
 			if (!dates.containsKey(dateTimeString.split(" ")[0])) {
 				dates.put(dateTimeString.split(" ")[0], new ArrayList());
 			}
@@ -595,10 +596,10 @@ public class UserController {
 				if (idea.getTag().getFinalClosingDate().getTime() < new Date().getTime()) {
 					timeline.setTagExpired(true);
 				}
-				
+
 				List<Comment> comments = new ArrayList();
-				
-				idea.getComments().iterator().forEachRemaining(c1->{
+
+				idea.getComments().iterator().forEachRemaining(c1 -> {
 					comments.add(index++, c1);
 				});
 				index = 0;
@@ -606,19 +607,20 @@ public class UserController {
 				timeline.setTotalComments(idea.getComments().size());
 
 				dates.get(dateTimeString.split(" ")[0]).add(timeline);
-				
+
 			}
-			
+
 		}
-				
+
 		int totalResults = ideas.size();
-		
+
 		// profile side panel items
-		
-		int pages = (int) Math.ceil(((double) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail()).size()) / resultPerPage);
+
+		int pages = (int) Math
+				.ceil(((double) ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail()).size()) / resultPerPage);
 		List<Idea> ideas2 = ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail());
 		Set<Tag> tags = new HashSet<>();
-		
+
 		ideas2.forEach((idea) -> tags.add(idea.getTag()));
 		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
 		String userType = "";
@@ -633,16 +635,14 @@ public class UserController {
 				userType = "qa_coordinator";
 			}
 		}
-		
+
 		model.addAttribute("totalIdeas", ideas2.size());
 		model.addAttribute("totalTags", tags.size());
 		model.addAttribute("totalContributions", contributionService.findContributionsByUser(userEntity).size());
-		
+
 		// timeline data
-		
-		model.addAttribute("pages",
-				totalResults ==5 ? pages - 1
-						: resultPerPage == totalResults ? 0 : pages-1);
+
+		model.addAttribute("pages", totalResults == 5 ? pages - 1 : resultPerPage == totalResults ? 0 : pages - 1);
 
 		model.addAttribute("currentPage", pageNumber);
 
@@ -656,11 +656,10 @@ public class UserController {
 		return "/templates/profile";
 	}
 
-	
 	@RequestMapping("/side-nav")
 	public String sideNav(Model model, HttpSession session) {
 		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
-		
+
 		for (Authority authority : authorities) {
 			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
 				return "/templates/side_nav_admin";
@@ -673,5 +672,108 @@ public class UserController {
 			}
 		}
 		return "/templates/side_nav_student";
+	}
+
+	int ideasByDepartment = 0;
+	@RequestMapping("/number-of-ideas-by-department")
+	public @ResponseBody Integer totalNumberOfIdeasByDepartment(HttpSession session,
+			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
+		ideasByDepartment = 0;
+		ideaService.listAllIdeas().forEach(idea -> {
+			if (userService.getUserByEmail(idea.getAuthorEmail()).getDepartment().contains(departmentName)) {
+				ideasByDepartment++;
+			}
+		});
+		return ideasByDepartment;
+	}
+	
+	int percentageOfIdeasByDepartment = 0;
+
+	@RequestMapping("/percentage-of-ideas-by-department")
+	public @ResponseBody Integer totalPercentageOfIdeasByDepartment(HttpSession session,
+			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
+		percentageOfIdeasByDepartment = 0;
+		ideaService.listAllIdeas().forEach(idea -> {
+			if (userService.getUserByEmail(idea.getAuthorEmail()).getDepartment().contains(departmentName)) {
+				percentageOfIdeasByDepartment++;
+			}
+		});
+		return (ideaService.listAllIdeas().size() > 0 ? ((percentageOfIdeasByDepartment * 100) / ideaService.listAllIdeas().size())
+				: ideaService.listAllIdeas().size());
+	}
+
+	int numberOfContribution = 0;
+	@RequestMapping("/number-of-contributions-by-department")
+	public @ResponseBody Integer totalContributionsByDepartment(HttpSession session,
+			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
+		numberOfContribution = 0;
+
+		ideaService.listAllIdeas().forEach(idea -> {
+			commentService.findAllByIdea(idea).forEach(comment -> {
+				if (comment.getCommentedUser().getDepartment().contains(departmentName)) {
+					numberOfContribution++;
+				}
+			});
+
+			if (userService.getUserByEmail(idea.getAuthorEmail()).getDepartment().contains(departmentName)) {
+				numberOfContribution++;
+			}
+		});
+
+		return numberOfContribution;
+	}
+
+	int ideasWithoutComment = 0;
+	@RequestMapping("/number-of-ideas-without-comment")
+	public @ResponseBody Integer totalNumberOfIdeasWithoutComment(HttpSession session,
+			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
+		ideasWithoutComment = 0;
+
+		if (!departmentName.isEmpty()) {
+			ideaService.listAllIdeas().forEach(idea -> {
+				if (userService.getUserByEmail(idea.getAuthorEmail()).getDepartment().contains(departmentName)) {
+					if (idea.getComments().size() < 1) {
+						ideasWithoutComment++;
+					}
+				}
+			});
+		} else {
+			ideaService.listAllIdeas().forEach(idea -> {
+				if (idea.getComments().size() < 1) {
+					ideasWithoutComment++;
+				}
+			});
+		}
+
+		return ideasWithoutComment;
+	}
+
+	int numberOfAnonymousComments = 0;
+	@RequestMapping("/number-of-anonymous-comments")
+	public @ResponseBody Integer totalAnonymousComments(HttpSession session,
+			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
+		numberOfAnonymousComments = 0;
+
+		if (!departmentName.isEmpty()) {
+			ideaService.listAllIdeas().forEach(idea -> {
+				if (userService.getUserByEmail(idea.getAuthorEmail()).getDepartment().contains(departmentName)) {
+					idea.getComments().forEach(comment -> {
+						if (comment.isAnonymous() == true) {
+							numberOfAnonymousComments++;
+						}
+					});
+				}
+			});
+		} else {
+			ideaService.listAllIdeas().forEach(idea -> {
+				idea.getComments().forEach(comment -> {
+					if (comment.isAnonymous() == true) {
+						numberOfAnonymousComments++;
+					}
+				});
+			});
+		}
+
+		return numberOfAnonymousComments;
 	}
 }

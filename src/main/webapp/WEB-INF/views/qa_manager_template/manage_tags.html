@@ -55,9 +55,17 @@
 
 					<li class="header">MAIN NAVIGATION</li>
 
+					<li><a th:href="@{/qa_manager/dashboard}">
+							<i class="fa fa-dashboard"></i> <span>Dashboard</span>
+					</a></li>
 					<li class="active "><a th:href="@{/qa_manager/manage-tags}">
 							<i class="fa fa-dashboard"></i> <span>Manage Category</span>
 					</a></li>
+					<li><a th:href="@{/qa_manager/download-backup-database}">
+							<i class="fa fa-dashboard"></i> <span>Download Backup File</span>
+					</a></li>
+
+
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -165,7 +173,7 @@
 							<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 							<script type="text/javascript"
 								th:src="@{resources/contents/lib/multiple-select/select2.js}"></script>
-							
+
 							<script type="text/javascript" th:inline="javascript">
 								$('#inputVisibleToDepartments').select2();
 								var dateToday = new Date();
@@ -198,14 +206,10 @@
 
 		</div>
 		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-			</div>
-			<strong>Copyright &copy; 2014-2016 <a
-				href="https://adminlte.io">Almsaeed Studio</a>.
-			</strong> All rights reserved.
-		</footer>
+		<div id="footer"></div>
+		<script type="text/javascript">
+			$("#footer").load("/ewsd/footer");
+		</script>
 
 		<!-- Control Sidebar -->
 		<div id="control-sidebar"></div>

@@ -57,6 +57,7 @@ public class QAManagerController {
 	private NotificationService notificationService;
 	@Autowired
 	private DepartmentService departmentService;
+	private String userType;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
 	public String qaManagerDashboard_GET(HttpSession session, Model model) {
@@ -74,10 +75,18 @@ public class QAManagerController {
 	 */
 
 	@RequestMapping(value = "/manage-tags", method = RequestMethod.GET)
-	public String manageTag_GET(Model model, HttpSession session) {
+	public String manageTag_GET(Model model, HttpSession session,
+			@RequestParam(name = "notif_id", defaultValue = "") String notificationId) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("tag", new Tag());
+
+		if (!notificationId.isEmpty() && Character.isDigit(notificationId.charAt(0))) {
+			Notification notification = notificationService.findById(Long.parseLong(notificationId));
+			notification.setSeen("yes");
+			notificationService.save(notification);
+		}
+
 		List<String> departments = new ArrayList<>();
 		departmentService.getAllDepartments().forEach(department -> {
 			String departmentName = department.getDepartmentName();
@@ -92,21 +101,19 @@ public class QAManagerController {
 			@RequestParam(name = "opening-date", required = true) String openingDate,
 			@RequestParam(name = "closure-date", required = true) String closureDate,
 			@RequestParam(name = "final-closure-date", required = true, defaultValue = "") String finalClosureDate,
-			@RequestParam(name="inputVisibleToDepartments", required=true, defaultValue="") String departments) {
+			@RequestParam(name = "inputVisibleToDepartments", required = true, defaultValue = "") String departments) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
-
-		tag.setTagId(System.currentTimeMillis());
-		tag.setOpeningDate(utils.convertStringToTimestamp(openingDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-		tag.setClosingDate(utils.convertStringToTimestamp(closureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-		tag.setDepartments(departments);
-		tag.setFinalClosingDate(utils.convertStringToTimestamp(finalClosureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
-
-		System.out.println(tag.getOpeningDate() + "\t" + tag.getClosingDate() + "\t" + tag.getFinalClosingDate());
-		if (tagService.save(tag) == false) {
-			model.addAttribute("isOk", "false");
-		} else {
+		if (tagService.findByTagName(tag.getTagName()) == null) {
+			tag.setTagId(System.currentTimeMillis());
+			tag.setOpeningDate(utils.convertStringToTimestamp(openingDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+			tag.setClosingDate(utils.convertStringToTimestamp(closureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+			tag.setDepartments(departments);
+			tag.setFinalClosingDate(
+					utils.convertStringToTimestamp(finalClosureDate + " 00:00:00", "dd/MM/yyyy HH:mm:ss"));
+			tagService.save(tag);
+			System.out.println(tag.getOpeningDate() + "\t" + tag.getClosingDate() + "\t" + tag.getFinalClosingDate());
 			model.addAttribute("isOk", "true");
 			InetAddress IP = null;
 			try {
@@ -116,18 +123,24 @@ public class QAManagerController {
 				e.printStackTrace();
 			}
 			List<UserEntity> userEntities = userService.getAllUsers();
-			
-			for (UserEntity userEntity2 : userEntities) {
-				if(tag.getDepartments().contains(userEntity2.getDepartment())) {
-					Mailer.sendMail(userEntity2.getEmail(), "EWSD - A new category has been opened.",
-							"A new category has been opened. \n To post an idea, please click on the link below. \n http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
 
+			for (UserEntity userEntity2 : userEntities) {
+				if (tag.getDepartments().contains(userEntity2.getDepartment())) {
+					userEntity2.getAuthorities().forEach(authority -> {
+						if (authority.getAuthority().equals("ROLE_STUDENT")) {
+							userType = "student";
+						} else if (authority.getAuthority().equals("ROLE_QA_COORDINATOR")) {
+							userType = "qa_coordinator";
+						}
+					});
+					Mailer.sendMail(userEntity2.getEmail(), "EWSD - A new category has been opened.",
+							"A new category has been opened.");
+					System.out.println(IP.getHostAddress());
 					Notification notification = new Notification();
-					notification.setNotificationId(tag.getTagId());
+					notification.setNotificationId(System.currentTimeMillis());
 					notification.setNotificationMsg("A new category has been opened.");
 					notification.setNotificationType("announcement");
-					notification.setNotificationUrl(
-							"http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/post-new-idea");
+					notification.setNotificationUrl("/ewsd/" + userType + "/post-new-idea");
 					notification.setNotifyTo(userEntity2);
 					notification.setNotificationFrom(userEntity);
 					notification.setNotifiableDepartments(tag.getDepartments());
@@ -136,10 +149,16 @@ public class QAManagerController {
 					notificationService.save(notification);
 				}
 			}
+
+			model.addAttribute("tag", tag);
+			return "redirect:/qa_manager/manage-tags";
+		} else {
+			model.addAttribute("isOk", "false");
+			model.addAttribute("tag", new Tag());
+			return "redirect:/qa_manager/manage-tags";
 		}
 
-		model.addAttribute("tag", tag);
-		return "redirect:/qa_manager/manage-tags";
+		
 	}
 
 	@RequestMapping(value = "/view-all-tags", method = RequestMethod.GET)
@@ -149,23 +168,28 @@ public class QAManagerController {
 		model.addAttribute("pageName", "view-all-tags");
 		List<Tag> tags = tagService.listAllTags();
 		List<Integer> totalIdeasOfTag = new ArrayList<>();
-		tags.forEach(tag->{
+		tags.forEach(tag -> {
 			totalIdeasOfTag.add(ideaService.listIdeasByTag(tag).size());
 		});
-		
+
 		model.addAttribute("tags", tags);
 		model.addAttribute("totalIdeas", totalIdeasOfTag);
 		return "/qa_manager_template/view_all_tags";
 	}
-	
-	@RequestMapping(value="/tag-status/{tagId}", method=RequestMethod.GET)
-	public @ResponseBody Integer totalIdeasOfTag(@PathVariable("tagId") Long tagId){
+
+	@RequestMapping(value = "/tag-status/{tagId}", method = RequestMethod.GET)
+	public @ResponseBody Integer totalIdeasOfTag(@PathVariable("tagId") Long tagId) {
 		return ideaService.listIdeasByTag(tagService.findById(tagId)).size();
 	}
-	
-	@RequestMapping(value="/delete-tag/{tagId}", method=RequestMethod.GET)
-	public @ResponseBody boolean deleteTag(@PathVariable("tagId") Long tagId){
-		notificationService.delete(notificationService.findById(tagId));
-		return ideaService.listIdeasByTag(tagService.findById(tagId)).size()==0?tagService.delete(tagService.findById(tagId)):false;
+
+	@RequestMapping(value = "/delete-tag/{tagId}", method = RequestMethod.GET)
+	public @ResponseBody boolean deleteTag(@PathVariable("tagId") Long tagId) {
+		Notification notification = notificationService.findById(tagId);
+		if(notification!=null) {
+			notificationService.delete(notification);
+		}
+		return ideaService.listIdeasByTag(tagService.findById(tagId)).size() == 0
+				? tagService.delete(tagService.findById(tagId))
+				: false;
 	}
 }

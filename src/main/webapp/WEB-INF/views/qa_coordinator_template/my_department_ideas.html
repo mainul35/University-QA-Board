@@ -46,7 +46,7 @@
 
 
 
-					<li class=" "><a th:href="@{/qa_coordinator/timeline}"> <i
+					<li class=" "><a th:href="@{/qa_coordinator/dashboard}"> <i
 							class="fa fa-dashboard"></i> <span>Home</span>
 					</a></li>
 					<li class="active"><a
@@ -71,8 +71,8 @@
 					QA <small>Board</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">All Ideas</li>
+					<li><a href="#"><i class="fa fa-dashboard"></i>All Ideas</a></li>
+					<li class="active">My Department</li>
 				</ol>
 			</section>
 
@@ -98,6 +98,10 @@
 
 								<!-- /.tab-pane -->
 								<div class="active tab-pane" id="timeline">
+									<th:block th:if="${dates.empty}">
+										<h1>Nothing to show!</h1>
+									</th:block>
+
 									<!-- The timeline -->
 									<th:block th:each="date : ${dates}">
 										<ul class="timeline timeline-inverse">
@@ -473,9 +477,11 @@
 						<div class="box-tools pull-right">
 							<ul class="pagination pagination-sm inline">
 								<th:block th:if="${(currentPage-1)>0}">
-									<li><a th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage-1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage-1})}"
 										th:text="${'&laquo;'}"></a></li>
-									<li><a th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage-1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage-1})}"
 										th:text="${currentPage-1}"></a></li>
 								</th:block>
 								<li class="active"><a
@@ -483,9 +489,11 @@
 									th:text="${currentPage}"></a></li>
 
 								<th:block th:unless="${currentPage>pages}">
-									<li><a th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage+1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage+1})}"
 										th:text="${currentPage+1}"></a></li>
-									<li><a th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage+1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/my-department(page=${currentPage+1})}"
 										th:text="${'&raquo;'}"></a></li>
 								</th:block>
 							</ul>
@@ -505,15 +513,10 @@
 
 
 		</div>
-		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-			</div>
-			<strong>Copyright &copy; 2014-2016 <a
-				href="https://adminlte.io">Almsaeed Studio</a>.
-			</strong> All rights reserved.
-		</footer>
+		<div id="footer"></div>
+		<script type="text/javascript">
+			$("#footer").load("/ewsd/footer");
+		</script>
 
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->

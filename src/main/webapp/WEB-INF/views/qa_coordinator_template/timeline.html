@@ -139,8 +139,10 @@
 					<div class="col-md-9">
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
-								<li><a th:href="@{/qa_coordinator/activities}">My Department Activities</a></li>
-								<li class="active"><a th:href="@{/qa_coordinator/timeline}">My Timeline</a></li>
+								<li><a th:href="@{/qa_coordinator/activities}">My
+										Department Activities</a></li>
+								<li class="active"><a th:href="@{/qa_coordinator/timeline}">My
+										Timeline</a></li>
 								<li><a th:href="@{/qa_coordinator/post-new-idea}">Post
 										an idea</a></li>
 							</ul>
@@ -148,6 +150,10 @@
 
 								<!-- /.tab-pane -->
 								<div class="active tab-pane" id="timeline">
+									<th:block th:if="${dates.empty}">
+										<h1>Nothing to show!</h1>
+									</th:block>
+
 									<!-- The timeline -->
 									<th:block th:each="date : ${dates}">
 										<ul class="timeline timeline-inverse">

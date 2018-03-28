@@ -9,12 +9,15 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletContext;
 
@@ -31,7 +34,7 @@ public class Utils {
 
 	@Autowired
 	private ServletContext servletContext;
-	
+
 	private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
 	public Timestamp convertStringToTimestamp(String dateTime, String format) {
@@ -99,13 +102,13 @@ public class Utils {
 	public byte[] readFile(Long fileId) throws IOException {
 		String attachmentUrl = attachmentService.readAttachment(fileId).getFileURL();
 		InputStream in = null;
-		if(servletContext.getResourceAsStream(attachmentUrl)==null) {
+		if (servletContext.getResourceAsStream(attachmentUrl) == null) {
 			in = new FileInputStream(new File(attachmentUrl));
-		}else {
+		} else {
 			in = servletContext.getResourceAsStream(attachmentUrl);
 		}
-				
-	    return IOUtils.toByteArray(in);
+
+		return IOUtils.toByteArray(in);
 	}
 
 	public String writeFile(String fileName, String content) {
@@ -128,5 +131,39 @@ public class Utils {
 
 		}
 		return content;
+	}
+
+	public void createZip(String filename) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		File file = new File("c:\\temp\\"+filename+".sql");
+		FileReader fileReader = new FileReader(file);
+		FileInputStream fileInputStream = new FileInputStream(file);
+		String line = "";
+		BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
+		while ((line = br.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+
+		File f = new File("c:\\temp\\"+filename+".zip");
+		ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
+		ZipEntry e = new ZipEntry(filename+".sql");
+		out.putNextEntry(e);
+
+		System.out.println(sb.toString());
+
+		byte[] data = sb.toString().getBytes();
+		out.write(data, 0, data.length);
+		out.closeEntry();
+		System.out.println("Zip file created successfully.");
+		out.close();
+	}
+
+	public void exportSQL(String filename) throws IOException, InterruptedException {
+		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "Start F:\\xampp\\mysql\\bin\\mysqldump -u root --password= ewsd -r c:\\temp\\"+filename+".sql");
+		File dir = new File("C:\\temp\\");
+		pb.directory(dir);
+		Process p = pb.start();
+		
+		createZip(filename);
 	}
 }

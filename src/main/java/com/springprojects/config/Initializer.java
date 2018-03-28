@@ -77,7 +77,7 @@ public class Initializer {
 		userEntity.setId(System.nanoTime());
 		userEntity.setName("Mainul Hasan");
 		userEntity.setEmail("mainuls18@gmail.com");
-		userEntity.setDepartment("BIT");
+		userEntity.setDepartment("Computer Science");
 		authorities = new HashSet<>();
 		authorities.add(authorityService.findByRoleName("ROLE_STUDENT"));
 		userEntity.setAuthorities(authorities);
@@ -104,7 +104,7 @@ public class Initializer {
 		userEntity.setId(System.nanoTime());
 		userEntity.setName("Sazzad Hossain");
 		userEntity.setEmail("sazzadhossainsakib@gmail.com");
-		userEntity.setDepartment("BIT");
+		userEntity.setDepartment("Computer Science");
 		authorities = new HashSet<>();
 		authorities.add(authorityService.findByRoleName("ROLE_STUDENT"));
 		userEntity.setAuthorities(authorities);

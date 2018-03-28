@@ -41,7 +41,7 @@
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
-				
+
 				<!-- 				/.search form sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 
@@ -102,10 +102,9 @@
 									<li class="list-group-item"><b>Contributions</b> <a
 										class="pull-right" onmouseover="describeTotalContributions()"
 										th:text="${totalContributions}"></a></li>
-									<li class="list-group-item"><b>Last activity</b> <p
-										class="pull-right last-activity-interval">
-										</p>
-										<script type="text/javascript" th:inline="javascript">
+									<li class="list-group-item"><b>Last activity</b>
+										<p class="pull-right last-activity-interval"></p> <script
+											type="text/javascript" th:inline="javascript">
 										$.ajax({
 											  url: '/ewsd/activity-interval',
 											  data: '',
@@ -122,9 +121,8 @@
 													  }
 													});
 											}, 60000);
-										</script>
-										</li>
-										
+										</script></li>
+
 								</ul>
 
 								<!-- 								<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
@@ -146,6 +144,9 @@
 
 								<!-- /.tab-pane -->
 								<div class="active tab-pane" id="timeline">
+									<th:block th:if="${dates.empty}">
+										<h1>Nothing to show!</h1>
+									</th:block>
 									<!-- The timeline -->
 									<th:block th:each="date : ${dates}">
 										<ul class="timeline timeline-inverse">
@@ -183,8 +184,8 @@
 
 															<ul class="list-inline">
 																<li><b><a class="link-black text-sm"
-																	th:text="${'View full post'}"
-																	th:href="@{'/ideas/'+${timeline.idea.ideaId}}"> </a></b></li>
+																		th:text="${'View full post'}"
+																		th:href="@{'/ideas/'+${timeline.idea.ideaId}}"> </a></b></li>
 																<th:block>|
 																	<li><span th:text="${timeline.totalThumbUp}"
 																		th:id="'idea_'+${timeline.idea.ideaId}+'_thumbup_count'"></span></li>
@@ -557,7 +558,7 @@
 
 		</div>
 		<!-- /.content-wrapper -->
-		
+
 		<div id="footer"></div>
 		<script type="text/javascript">
 			$("#footer").load("/ewsd/footer");

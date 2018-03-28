@@ -59,7 +59,7 @@
 							class="fa fa-dashboard"></i> <span>Home</span>
 					</a></li>
 
-					<li><a th:href="@{/qa_coordinator/all-ideas}"> <i
+					<li><a th:href="@{/qa_coordinator/ideas/my-department}"> <i
 							class="fa fa-dashboard"></i> <span>All ideas</span>
 					</a></li>
 					<li><a th:href="@{/qa_coordinator/submit-issue}"> <i
@@ -87,7 +87,7 @@
 			<!-- Main content -->
 
 			<section class="content">
-								<div class="box box-info" id="add-department"></div>
+				<div class="box box-info" id="add-department"></div>
 
 				<div class="all-destinations"></div>
 				<script type="text/javascript">
@@ -101,14 +101,10 @@
 
 		</div>
 		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-			</div>
-			<strong>Copyright &copy; 2014-2016 <a
-				href="https://adminlte.io">Almsaeed Studio</a>.
-			</strong> All rights reserved.
-		</footer>
+		<div id="footer"></div>
+		<script type="text/javascript">
+			$("#footer").load("/ewsd/footer");
+		</script>
 
 		<!-- Control Sidebar -->
 		<div id="control-sidebar"></div>

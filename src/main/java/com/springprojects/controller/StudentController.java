@@ -2,8 +2,11 @@ package com.springprojects.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
@@ -141,13 +144,21 @@ public class StudentController {
 		idea.setIdeaId(System.currentTimeMillis());
 		idea.setPublishingDate(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
 
+		InetAddress IP = null;
+		try {
+			IP = Inet4Address.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		Notification notification = new Notification();
 		notification.setNotificationId(idea.getIdeaId());
 		notification.setNotifiableDepartments(userEntity.getDepartment());
 		notification.setNotificationFrom(userEntity);
 		notification.setNotificationType("notification");
 		notification.setNotificationMsg("EWSD - A new idea is submitted from your department.");
-		notification.setNotificationUrl("http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/ideas/"+idea.getIdeaId());
+		notification.setNotificationUrl("/ewsd/ideas/"+idea.getIdeaId());
 		notification.setSeen("no");
 		userService.getUsersByDepartment(userEntity.getDepartment()).forEach(user->{
 			for (Authority authority : user.getAuthorities()) {
@@ -162,7 +173,7 @@ public class StudentController {
 		Mailer.sendMail(
 				notification.getNotifyTo().getEmail(),
 				"EWSD - A new idea is submitted from your department.",
-				"To read the comment, please click on the link below. \n http://ec2-18-220-231-146.us-east-2.compute.amazonaws.com:8080/ewsd/ideas/"+idea.getIdeaId());
+				"To read the comment, please click on the link below. \n "+IP.getHostAddress()+":8080/ewsd/ideas/"+idea.getIdeaId());
 		
 		
 		Set<Attachment> attachments = new HashSet<>();

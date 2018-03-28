@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -50,7 +53,7 @@ public class AdminController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		logger.info("Admin Dashboard : ");
-		return "/admin_template/index";
+		return "redirect:/admin/manage-batch";
 	}
 
 	@RequestMapping(value = "/set-terms-and-conditions", method = RequestMethod.GET)
@@ -60,7 +63,7 @@ public class AdminController {
 		String tNc = utils.readFile("/TermsAndConditions.txt");
 		model.addAttribute("tNc", tNc);
 		model.addAttribute("pageName", "terms-and-conditions");
-		return "/admin_template/index";
+		return "/admin_template/terms_and_conditions";
 	}
 
 	@RequestMapping(value = "/set-terms-and-conditions", method = RequestMethod.POST)
@@ -70,7 +73,7 @@ public class AdminController {
 		model.addAttribute("pageName", "terms-and-conditions");
 		tc = utils.writeFile("/TermsAndConditions.txt", tc);
 		model.addAttribute("tNc", tc);
-		return "/admin_template/index";
+		return "/admin_template/terms_and_conditions";
 	}
 
 	/**
@@ -129,7 +132,7 @@ public class AdminController {
 		model.addAttribute("usr", userEntity);
 		return "/admin_template/manage_batch";
 	}
-	
+
 	@RequestMapping(value = "/create-batch", method = RequestMethod.GET)
 	public String createBatch_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
@@ -145,11 +148,11 @@ public class AdminController {
 		model.addAttribute("usr", userEntity);
 		batch.setBatchId(System.currentTimeMillis());
 		batchService.save(batch);
-		
+
 		model.addAttribute("batch", batch);
 		return "/admin_template/manage_batch";
 	}
-	
+
 	@RequestMapping(value = "/view-batches", method = RequestMethod.GET)
 	public String viewBatches_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
@@ -161,7 +164,6 @@ public class AdminController {
 		return "/admin_template/view_all_batches";
 	}
 
-	
 	/**
 	 * 
 	 * 
@@ -176,7 +178,7 @@ public class AdminController {
 		model.addAttribute("usr", userEntity);
 		return "/admin_template/manage_department";
 	}
-	
+
 	@RequestMapping(value = "/create-department", method = RequestMethod.GET)
 	public String createDepartment_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
@@ -184,32 +186,45 @@ public class AdminController {
 		Department department = new Department();
 		model.addAttribute("department", department);
 		model.addAttribute("batches", batchService.findAllBatches());
-		
+
 		return "/admin_template/create_department";
 	}
 
 	@RequestMapping(value = "/create-department", method = RequestMethod.POST)
-	public String createDepartment_POST(Model model, HttpSession session, @ModelAttribute("department") Department department) {
+	public String createDepartment_POST(Model model, HttpSession session,
+			@ModelAttribute("department") Department department) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		department.setDepartmentId(System.currentTimeMillis());
 		String status = departmentService.saveOrUpdate(department);
 
+		InetAddress IP = null;
+		try {
+			IP = Inet4Address.getLocalHost();
+
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Notification notification = new Notification();
 		notification.setNotificationId(department.getDepartmentId());
 		notification.setNotificationMsg("EWSD - A new department has been added.");
 		notification.setNotifiableDepartments("QA");
 		notification.setNotificationFrom(userEntity);
 		notification.setNotificationType("notification");
-		notification.setNotificationUrl("#");
+		notification.setNotificationUrl("/ewsd/qa_manager/manage-tags");
 		notification.setNotifyTo(userService.getUserByUsername("qa_manager"));
 		notification.setSeen("no");
-		notificationService.save(notification);		
-		
+		notificationService.save(notification);
+
+		Mailer.sendMail(notification.getNotifyTo().getEmail(), "DoNotReply",
+				"EWSD - A new department has been added.\n");
+
 		model.addAttribute("department", department);
 		return "/admin_template/manage_department";
 	}
-	
+
 	@RequestMapping(value = "/view-departments", method = RequestMethod.GET)
 	public String viewDestinations_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");

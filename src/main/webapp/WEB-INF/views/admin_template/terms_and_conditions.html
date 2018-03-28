@@ -21,6 +21,10 @@
 
 
 
+
+
+
+
 		<!-- Left side column. contains the logo and sidebar -->
 
 
@@ -31,8 +35,8 @@
 				Sidebar user panel
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img th:src="@{${usr.userImage.fileURL}}" class="img-circle"
-							alt="User Image">
+						<img th:src="@{/file(fileId=${usr.userImage.attachmentId})}"
+							class="img-circle" alt="User Image">
 					</div>
 					<div class="pull-left info">
 						<p th:text="${usr.name}"></p>
@@ -54,17 +58,19 @@
 				<!-- 				/.search form sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 
+
 					<li class="header">MAIN NAVIGATION</li>
-					<li class="active"><a th:href="@{/qa_manager/dashboard}">
-							<i class="fa fa-dashboard"></i> <span>Dashboard</span>
+					
+					<li><a th:href="@{/admin/manage-batch}">
+							<i class="fa fa-dashboard"></i> <span>Manage Batch</span>
 					</a></li>
-					<li><a th:href="@{/qa_manager/manage-tags}">
-							<i class="fa fa-dashboard"></i> <span>Manage Category</span>
-					</a></li>
-					<li><a th:href="@{/qa_manager/download-backup-database}">
-							<i class="fa fa-dashboard"></i> <span>Download Backup File</span>
+					<li><a th:href="@{/admin/manage-department}">
+							<i class="fa fa-dashboard"></i> <span>Manage Department</span>
 					</a></li>
 
+					<li><a th:href="@{/admin/set-terms-and-conditions}"> <i
+							class="fa fa-th"></i> <span>Set Terms and Conditions</span>
+					</a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -78,10 +84,8 @@
 					Dashboard <small>Control panel</small>
 				</h1>
 				<ol class="breadcrumb">
-					<l `i>
-					<a href="#"><i class="fa fa-dashboard"></i> Home</a>
-					</li>
-					<li class="active">Manage Department</li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li class="active">Terms and Conditions</li>
 				</ol>
 			</section>
 
@@ -89,10 +93,35 @@
 			<!-- Main content -->
 
 			<section class="content">
-				<div class="box box-info"></div>
+
+				<th:block th:if="${pageName=='terms-and-conditions'}">
+					<div class="row">
+						<div class="col-xs-12 col-xl-12 col-md-12 col-lg-12 col-sm-12">
+							<form method="post"
+								th:action="@{/admin/set-terms-and-conditions}">
+								<div class="form-group">
+									<textarea id="editor1" name="editor1" th:text="${tNc}"></textarea>
+								</div>
+								<div class="row">
+									<div
+										class="form-group col-sm-2 col-lg-2 col-xl-2 col-md-2 col-xs-2">
+										<input type="submit" class="btn btn-block btn-primary btn-sm"
+											value="Save">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<script type="text/javascript">
+						CKEDITOR.replace('editor1');
+					</script>
+
+				</th:block>
+
 			</section>
 
 			<!-- /.Ending Main content -->
+
 
 
 		</div>
@@ -101,7 +130,6 @@
 		<script type="text/javascript">
 			$("#footer").load("/ewsd/footer");
 		</script>
-
 		<!-- Control Sidebar -->
 		<div id="control-sidebar"></div>
 		<script type="text/javascript">

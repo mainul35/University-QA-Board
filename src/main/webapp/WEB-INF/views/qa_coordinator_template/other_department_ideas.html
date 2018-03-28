@@ -37,7 +37,7 @@
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
-				
+
 				<!-- 				/.search form sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 
@@ -46,10 +46,11 @@
 
 
 
-					<li class=" "><a th:href="@{/qa_coordinator/timeline}"> <i
+					<li class=" "><a th:href="@{/qa_coordinator/dashboard}"> <i
 							class="fa fa-dashboard"></i> <span>Home</span>
 					</a></li>
-					<li class="active"><a th:href="@{/qa_coordinator/ideas/my-department}"> <i
+					<li class="active"><a
+						th:href="@{/qa_coordinator/ideas/my-department}"> <i
 							class="fa fa-files-o"></i> <span>All Ideas</span>
 					</a></li>
 					<li><a th:href="@{/qa_coordinator/submit-issue}"> <i
@@ -70,8 +71,8 @@
 					QA <small>Board</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">All Ideas</li>
+					<li><a href="#"><i class="fa fa-dashboard"></i>All Ideas</a></li>
+					<li class="active">Staff Ideas</li>
 				</ol>
 			</section>
 
@@ -88,13 +89,19 @@
 						<div class="nav-tabs-custom">
 							<ul class="nav nav-tabs">
 
-								<li><a th:href="@{/qa_coordinator/ideas/my-department}">My Department</a></li>
-								<li class="active"><a th:href="@{/qa_coordinator/ideas/staff-ideas}">Staff</a></li>
+								<li><a th:href="@{/qa_coordinator/ideas/my-department}">My
+										Department</a></li>
+								<li class="active"><a
+									th:href="@{/qa_coordinator/ideas/staff-ideas}">Staff</a></li>
 							</ul>
 							<div class="tab-content">
 
 								<!-- /.tab-pane -->
 								<div class="active tab-pane" id="timeline">
+									<th:block th:if="${dates.empty}">
+										<h1>Nothing to show!</h1>
+									</th:block>
+
 									<!-- The timeline -->
 									<th:block th:each="date : ${dates}">
 										<ul class="timeline timeline-inverse">
@@ -470,9 +477,11 @@
 						<div class="box-tools pull-right">
 							<ul class="pagination pagination-sm inline">
 								<th:block th:if="${(currentPage-1)>0}">
-									<li><a th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage-1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage-1})}"
 										th:text="${'&laquo;'}"></a></li>
-									<li><a th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage-1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage-1})}"
 										th:text="${currentPage-1}"></a></li>
 								</th:block>
 								<li class="active"><a
@@ -480,9 +489,11 @@
 									th:text="${currentPage}"></a></li>
 
 								<th:block th:unless="${currentPage>pages}">
-									<li><a th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage+1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage+1})}"
 										th:text="${currentPage+1}"></a></li>
-									<li><a th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage+1})}"
+									<li><a
+										th:href="@{/qa_coordinator/ideas/staff-ideas(page=${currentPage+1})}"
 										th:text="${'&raquo;'}"></a></li>
 								</th:block>
 							</ul>
@@ -503,15 +514,10 @@
 
 		</div>
 		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.4.0
-			</div>
-			<strong>Copyright &copy; 2014-2016 <a
-				href="https://adminlte.io">Almsaeed Studio</a>.
-			</strong> All rights reserved.
-		</footer>
-
+		<div id="footer"></div>
+		<script type="text/javascript">
+			$("#footer").load("/ewsd/footer");
+		</script>
 		<!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
