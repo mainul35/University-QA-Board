@@ -13,7 +13,7 @@ public class Activity {
 	@Column(name="activity_id")
 	private Long id;
 	@Column(name="last_activity_date_time")
-	private Timestamp lastActivityDateTime;
+	private Timestamp lastActivityDateTime = new Timestamp(System.currentTimeMillis());
 	public Long getId() {
 		return id;
 	}

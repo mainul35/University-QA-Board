@@ -13,7 +13,6 @@ import com.springprojects.entity.Tag;
 @Repository
 public interface IdeaRepository extends PagingAndSortingRepository<Idea, Long>{
 
-//	@Query("select i from Idea i where i.authorEmail = ?1 Order By i.ideaId DESC")
 	Page<Idea> findAllByAuthorEmailOrderByIdeaIdDesc(String email, Pageable pageable);
 
 	List<Idea> findAllByAuthorEmail(String email);

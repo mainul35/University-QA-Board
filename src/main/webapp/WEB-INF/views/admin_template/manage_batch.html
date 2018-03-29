@@ -86,8 +86,11 @@
 			<!-- Main content -->
 
 			<section class="content">
-				<div class="box box-info" id="add-batch">
+					<div th:if="${msg!=''}" style="height: 30px; background-color:#ee0202; font-size:14px;">
+						<span th:text="${msg}"></span>
+					</div><br>
 
+				<div class="box box-info" id="add-batch">
 				</div>
 				
 				<div class="all-batches"></div>

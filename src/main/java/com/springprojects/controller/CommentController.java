@@ -96,7 +96,7 @@ public class CommentController {
 			Mailer.sendMail(
 					idea.getAuthorEmail(), 
 					"EWSD - "+comment.getCommentedUser().getName()+" Commented on your idea -\""+idea.getIdeaTitle()+"\"",
-					"To read the comment, please click on the link below. \n "+IP.getHostAddress()+":8080/ewsd/ideas/"+idea.getIdeaId());
+					"To read the comment, please click on the link below. \n http://ec2-13-127-223-157.ap-south-1.compute.amazonaws.com:8080/ewsd/ideas/"+idea.getIdeaId());
 			
 			Notification notification = new Notification();
 			notification.setNotificationId(comment.getCommentId());

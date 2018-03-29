@@ -7,16 +7,19 @@ import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Authority;
 import com.springprojects.entity.Comment;
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.Issue;
 import com.springprojects.entity.Notification;
 import com.springprojects.entity.Reaction;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
+import com.springprojects.repository.IssueRepository;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.AuthorityService;
 import com.springprojects.service.CommentService;
 import com.springprojects.service.ContributionService;
 import com.springprojects.service.DepartmentService;
 import com.springprojects.service.IdeaService;
+import com.springprojects.service.IssueService;
 import com.springprojects.service.NotificationService;
 import com.springprojects.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +76,8 @@ public class UserController {
 	private NotificationService notificationService;
 	@Autowired
 	private DepartmentService departmentService;
-
+	@Autowired
+	private IssueService issueService;
 	private int index = 0;
 
 	// @RequestMapping(value = {"/"})
@@ -267,6 +271,7 @@ public class UserController {
 			}
 
 			if (authority.getAuthority().toUpperCase().equals("ROLE_STAFF")) {
+				userType = "staff";
 				List<Notification> notifications2 = notificationService.findNotificationsByUser(userEntity);
 				for (Notification notification : notifications2) {
 					if (notification.getNotificationType().equalsIgnoreCase("notification")
@@ -296,6 +301,7 @@ public class UserController {
 
 		int unreadNotifications = 0;
 		int unreadAnnouncements = 0;
+		
 		for (Notification notification : notificationService.findNotificationsByUser(userEntity)) {
 			if (notification.getNotifiableDepartments() != null
 					&& notification.getNotifiableDepartments().contains(userEntity.getDepartment())) {
@@ -312,10 +318,23 @@ public class UserController {
 				}
 			}
 		}
+		
+		List<Issue> issues = new ArrayList<>();
+		if(issueService.findAllIssues()!=null && issueService.findAllIssues().size()>0) {
+			issueService.findAllIssues().forEach(issue->{
+				if(issue.getIssueStatus().equals("created")) {
+					issues.add(issue);
+				}
+			});
+		}
+		
+		
 		model.addAttribute("notifications", notifications);
 		model.addAttribute("unreadNotifications", unreadNotifications);
 		model.addAttribute("unreadAnnouncements", unreadAnnouncements);
 		model.addAttribute("announcements", announcements);
+		model.addAttribute("createdIssues", issues.size());
+		model.addAttribute("issues", issues);
 		model.addAttribute("id", userEntity.getId());
 		model.addAttribute("usr", userEntity);
 		model.addAttribute("userType", userType);
@@ -413,9 +432,28 @@ public class UserController {
 		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
 
 		String dateTimeString = "";
-
+		
+		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
+		
 		for (Idea idea : ideas) {
 
+			List<Comment> comments = new ArrayList<>();
+			authorities.forEach(authority->{
+				if(authority.getAuthority().equals("ROLE_STUDENT")) {
+					for (Comment comment : idea.getComments()) {
+						for (Authority authority2 : comment.getCommentedUser().getAuthorities()) {
+							if(authority2.getAuthority().equals("ROLE_STUDENT")) {
+								comments.add(comment);
+								break;
+							}
+						}
+					}
+					idea.setComments(comments);
+				}else {
+					idea.setComments(commentService.findAllByIdea(idea));
+				}
+			});
+			
 			dateTimeString = utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa");
 			String time = dateTimeString.split(" ")[1] + " " + dateTimeString.split(" ")[2];
 
@@ -440,13 +478,7 @@ public class UserController {
 					timeline.setTagExpired(true);
 				}
 
-				List<Comment> comments = new ArrayList();
-
-				idea.getComments().iterator().forEachRemaining(c1 -> {
-					comments.add(index++, c1);
-				});
 				index = 0;
-				idea.setComments(comments);
 				timeline.setTotalComments(idea.getComments().size());
 
 				dates.get(dateTimeString.split(" ")[0]).add(timeline);
@@ -455,7 +487,6 @@ public class UserController {
 		}
 		int totalResults = ideas.size();
 
-		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
 		String userType = "";
 		for (Authority authority : authorities) {
 			if (authority.getAuthority().toUpperCase().equals("ROLE_ADMIN")) {
@@ -499,10 +530,27 @@ public class UserController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Idea idea = ideaService.getIdea(id);
 		idea.getComments().clear();
-		idea.setComments(commentService.findAllByIdea(idea));
+		List<Comment> comments = new ArrayList<>();
+		authorities.forEach(authority->{
+			if(authority.getAuthority().equals("ROLE_STUDENT")) {
+				for (Comment comment : idea.getComments()) {
+					for (Authority authority2 : comment.getCommentedUser().getAuthorities()) {
+						if(authority.getAuthority().equals("ROLE_STUDENT")) {
+							comments.add(comment);
+							break;
+						}
+					}
+				}
+				idea.setComments(comments);
+			}else {
+				idea.setComments(commentService.findAllByIdea(idea));
+			}
+		});
+		
 		idea.getSeenBy().add(userEntity.getUsername());
 		idea.setCountViews(idea.getCountViews() + 1);
 		ideaService.update(idea);
+		
 		Timeline timeline = new Timeline(
 				utils.convertTimestampToString(idea.getPublishingDate(), "d/MM/YYYY hh:mm:ss aaa"), idea);
 		timeline.setPostedBy(userService.getUserByEmail(idea.getAuthorEmail()));
@@ -675,7 +723,7 @@ public class UserController {
 	}
 
 	int ideasByDepartment = 0;
-	@RequestMapping("/number-of-ideas-by-department")
+	@RequestMapping(value= {"/qa_manager/number-of-ideas-by-department","/qa_coordinator/number-of-ideas-by-department"})
 	public @ResponseBody Integer totalNumberOfIdeasByDepartment(HttpSession session,
 			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
 		ideasByDepartment = 0;
@@ -689,7 +737,7 @@ public class UserController {
 	
 	int percentageOfIdeasByDepartment = 0;
 
-	@RequestMapping("/percentage-of-ideas-by-department")
+	@RequestMapping(value= {"/qa_manager/percentage-of-ideas-by-department","/qa_coordinator/percentage-of-ideas-by-department"})
 	public @ResponseBody Integer totalPercentageOfIdeasByDepartment(HttpSession session,
 			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
 		percentageOfIdeasByDepartment = 0;
@@ -703,7 +751,7 @@ public class UserController {
 	}
 
 	int numberOfContribution = 0;
-	@RequestMapping("/number-of-contributions-by-department")
+	@RequestMapping(value= {"/qa_manager/number-of-contributions-by-department","/qa_coordinator/number-of-contributions-by-department"})
 	public @ResponseBody Integer totalContributionsByDepartment(HttpSession session,
 			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
 		numberOfContribution = 0;
@@ -724,7 +772,7 @@ public class UserController {
 	}
 
 	int ideasWithoutComment = 0;
-	@RequestMapping("/number-of-ideas-without-comment")
+	@RequestMapping(value= {"/qa_manager/number-of-ideas-without-comment","/qa_coordinator/number-of-ideas-without-comment"})
 	public @ResponseBody Integer totalNumberOfIdeasWithoutComment(HttpSession session,
 			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
 		ideasWithoutComment = 0;
@@ -749,7 +797,7 @@ public class UserController {
 	}
 
 	int numberOfAnonymousComments = 0;
-	@RequestMapping("/number-of-anonymous-comments")
+	@RequestMapping(value= {"/qa_manager/number-of-anonymous-comments", "/qa_coordinator/number-of-anonymous-comments"})
 	public @ResponseBody Integer totalAnonymousComments(HttpSession session,
 			@RequestParam(name = "departmentName", defaultValue = "") String departmentName) {
 		numberOfAnonymousComments = 0;

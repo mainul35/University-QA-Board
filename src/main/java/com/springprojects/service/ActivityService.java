@@ -21,11 +21,12 @@ public class ActivityService {
 	private ActivityRepository activityRepository;
 
 	public void saveOrUpdate(Activity activity) {
-		if (activityRepository.findOne(activity.getId()) != null) {
-			activityRepository.update(activity.getLastActivityDateTime(), activity.getId());
-		} else {
-			activityRepository.save(activity);
-		}
+//		if (activityRepository.findOne(activity.getId()) != null) {
+//			activityRepository.update(activity.getLastActivityDateTime(), activity.getId());
+//		} else {
+//			activityRepository.save(activity);
+//		}
+		activityRepository.save(activity);
 	}
 
 	public Activity findActivityById(Long id) {

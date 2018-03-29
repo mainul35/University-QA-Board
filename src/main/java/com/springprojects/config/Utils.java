@@ -134,6 +134,7 @@ public class Utils {
 	}
 
 	public void createZip(String filename) throws IOException {
+		
 		StringBuilder sb = new StringBuilder();
 		File file = new File("c:\\temp\\"+filename+".sql");
 		FileReader fileReader = new FileReader(file);
@@ -149,8 +150,6 @@ public class Utils {
 		ZipEntry e = new ZipEntry(filename+".sql");
 		out.putNextEntry(e);
 
-		System.out.println(sb.toString());
-
 		byte[] data = sb.toString().getBytes();
 		out.write(data, 0, data.length);
 		out.closeEntry();
@@ -159,11 +158,20 @@ public class Utils {
 	}
 
 	public void exportSQL(String filename) throws IOException, InterruptedException {
-		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "Start F:\\xampp\\mysql\\bin\\mysqldump -u root --password= ewsd -r c:\\temp\\"+filename+".sql");
-		File dir = new File("C:\\temp\\");
+		File dir = Paths.get(Properties.TEMP_PATH).toFile();
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "Start C:\\shared\\xampp\\mysql\\bin\\mysqldump -u root --password= ewsd -r c:\\temp\\"+filename+".sql");
+		
 		pb.directory(dir);
 		Process p = pb.start();
-		
+		try {
+			logger.info(Integer.toString(p.exitValue()));
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		createZip(filename);
 	}
 }

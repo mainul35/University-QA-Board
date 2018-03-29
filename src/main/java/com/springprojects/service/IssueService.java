@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springprojects.entity.Issue;
+import com.springprojects.entity.UserEntity;
 import com.springprojects.repository.IssueRepository;
 
 @Service
@@ -20,12 +21,15 @@ public class IssueService {
 	}
 	
 	public List<Issue> findAllIssues(){
-		return issueRepository.findByIssueStatus("closed");
+		return issueRepository.findAll();
 	}
 	
 	public Issue findById(Long issueId) {
 		return issueRepository.findOne(issueId);
 	}
 	
-	
+	public List<Issue> findByIssueSubmittedBy(UserEntity userEntity){
+		return issueRepository.findByIssueSubmittedBy(userEntity);
+	}
+
 }

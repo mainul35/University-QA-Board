@@ -1,5 +1,6 @@
 package com.springprojects.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,6 +30,7 @@ import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Comment;
 import com.springprojects.entity.Contribution;
 import com.springprojects.entity.Idea;
+import com.springprojects.entity.Issue;
 import com.springprojects.entity.Notification;
 import com.springprojects.entity.Reaction;
 import com.springprojects.entity.Tag;
@@ -37,6 +39,7 @@ import com.springprojects.service.ActivityService;
 import com.springprojects.service.AttachmentService;
 import com.springprojects.service.ContributionService;
 import com.springprojects.service.IdeaService;
+import com.springprojects.service.IssueService;
 import com.springprojects.service.NotificationService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
@@ -61,6 +64,9 @@ public class QACoordinatorController {
 	private ActivityService activityService;
 	@Autowired
 	private NotificationService notificationService;
+	@Autowired
+	private IssueService issueService;
+	
 	private int index = 0;
 	private int countIdeas = 0;
 	private Logger logger = Logger.getLogger(getClass().getName());
@@ -104,7 +110,7 @@ public class QACoordinatorController {
 	public String postNewIdea_GET(Model model, HttpSession session, @RequestParam(name="notif_id", defaultValue="") String notificationId) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		if(Character.isDigit(notificationId.charAt(0))) {
+		if(!notificationId.isEmpty() && Character.isDigit(notificationId.charAt(0))) {
 			Notification notification = notificationService.findById(Long.parseLong(notificationId));
 			notification.setSeen("yes");
 			notificationService.save(notification);
@@ -133,13 +139,13 @@ public class QACoordinatorController {
 			model.addAttribute("usr", userEntity);
 			List<Tag> tags = tagService.listAllTags();
 			tags.removeIf(
-					t -> tag.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
+					t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
 
 			model.addAttribute("categories", tags);
 
 			model.addAttribute("ok", "false");
 			model.addAttribute("msg", "Sorry, The category expired.");
-			return "/student_template/post_an_idea";
+			return "/qa_coordinator_template/post_an_idea";
 		}
 		idea.setTag(tagService.findByTagName(tagName));
 		idea.setAuthorEmail(userEntity.getEmail());
@@ -154,7 +160,7 @@ public class QACoordinatorController {
 					model.addAttribute("idea", new Idea());
 					model.addAttribute("usr", userEntity);
 					List<Tag> tags = tagService.listAllTags();
-					tags.removeIf(t -> tag.getClosingDate() == null
+					tags.removeIf(t -> t.getClosingDate() == null
 							|| t.getClosingDate().getTime() < System.currentTimeMillis());
 
 					model.addAttribute("categories", tags);
@@ -496,108 +502,91 @@ public class QACoordinatorController {
 	 * 
 	 * */
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/raise-an-issue")
+	@RequestMapping(method = RequestMethod.GET, value = "/submit-issue")
 	public String raiseAnIssue_GET(Model model, HttpSession session) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
-		model.addAttribute("idea", new Idea());
+		model.addAttribute("issue", new Issue());
 		model.addAttribute("usr", userEntity);
 		List<Tag> tags = tagService.listAllTags();
 		tags.removeIf(
-				tag -> tag.getClosingDate() == null || tag.getClosingDate().getTime() < System.currentTimeMillis());
+				t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
 
 		model.addAttribute("categories", tags);
-		logger.info("Student -> Post new idea : ");
-		return "/qa_coordinator_template/post_an_idea";
+		logger.info("Student -> Submit an issue : ");
+		return "/qa_coordinator_template/submit_an_issue";
 	}
 
-	@RequestMapping(value = "/raise-an-issue", method = RequestMethod.POST)
-	public String raiseAnIssue_POST(Model model, HttpSession session, @ModelAttribute("idea") Idea idea,
-			@RequestParam(name = "tagName", defaultValue = "") String tagName,
-			@RequestParam(name = "publishingDateTime") String publishingDateTime,
-			@RequestParam(name = "images[]") MultipartFile[] files) {
+	@RequestMapping(value = "/submit-issue", method = RequestMethod.POST)
+	public String raiseAnIssue_POST(Model model, 
+			HttpSession session, @ModelAttribute("issue") Issue issue,
+			@RequestParam(name = "tagName", defaultValue = "") String tagName
+			) {
 
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		Tag tag = tagService.findByTagName(tagName);
 		if (tag.getClosingDate().getTime() < System.currentTimeMillis()) {
-			model.addAttribute("idea", new Idea());
+			model.addAttribute("issue", new Issue());
 			model.addAttribute("usr", userEntity);
 			List<Tag> tags = tagService.listAllTags();
 			tags.removeIf(
-					t -> tag.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
+					t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
 
 			model.addAttribute("categories", tags);
-
 			model.addAttribute("ok", "false");
 			model.addAttribute("msg", "Sorry, The category expired.");
-			return "/student_template/post_an_idea";
-		}
-		idea.setTag(tagService.findByTagName(tagName));
-		idea.setAuthorEmail(userEntity.getEmail());
-		idea.setCountViews(0);
-		idea.setIdeaId(System.currentTimeMillis());
-		idea.setPublishingDate(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
-
-		Set<Attachment> attachments = new HashSet<>();
-		if (files[0].getOriginalFilename().contains(".")) {
-			for (MultipartFile file : files) {
-				if (file.getSize() > 25000000L) {
-					model.addAttribute("idea", new Idea());
-					model.addAttribute("usr", userEntity);
-					List<Tag> tags = tagService.listAllTags();
-					tags.removeIf(t -> tag.getClosingDate() == null
-							|| t.getClosingDate().getTime() < System.currentTimeMillis());
-
-					model.addAttribute("categories", tags);
-
-					model.addAttribute("ok", "false");
-					model.addAttribute("msg", "Sorry, The file size is too large.");
-					return "/qa_coordinator_template/post_an_idea";
-				}
-				System.out.println(file.getContentType());
-				if (!file.getContentType().contains("image") && !file.getOriginalFilename().contains(".doc")
-						&& !file.getOriginalFilename().contains(".docx") && !file.getContentType().contains("video")
-						&& !file.getOriginalFilename().contains(".pdf")) {
-					System.out.println(file.getOriginalFilename());
-					model.addAttribute("idea", new Idea());
-					model.addAttribute("usr", userEntity);
-					List<Tag> tags = tagService.listAllTags();
-					tags.removeIf(t -> tag.getClosingDate() == null
-							|| t.getClosingDate().getTime() < System.currentTimeMillis());
-
-					model.addAttribute("categories", tags);
-
-					model.addAttribute("ok", "false");
-					model.addAttribute("msg", "Sorry, Unknown file type found.");
-					return "/qa_coordinator_template/post_an_idea";
-				}
-				Attachment attachment = new Attachment();
-				Long attachmentId = System.currentTimeMillis();
-				attachment.setAttachmentId(attachmentId);
-				attachment.setFileName("" + attachmentId);
-				attachment.setFileTitle(idea.getIdeaTitle());
-
-				attachment = attachmentService.save(attachment, file, userEntity.getId());
-
-				attachments.add(attachment);
-			}
-
+			return "/qa_coordinator_template/submit_an_issue";
 		}
 
-		List<Tag> tags = tagService.listAllTags();
-		tags.removeIf(t -> t.getClosingDate() == null || t.getClosingDate().getTime() < System.currentTimeMillis());
-
-		idea.setAttachments(attachments);
-		ideaService.save(idea);
-
-		Contribution contribution = new Contribution(idea.getIdeaId(), userEntity);
-		contributionService.save(contribution);
+		issue.setIssueId(System.currentTimeMillis());
+		issue.setIssueRaisedDate(new Timestamp(System.currentTimeMillis()));
+		issue.setIssueStatus("created");
+		issue.setIssueSubmittedBy(userEntity);
+		issue.setTag(tag);
+		issue.setIssueUrl("/qa_manager/read-issue?issue_id="+issue.getIssueId());
+		issue.setIssueSubmittedTo(userService.getUserByUsername("qa_manager"));
+		
+		issueService.save(issue);
+		
 		Activity activity = new Activity();
 		activity.setId(userEntity.getId());
-		activity.setLastActivityDateTime(utils.convertStringToTimestamp(publishingDateTime, "dd-MM-yyyy HH:mm:ss"));
+		activity.setLastActivityDateTime(new Timestamp(System.currentTimeMillis()));
 		activityService.saveOrUpdate(activity);
-		logger.info("Student -> Post new idea : ");
-		return "redirect:/qa_coordinator/timeline";
+		System.out.println(activity);
+		logger.info("Student -> Submit issue [POST] : ");
+		return "redirect:/qa_coordinator/dashboard";
+	}
+
+	@RequestMapping(value = "/read-issue", method = RequestMethod.GET)
+	public String readIssue(Model model, HttpSession session,
+			@RequestParam(name = "issue_id", defaultValue = "") String issueId) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+
+		if (!issueId.isEmpty() && Character.isDigit(issueId.charAt(0))) {
+			Issue issue = issueService.findById(Long.parseLong(issueId));
+			issue.setIssueStatus("Processing");
+			issueService.save(issue);
+			model.addAttribute("issue", issue);
+			model.addAttribute("usr", userEntity);
+		}
+		return "/qa_coordinator_template/read_issue";
+	}
+
+	@RequestMapping(value = "/all-issues", method = RequestMethod.GET)
+	public String allIssues(Model model, HttpSession session) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		
+		model.addAttribute("issues", issueService.findByIssueSubmittedBy(userEntity));
+		model.addAttribute("usr", userEntity);
+
+		return "/qa_coordinator_template/list_all_issues";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/view-all-issues")
+	public String viewAllIssues_GET(HttpSession session, Model model) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		model.addAttribute("usr", userEntity);
+		return "/qa_coordinator_template/view_all_issues";
 	}
 
 }

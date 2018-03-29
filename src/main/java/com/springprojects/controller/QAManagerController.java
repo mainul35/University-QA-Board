@@ -3,6 +3,7 @@ package com.springprojects.controller;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.springprojects.config.Mailer;
 import com.springprojects.config.Utils;
+import com.springprojects.entity.Issue;
 import com.springprojects.entity.Notification;
 import com.springprojects.entity.Tag;
 import com.springprojects.entity.UserEntity;
@@ -29,6 +31,7 @@ import com.springprojects.service.AttachmentService;
 import com.springprojects.service.ContributionService;
 import com.springprojects.service.DepartmentService;
 import com.springprojects.service.IdeaService;
+import com.springprojects.service.IssueService;
 import com.springprojects.service.NotificationService;
 import com.springprojects.service.TagService;
 import com.springprojects.service.UserService;
@@ -57,6 +60,9 @@ public class QAManagerController {
 	private NotificationService notificationService;
 	@Autowired
 	private DepartmentService departmentService;
+	@Autowired
+	private IssueService issueService;
+
 	private String userType;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/dashboard")
@@ -103,6 +109,9 @@ public class QAManagerController {
 			@RequestParam(name = "final-closure-date", required = true, defaultValue = "") String finalClosureDate,
 			@RequestParam(name = "inputVisibleToDepartments", required = true, defaultValue = "") String departments) {
 
+		if(tag.getTagName().isEmpty() || departments.isEmpty()) {
+			return "redirect:/qa_manager/manage-tags";
+		}
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		if (tagService.findByTagName(tag.getTagName()) == null) {
@@ -135,7 +144,6 @@ public class QAManagerController {
 					});
 					Mailer.sendMail(userEntity2.getEmail(), "EWSD - A new category has been opened.",
 							"A new category has been opened.");
-					System.out.println(IP.getHostAddress());
 					Notification notification = new Notification();
 					notification.setNotificationId(System.currentTimeMillis());
 					notification.setNotificationMsg("A new category has been opened.");
@@ -158,7 +166,6 @@ public class QAManagerController {
 			return "redirect:/qa_manager/manage-tags";
 		}
 
-		
 	}
 
 	@RequestMapping(value = "/view-all-tags", method = RequestMethod.GET)
@@ -185,11 +192,53 @@ public class QAManagerController {
 	@RequestMapping(value = "/delete-tag/{tagId}", method = RequestMethod.GET)
 	public @ResponseBody boolean deleteTag(@PathVariable("tagId") Long tagId) {
 		Notification notification = notificationService.findById(tagId);
-		if(notification!=null) {
+		if (notification != null) {
 			notificationService.delete(notification);
 		}
 		return ideaService.listIdeasByTag(tagService.findById(tagId)).size() == 0
 				? tagService.delete(tagService.findById(tagId))
 				: false;
 	}
+
+	@RequestMapping(value = "/read-issue", method = RequestMethod.GET)
+	public String readIssue(Model model, HttpSession session,
+			@RequestParam(name = "issue_id", defaultValue = "") String issueId) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+
+		if (!issueId.isEmpty() && Character.isDigit(issueId.charAt(0))) {
+			Issue issue = issueService.findById(Long.parseLong(issueId));
+			issue.setIssueStatus("Processing");
+			issueService.save(issue);
+			model.addAttribute("issue", issue);
+			model.addAttribute("usr", userEntity);
+		}
+		return "/qa_manager_template/read_issue";
+	}
+
+	@RequestMapping(value = "/all-issues", method = RequestMethod.GET)
+	public String allIssues(Model model, HttpSession session,
+			@RequestParam(name = "issue_id", defaultValue = "") String issueId,
+			@RequestParam(name = "action_type", defaultValue = "") String actionType) {
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+
+		if (!issueId.isEmpty() && Character.isDigit(issueId.charAt(0))) {
+			Issue issue = issueService.findById(Long.parseLong(issueId));
+			if (actionType.equals("close")) {
+				issue.setIssueClosureDate(new Timestamp(System.currentTimeMillis()));
+				issue.setIssueStatus("Closed");
+			} else if (actionType.equals("solve")) {
+				issue.setIssueClosureDate(new Timestamp(System.currentTimeMillis()));
+				issue.setIssueStatus("Solved");
+			}
+
+			issueService.save(issue);
+
+			return "redirect:/qa_manager/dashboard";
+		}
+		model.addAttribute("issues", issueService.findAllIssues());
+		model.addAttribute("usr", userEntity);
+
+		return "/qa_manager_template/view_all_issues";
+	}
+
 }

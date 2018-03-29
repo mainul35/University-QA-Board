@@ -316,7 +316,7 @@
 															<div class="box-body chat"
 																th:id="'load-comments_'+${timeline.idea.ideaId}">
 																<th:block th:each="comment : ${timeline.idea.comments}">
-																	<th:block th:if="${comment.isAnonymous} == false ">
+																	<th:block th:if="${comment.isAnonymous} == false">
 																		<div class="item">
 																			<img
 																				th:src="@{/file/(fileId=${comment.commentedUser.userImage.attachmentId})}"
@@ -500,17 +500,7 @@
 									</th:block>
 
 								</div>
-								<!-- /.tab-pane -->
-
-								<!-- 								<div class="box-tools pull-right"> -->
-								<!-- 									<ul class="pagination pagination-sm inline"> -->
-								<!-- 										<li><a href="#">«</a></li> -->
-								<!-- 										<li><a href="#">1</a></li> -->
-								<!-- 										<li><a href="#">2</a></li> -->
-								<!-- 										<li><a href="#">3</a></li> -->
-								<!-- 										<li><a href="#">»</a></li> -->
-								<!-- 									</ul> -->
-								<!-- 								</div> -->
+								
 
 							</div>
 							<!-- /.tab-content -->

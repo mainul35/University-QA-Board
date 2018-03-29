@@ -6,7 +6,7 @@
 <header class="main-header">
 	<!-- Logo -->
 	<a th:href="@{/}" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-		<span class="logo-mini"><b>A</b>LT</span> <!-- logo for regular state and mobile devices -->
+		<span class="logo-mini" style="font-size: 12px;">EWSD</span> <!-- logo for regular state and mobile devices -->
 		<span class="logo-lg"><b>EWSD</b></span>
 	</a>
 	<!-- Header Navbar: style can be found in header.less -->
@@ -113,36 +113,23 @@
 				
 				<li class="dropdown notifications-menu"  sec:authorize="hasRole('ROLE_QA_MANAGER')"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <i
-						class="fa fa-exclamation-circle"></i> <span th:if="${unreadIssues}!=0" class="label label-warning" th:text="${unreadIssues}"></span>
+						class="fa fa-exclamation-circle"></i> <span th:if="${createdIssues}!=0" class="label label-warning" th:text="${createdIssues}"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li class="header">You have <span th:text="${unreadIssues}"></span> unread notifications</li>
+						<li class="header">You have <span th:text="${createdIssues}"></span> new issues</li>
 						
 						<li>
 							<!-- inner menu: contains the actual data -->
 							<ul class="menu">
-								<li  th:each="notification : ${issues}"  th:if="${notification.seen}=='no'" style="background-color:#cccccc;">
-									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
+								<li  th:each="issue : ${issues}"  th:if="${issue.issueStatus}=='created'" style="background-color:#cccccc;">
+									<!-- start message --> <a th:href="'/ewsd'+${issue.issueUrl}">
 										<div class="pull-left">
-											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+											<img width="40" height="40" th:src="'/ewsd/'+${issue.issueSubmittedBy.userImage.fileURL}" class="img-circle" alt="User Image">
 										</div>
 										<h4>
-											<span th:text="${notification.notificationFrom.name}"></span>
+											<span th:text="${issue.issueSubmittedBy.name}"></span>
 										</h4>
-										<p th:text="${notification.notificationMsg}"></p>
-										
-								</a>
-								
-								</li>
-								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='yes'">
-									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
-										<div class="pull-left">
-											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
-										</div>
-										<h4>
-											<span th:text="${notification.notificationFrom.name}"></span>
-										</h4>
-										<p th:text="${notification.notificationMsg}"></p>
+										<p th:text="'A New issue has been submitted from '+${issue.issueSubmittedBy.department}"></p>
 										
 								</a>
 								

@@ -35,27 +35,14 @@
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
-				
+
 				<!-- 				/.search form sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 
-
-					<li class="header">MAIN NAVIGATION</li>
-
-
-
-					<li class=""><a th:href="@{/${userType}/timeline}"> <i
-							class="fa fa-dashboard"></i> <span>Home</span> <span
-							class="pull-right-container"> </span>
-					</a></li>
-					<li class="active"><a th:href="@{/ideas}"> <i
-							class="fa fa-files-o"></i> <span>All Ideas</span> <span
-							class="pull-right-container"> </span>
-					</a></li>
-
-
-
 				</ul>
+				<script type="text/javascript">
+					$(".sidebar-menu").load("/ewsd/side-nav");
+				</script>
 			</section>
 			<!-- /.sidebar -->
 		</aside>
@@ -403,8 +390,7 @@
 											</th:block>
 											<br>
 											<li>&nbsp;
-												<p class="link-black text-sm" th:text="${'Views'}">
-												</p>
+												<p class="link-black text-sm" th:text="${'Views'}"></p>
 											</li>
 											<li>&nbsp;<span th:text="${timeline.idea.countViews}"></span>
 											</li> |
@@ -626,7 +612,7 @@
 											  content = '<p>No other attachments available.</p>';
 										  }else{
 											  for(i = 0; i<data.length; i++){
-												  content+='<a href="/ewsd/'+data[i]+'"><span class="fa fa-file-text"></span>File '+(i+1)+'</a>';
+												  content+='<a href="/ewsd/'+data[i]+'"><span class="fa fa-file-text"></span>File '+(i+1)+'</a><br>';
 											  }
 										  }
 										  

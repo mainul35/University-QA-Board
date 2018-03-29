@@ -25,6 +25,10 @@ public class Issue {
 	private Timestamp issueClosureDate;
 	@Column(name="issue_status")
 	private String issueStatus;
+	@Column(name="issue_url")
+	private String issueUrl;
+	@OneToOne
+	Tag tag = new Tag();
 	@OneToOne
 	private UserEntity issueSubmittedTo;
 	@OneToOne
@@ -89,7 +93,21 @@ public class Issue {
 		result = prime * result + ((issueStatus == null) ? 0 : issueStatus.hashCode());
 		result = prime * result + ((issueSubmittedBy == null) ? 0 : issueSubmittedBy.hashCode());
 		result = prime * result + ((issueSubmittedTo == null) ? 0 : issueSubmittedTo.hashCode());
+		result = prime * result + ((issueUrl == null) ? 0 : issueUrl.hashCode());
+		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
 		return result;
+	}
+	public String getIssueUrl() {
+		return issueUrl;
+	}
+	public void setIssueUrl(String issueUrl) {
+		this.issueUrl = issueUrl;
+	}
+	public Tag getTag() {
+		return tag;
+	}
+	public void setTag(Tag tag) {
+		this.tag = tag;
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -140,6 +158,16 @@ public class Issue {
 				return false;
 		} else if (!issueSubmittedTo.equals(other.issueSubmittedTo))
 			return false;
+		if (issueUrl == null) {
+			if (other.issueUrl != null)
+				return false;
+		} else if (!issueUrl.equals(other.issueUrl))
+			return false;
+		if (tag == null) {
+			if (other.tag != null)
+				return false;
+		} else if (!tag.equals(other.tag))
+			return false;
 		return true;
 	}
 
@@ -147,8 +175,8 @@ public class Issue {
 	public String toString() {
 		return "Issue [issueId=" + issueId + ", issueName=" + issueName + ", issueDescription=" + issueDescription
 				+ ", issueRaisedDate=" + issueRaisedDate + ", issueClosureDate=" + issueClosureDate + ", issueStatus="
-				+ issueStatus + ", issueSubmittedTo=" + issueSubmittedTo + ", issueSubmittedBy=" + issueSubmittedBy
-				+ "]";
+				+ issueStatus + ", issueUrl=" + issueUrl + ", tag=" + tag + ", issueSubmittedTo=" + issueSubmittedTo
+				+ ", issueSubmittedBy=" + issueSubmittedBy + "]";
 	}
 	
 }

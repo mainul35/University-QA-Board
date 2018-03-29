@@ -130,6 +130,7 @@ public class AdminController {
 	public String manageBatch_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
+		model.addAttribute("msg","");
 		return "/admin_template/manage_batch";
 	}
 
@@ -147,10 +148,14 @@ public class AdminController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		batch.setBatchId(System.currentTimeMillis());
+		if(batch.getBatchName().isEmpty() || batch.getAcademicYear().isEmpty()) {
+			model.addAttribute("msg", "Invalid batch data.");
+			return "/admin_template/manage_batch";
+		}
 		batchService.save(batch);
-
+		model.addAttribute("msg","");
 		model.addAttribute("batch", batch);
-		return "/admin_template/manage_batch";
+		return "redirect:/admin/manage-batch";
 	}
 
 	@RequestMapping(value = "/view-batches", method = RequestMethod.GET)
@@ -176,6 +181,8 @@ public class AdminController {
 	public String manageDepartment_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
+		model.addAttribute("msg", "");
+		
 		return "/admin_template/manage_department";
 	}
 
@@ -184,6 +191,7 @@ public class AdminController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		Department department = new Department();
+		model.addAttribute("msg", "");
 		model.addAttribute("department", department);
 		model.addAttribute("batches", batchService.findAllBatches());
 
@@ -196,16 +204,11 @@ public class AdminController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		department.setDepartmentId(System.currentTimeMillis());
-		String status = departmentService.saveOrUpdate(department);
-
-		InetAddress IP = null;
-		try {
-			IP = Inet4Address.getLocalHost();
-
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(department.getDepartmentName().isEmpty()) {
+			model.addAttribute("msg", "Invalid department data.");
+			return "/admin_template/manage_department";
 		}
+		String status = departmentService.saveOrUpdate(department);
 		
 		Notification notification = new Notification();
 		notification.setNotificationId(department.getDepartmentId());
@@ -220,9 +223,11 @@ public class AdminController {
 
 		Mailer.sendMail(notification.getNotifyTo().getEmail(), "DoNotReply",
 				"EWSD - A new department has been added.\n");
-
+		
+		model.addAttribute("msg", "");
+		
 		model.addAttribute("department", department);
-		return "/admin_template/manage_department";
+		return "redirect:/admin/manage-department";
 	}
 
 	@RequestMapping(value = "/view-departments", method = RequestMethod.GET)

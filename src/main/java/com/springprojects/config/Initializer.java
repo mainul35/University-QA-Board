@@ -54,7 +54,7 @@ public class Initializer {
 		userEntity.setAuthorities(authorities);
 		userEntity.setEnabled(true);
 		userEntity.setPassword(encoder.encode("secret"));
-		userEntity.setUsername("ADMIN");
+		userEntity.setUsername("admin");
 
 		Attachment userImage = new Attachment();
 		Long attachmentId = System.currentTimeMillis();
