@@ -98,7 +98,7 @@ public class StudentController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/post-new-idea")
-	public String postNewIdea_GET(Model model, HttpSession session, @RequestParam(name="notif_id") String notificationId) {
+	public String postNewIdea_GET(Model model, HttpSession session, @RequestParam(name="notif_id", defaultValue="") String notificationId) {
 
 		if(!notificationId.isEmpty() && Character.isDigit(notificationId.charAt(0))) {
 			Notification notification = notificationService.findById(Long.parseLong(notificationId));
