@@ -3,7 +3,7 @@
 - A student activity is counted if a student submits an idea or comments on an idea.
 - A QA Coordinator activity is counted if he submits an idea or comments on an idea or submits an issue.
 
-** Usernames and roles:
+## Usernames and roles:
 | Username                 |       Role                                   |
 | ------------------------ | -------------------------------------------- |
 | admin                    |       ADMIN (Admin Dept.)                    |
@@ -14,7 +14,7 @@
 | sazzad                   |     Student (Computer science Dept.)         |
 | tanjina                  |     Student (Archiology Dept.)               |
 
-** Password for all users: secret
+## Password for all users: secret
 
 ## Roles and permissions of tasks
 
