@@ -605,7 +605,7 @@
 									ideaId = /*[[${timeline.idea.ideaId}]]*/;
 									
 									$.get( '/ewsd/other-attachments?ideaId='+ideaId, function( data ) {
-										  $("doc-container").html("");
+										  $("#doc-container").html("");
 										  console.log( data );
 										  var content = "";
 										  if(data.length<1){

@@ -8,15 +8,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.springprojects.config.Utils;
 
 @Configuration
-@ComponentScan(basePackages = {"com.springprojects.service"})
+@ComponentScan(basePackages = {"com.springprojects.service", "com.springprojects.config"})
 public class RootConfig {
     @Bean
     public CommonsMultipartResolver multipartResolver(){
         return new CommonsMultipartResolver();
-    }
-    
-    @Bean
-    public Utils utils() {
-    	return new Utils();
     }
 }

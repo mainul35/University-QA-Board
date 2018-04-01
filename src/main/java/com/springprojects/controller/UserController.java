@@ -79,6 +79,7 @@ public class UserController {
 	@Autowired
 	private IssueService issueService;
 	private int index = 0;
+	private int countIdeas = 0;
 
 	// @RequestMapping(value = {"/"})
 	// public String index(HttpServletRequest request){
@@ -423,10 +424,24 @@ public class UserController {
 		int resultPerPage = 5;
 
 		List<Idea> ideas = new ArrayList<>();
-		ideaService.getPageOfIdeas(pageNumber, resultPerPage).iterator().forEachRemaining(idea -> {
-			ideas.add(idea);
+//		ideaService.getPageOfIdeas(pageNumber, resultPerPage).iterator().forEachRemaining(idea -> {
+//			ideas.add(idea);
+//		});
+		
+		index = 0;
+		countIdeas = 0;
+		ideaService.listAllIdeas().iterator().forEachRemaining(idea -> {
+			if (userService.getUserByEmail(idea.getAuthorEmail()).getDepartment()
+					.contains(userEntity.getDepartment())) {
+				if (index >= (pageNumber - 1) * resultPerPage && index < pageNumber * resultPerPage) {
+					ideas.add(idea);
+				}
+				index++;
+				countIdeas++;
+			}
 		});
 
+		index = 0;
 		Collections.reverse(ideas);
 
 		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());
@@ -500,7 +515,7 @@ public class UserController {
 			}
 		}
 
-		int pages = (int) Math.ceil(((double) ideaService.count()) / resultPerPage);
+		int pages = (int) Math.ceil(((double) countIdeas) / resultPerPage);
 
 		model.addAttribute("pages", totalResults == 5 ? pages - 1 : resultPerPage == totalResults ? 0 : pages - 1);
 
@@ -823,5 +838,6 @@ public class UserController {
 		}
 
 		return numberOfAnonymousComments;
-	}
+	}	
+
 }

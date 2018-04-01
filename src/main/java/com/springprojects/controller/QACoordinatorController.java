@@ -2,6 +2,7 @@ package com.springprojects.controller;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +23,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springprojects.config.SortTimelines;
 import com.springprojects.config.Utils;
 import com.springprojects.customModel.Timeline;
 import com.springprojects.entity.Activity;
@@ -66,6 +70,8 @@ public class QACoordinatorController {
 	private NotificationService notificationService;
 	@Autowired
 	private IssueService issueService;
+	@Autowired
+	private SortTimelines sortTimelines;
 	
 	private int index = 0;
 	private int countIdeas = 0;
@@ -587,6 +593,146 @@ public class QACoordinatorController {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		model.addAttribute("usr", userEntity);
 		return "/qa_coordinator_template/view_all_issues";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/most-liked-ideas")
+	public @ResponseBody Timeline[] mostLikedIdeas_GET(HttpSession session) {
+		
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		
+		List<Idea> ideas = new ArrayList<>();
+		List<Timeline> timelines = new ArrayList<>();
+		ideaService.listAllIdeas().forEach(idea -> {
+			Timeline timeline = new Timeline();
+			UserEntity userEntity2 = userService.getUserByEmail(idea.getAuthorEmail());
+			if(userEntity.getDepartment().contains(userEntity2.getDepartment())) {
+				idea.getReactions().forEach(reaction->{
+					if (reaction.getReactionType() == 1) {
+						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
+					} else if (reaction.getReactionType() == 2) {
+						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
+					}
+				});
+				timeline.setIdea(idea);
+				timeline.setPostedBy(userEntity2);
+				timeline.setTotalComments(idea.getComments().size());
+				timeline.setTotalSeenBy(idea.getSeenBy().size());
+				if (!(idea.getTag().getFinalClosingDate().getTime() < new Date().getTime())) {
+					timelines.add(timeline);
+				}
+			}
+			});
+		sortTimelines.SORT_TYPE = sortTimelines.SORT_BY_TOTAL_THUMB_UP;
+		Timeline[] timelineArray = new Timeline[timelines.size()];
+		System.out.println(timelineArray);
+		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
+		ArrayUtils.reverse(timelineArray);
+		return timelineArray;
+	}
+
+	@RequestMapping(method=RequestMethod.GET, value="/most-comented-ideas")
+	public @ResponseBody Timeline[] mostCommentedIdeas_GET(HttpSession session) {
+		
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		
+		List<Idea> ideas = new ArrayList<>();
+		List<Timeline> timelines = new ArrayList<>();
+		ideaService.listAllIdeas().forEach(idea -> {
+			Timeline timeline = new Timeline();
+			UserEntity userEntity2 = userService.getUserByEmail(idea.getAuthorEmail());
+			if(userEntity.getDepartment().contains(userEntity2.getDepartment())) {
+				idea.getReactions().forEach(reaction->{
+					if (reaction.getReactionType() == 1) {
+						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
+					} else if (reaction.getReactionType() == 2) {
+						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
+					}
+				});
+				timeline.setIdea(idea);
+				timeline.setPostedBy(userEntity2);
+				timeline.setTotalComments(idea.getComments().size());
+				timeline.setTotalSeenBy(idea.getSeenBy().size());
+				if (!(idea.getTag().getFinalClosingDate().getTime() < new Date().getTime())) {
+					timelines.add(timeline);
+				}
+			}
+			});
+		sortTimelines.SORT_TYPE = sortTimelines.SORT_BY_TOTAL_COMMENTS;
+		Timeline[] timelineArray = new Timeline[timelines.size()];
+		System.out.println(timelineArray);
+		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
+		ArrayUtils.reverse(timelineArray);
+		return timelineArray;
+	}
+
+	@RequestMapping(method=RequestMethod.GET, value="/most-visited-ideas")
+	public @ResponseBody Timeline[] mostVisitedIdeas_GET(HttpSession session) {
+		
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		
+		List<Idea> ideas = new ArrayList<>();
+		List<Timeline> timelines = new ArrayList<>();
+		ideaService.listAllIdeas().forEach(idea -> {
+			Timeline timeline = new Timeline();
+			UserEntity userEntity2 = userService.getUserByEmail(idea.getAuthorEmail());
+			if(userEntity.getDepartment().contains(userEntity2.getDepartment())) {
+				idea.getReactions().forEach(reaction->{
+					if (reaction.getReactionType() == 1) {
+						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
+					} else if (reaction.getReactionType() == 2) {
+						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
+					}
+				});
+				timeline.setIdea(idea);
+				timeline.setPostedBy(userEntity2);
+				timeline.setTotalComments(idea.getComments().size());
+				timeline.setTotalSeenBy(idea.getSeenBy().size());
+				if (!(idea.getTag().getFinalClosingDate().getTime() < new Date().getTime())) {
+					timelines.add(timeline);
+				}
+			}
+			});
+		sortTimelines.SORT_TYPE = sortTimelines.SORT_BY_TOTAL_VIEWS;
+		Timeline[] timelineArray = new Timeline[timelines.size()];
+		System.out.println(timelineArray);
+		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
+		ArrayUtils.reverse(timelineArray);
+		return timelineArray;
+	}
+
+	@RequestMapping(method=RequestMethod.GET, value="/most-seen-ideas")
+	public @ResponseBody Timeline[] mostSeenIdeas_GET(HttpSession session) {
+		
+		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
+		
+		List<Idea> ideas = new ArrayList<>();
+		List<Timeline> timelines = new ArrayList<>();
+		ideaService.listAllIdeas().forEach(idea -> {
+			Timeline timeline = new Timeline();
+			UserEntity userEntity2 = userService.getUserByEmail(idea.getAuthorEmail());
+			if(userEntity.getDepartment().contains(userEntity2.getDepartment())) {
+				idea.getReactions().forEach(reaction->{
+					if (reaction.getReactionType() == 1) {
+						timeline.setTotalThumbUp(timeline.getTotalThumbUp() + 1);
+					} else if (reaction.getReactionType() == 2) {
+						timeline.setTotalThumbDown(timeline.getTotalThumbDown() + 1);
+					}
+				});
+				timeline.setIdea(idea);
+				timeline.setPostedBy(userEntity2);
+				timeline.setTotalComments(idea.getComments().size());
+				timeline.setTotalSeenBy(idea.getSeenBy().size());
+				if (!(idea.getTag().getFinalClosingDate().getTime() < new Date().getTime())) {
+					timelines.add(timeline);
+				}
+			}
+			});
+		sortTimelines.SORT_TYPE = sortTimelines.SORT_BY_TOTAL_SEEN_BY;
+		Timeline[] timelineArray = new Timeline[timelines.size()];
+		System.out.println(timelineArray);
+		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
+		ArrayUtils.reverse(timelineArray);
+		return timelineArray;
 	}
 
 }

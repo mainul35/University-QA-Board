@@ -32,7 +32,7 @@
 						<li>
 							<!-- inner menu: contains the actual data -->
 							<ul class="menu">
-								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='no'" style="background-color:#cccccc;">
+								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='no'" style="background-color:#cccccc; word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
 											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
@@ -45,7 +45,7 @@
 								</a>
 								
 								</li>
-								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='yes'">
+								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='yes'" style="word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
 											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
@@ -77,7 +77,7 @@
 						<li>
 							<!-- inner menu: contains the actual data -->
 							<ul class="menu">
-								<li  th:each="notification : ${announcements}"   th:if="${notification.seen}=='no'" style="background-color:#cccccc;">
+								<li  th:each="notification : ${announcements}"   th:if="${notification.seen}=='no'" style="background-color:#cccccc; word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
 											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
@@ -91,7 +91,7 @@
 								
 								</li>
 								
-								<li  th:each="notification : ${announcements}" th:if="${notification.seen}=='yes'">
+								<li  th:each="notification : ${announcements}" th:if="${notification.seen}=='yes'" style="word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
 											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
@@ -121,7 +121,7 @@
 						<li>
 							<!-- inner menu: contains the actual data -->
 							<ul class="menu">
-								<li  th:each="issue : ${issues}"  th:if="${issue.issueStatus}=='created'" style="background-color:#cccccc;">
+								<li  th:each="issue : ${issues}"  th:if="${issue.issueStatus}=='created'" style="background-color:#cccccc; word-wrap: break-word;">
 									<!-- start message --> <a th:href="'/ewsd'+${issue.issueUrl}">
 										<div class="pull-left">
 											<img width="40" height="40" th:src="'/ewsd/'+${issue.issueSubmittedBy.userImage.fileURL}" class="img-circle" alt="User Image">

@@ -142,8 +142,8 @@
 											
 											</script>
 										</div>
-										
-										
+
+
 										<div class="col-md-4 col-sm-12 col-xs-12">
 											<div class="info-box">
 												<span class="info-box-icon bg-aqua"><i
@@ -180,15 +180,15 @@
 											
 											</script>
 										</div>
-										
+
 										<div class="col-md-4 col-sm-12 col-xs-12">
 											<div class="info-box">
 												<span class="info-box-icon bg-aqua"><i
 													class="fa fa-connectdevelop"></i></span>
 
 												<div class="info-box-content">
-													<span class="info-box-text">Number of Contributions</span> <span
-														class="info-box-number contribution-in-number"></span>
+													<span class="info-box-text">Number of Contributions</span>
+													<span class="info-box-number contribution-in-number"></span>
 												</div>
 												<!-- /.info-box-content -->
 											</div>
@@ -217,15 +217,15 @@
 											
 											</script>
 										</div>
-										
+
 										<div class="col-md-4 col-sm-12 col-xs-12">
 											<div class="info-box">
 												<span class="info-box-icon bg-aqua"><i
 													class="fa fa-comments-o"></i></span>
 
 												<div class="info-box-content">
-													<span class="info-box-text">Ideas without a comment</span> <span
-														class="info-box-number ideas-without-a-comment"></span>
+													<span class="info-box-text">Ideas without a comment</span>
+													<span class="info-box-number ideas-without-a-comment"></span>
 												</div>
 												<!-- /.info-box-content -->
 											</div>
@@ -254,7 +254,7 @@
 											
 											</script>
 										</div>
-										
+
 										<div class="col-md-4 col-sm-12 col-xs-12">
 											<div class="info-box">
 												<span class="info-box-icon bg-aqua"><i
@@ -290,6 +290,152 @@
 											}, 3000);	
 											
 											</script>
+										</div>
+
+										<br>
+
+										<!-- ###############################################	Top 5 liked	########################################## -->
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="box box-primary">
+												<div class="box-body box-profile">
+
+													<h4>Most popular ideas</h4>
+													<hr>
+
+													<div id="most-popular-ideas-container">
+														<script>
+														$.get( '/ewsd/qa_coordinator/most-liked-ideas', function( data ) {
+															  $("#most-popular-ideas-container").html("");
+															  var content = "";
+															  if(data.length<1){
+																  content = '<p>No popular idea available.</p>';
+															  }else{
+																  if(data.length>4){
+																	  for(i = 0; i<5; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }else{
+																	  for(i = 0; i<data.length; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }
+															  }
+															  
+															  $("#most-popular-ideas-container").html(content);
+															});
+													</script>
+													</div>
+												</div>
+												<!-- /.box-body -->
+											</div>
+										</div>
+										
+										<!-- ###############################################	Top 5 commented	########################################## -->
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="box box-primary">
+												<div class="box-body box-profile">
+
+													<h4>Most commented ideas</h4>
+													<hr>
+
+													<div id="most-commented-ideas-container">
+														<script>
+														$.get( '/ewsd/qa_coordinator/most-comented-ideas', function( data ) {
+															  $("#most-commented-ideas-container").html("");
+															  var content = "";
+															  if(data.length<1){
+																  content = '<p>No idea has any comment so far.</p>';
+															  }else{
+																  if(data.length>4){
+																	  for(i = 0; i<5; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }else{
+																	  for(i = 0; i<data.length; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }
+															  }
+															  
+															  $("#most-commented-ideas-container").html(content);
+															});
+													</script>
+													</div>
+												</div>
+												<!-- /.box-body -->
+											</div>
+										</div>
+										
+										<!-- ###############################################	Top 5 viewd		########################################## -->
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="box box-primary">
+												<div class="box-body box-profile">
+
+													<h4>Most vied ideas</h4>
+													<hr>
+
+													<div id="most-viewed-ideas-container">
+														<script>
+														$.get( '/ewsd/qa_coordinator/most-visited-ideas', function( data ) {
+															  $("#most-viewed-ideas-container").html("");
+															  var content = "";
+															  if(data.length<1){
+																  content = '<p>No idea was viewed by any user.</p>';
+															  }else{
+																  if(data.length>4){
+																	  for(i = 0; i<5; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }else{
+																	  for(i = 0; i<data.length; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }
+															  }
+															  
+															  $("#most-viewed-ideas-container").html(content);
+															});
+													</script>
+													</div>
+												</div>
+												<!-- /.box-body -->
+											</div>
+										</div>
+										
+										<!-- ###############################################	Top 5 seen	########################################## -->
+										<div class="col-md-4 col-sm-12 col-xs-12">
+											<div class="box box-primary">
+												<div class="box-body box-profile">
+
+													<h4>Most seen by</h4>
+													<hr>
+
+													<div id="most-seen-ideas-container">
+														<script>
+														$.get( '/ewsd/qa_coordinator/most-seen-ideas', function( data ) {
+															  $("#most-seen-ideas-container").html("");
+															  var content = "";
+															  if(data.length<1){
+																  content = '<p> No idea has been seen by anyone.</p>';
+															  }else{
+																  if(data.length>4){
+																	  for(i = 0; i<5; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }else{
+																	  for(i = 0; i<data.length; i++){
+																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																	  }
+																  }
+															  }
+															  
+															  $("#most-seen-ideas-container").html(content);
+															});
+													</script>
+													</div>
+												</div>
+												<!-- /.box-body -->
+											</div>
 										</div>
 										
 									</div>

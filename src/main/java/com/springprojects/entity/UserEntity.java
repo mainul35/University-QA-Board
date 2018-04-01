@@ -43,7 +43,7 @@ public class UserEntity implements UserDetails, Serializable {
             inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="role_uuid")}
     )
 	private Set<Authority> authorities;
-    @OneToOne(optional=false)
+    @OneToOne(optional=false, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_image", unique = true, nullable = false, updatable = false)
 	private Attachment userImage;
     @Column(nullable = false, name = "enabled")

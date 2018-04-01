@@ -20,13 +20,19 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletContext;
+import javax.sql.DataSource;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 import com.springprojects.service.AttachmentService;
 
+@Configuration
 public class Utils {
 
 	@Autowired
@@ -157,6 +163,7 @@ public class Utils {
 		out.close();
 	}
 
+	
 	public void exportSQL(String filename) throws IOException, InterruptedException {
 		File dir = Paths.get(Properties.TEMP_PATH).toFile();
 		if (!dir.exists()) {
@@ -173,5 +180,11 @@ public class Utils {
 			e.printStackTrace();
 		}
 		createZip(filename);
+	}
+	
+	@Bean
+	@Autowired
+	JdbcTemplate jdbcTemplate(DriverManagerDataSource dataSource) {
+		return new JdbcTemplate(dataSource);
 	}
 }
