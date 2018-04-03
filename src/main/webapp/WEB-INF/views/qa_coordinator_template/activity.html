@@ -128,7 +128,7 @@
 													$(".ideas-in-number").text(data);
 												}
 											});
-											setTimeout(function(){
+											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
 													url:'/ewsd/qa_coordinator/number-of-ideas-by-department?departmentName='+departmentName,
@@ -166,7 +166,7 @@
 													$(".ideas-in-percentage").text(data+"%");
 												}
 											});
-											setTimeout(function(){
+											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
 													url:'/ewsd/qa_coordinator/percentage-of-ideas-by-department?departmentName='+departmentName,
@@ -203,7 +203,7 @@
 													$(".contribution-in-number").text(data);
 												}
 											});
-											setTimeout(function(){
+											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
 													url:'/ewsd/qa_coordinator/number-of-contributions-by-department?departmentName='+departmentName,
@@ -240,7 +240,7 @@
 													$(".ideas-without-a-comment").text(data);
 												}
 											});
-											setTimeout(function(){
+											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
 													url:'/ewsd/qa_coordinator/number-of-ideas-without-comment?departmentName='+departmentName,
@@ -277,7 +277,7 @@
 													$(".anonymous-comments").text(data);
 												}
 											});
-											setTimeout(function(){
+											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
 													url:'/ewsd/qa_coordinator/number-of-anonymous-comments?departmentName='+departmentName,
@@ -303,7 +303,9 @@
 													<hr>
 
 													<div id="most-popular-ideas-container">
-														<script>
+														
+													</div>
+													<script>
 														$.get( '/ewsd/qa_coordinator/most-liked-ideas', function( data ) {
 															  $("#most-popular-ideas-container").html("");
 															  var content = "";
@@ -320,11 +322,32 @@
 																	  }
 																  }
 															  }
-															  
+															  console.log(content);
 															  $("#most-popular-ideas-container").html(content);
 															});
-													</script>
-													</div>
+															setInterval(function(){
+																$.get( '/ewsd/qa_coordinator/most-liked-ideas', function( data ) {
+																	  $("#most-popular-ideas-container").html("");
+																	  var content = "";
+																	  if(data.length<1){
+																		  content = '<p>No popular idea available.</p>';
+																	  }else{
+																		  if(data.length>4){
+																			  for(i = 0; i<5; i++){
+																				  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																			  }
+																		  }else{
+																			  for(i = 0; i<data.length; i++){
+																				  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																			  }
+																		  }
+																	  }
+																	  console.log(content);
+																	  $("#most-popular-ideas-container").html(content);
+																	});
+
+															}, 1500);
+														</script>
 												</div>
 												<!-- /.box-body -->
 											</div>
@@ -339,7 +362,10 @@
 													<hr>
 
 													<div id="most-commented-ideas-container">
-														<script>
+														
+													</div>
+													<script>
+														
 														$.get( '/ewsd/qa_coordinator/most-comented-ideas', function( data ) {
 															  $("#most-commented-ideas-container").html("");
 															  var content = "";
@@ -359,8 +385,28 @@
 															  
 															  $("#most-commented-ideas-container").html(content);
 															});
+														setInterval(function(){
+															$.get( '/ewsd/qa_coordinator/most-comented-ideas', function( data ) {
+																  $("#most-commented-ideas-container").html("");
+																  var content = "";
+																  if(data.length<1){
+																	  content = '<p>No idea has any comment so far.</p>';
+																  }else{
+																	  if(data.length>4){
+																		  for(i = 0; i<5; i++){
+																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  }
+																	  }else{
+																		  for(i = 0; i<data.length; i++){
+																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  }
+																	  }
+																  }
+																  
+																  $("#most-commented-ideas-container").html(content);
+																});
+														}, 1500);
 													</script>
-													</div>
 												</div>
 												<!-- /.box-body -->
 											</div>
@@ -371,11 +417,13 @@
 											<div class="box box-primary">
 												<div class="box-body box-profile">
 
-													<h4>Most vied ideas</h4>
+													<h4>Most viewed ideas</h4>
 													<hr>
 
 													<div id="most-viewed-ideas-container">
-														<script>
+														
+													</div>
+													<script>
 														$.get( '/ewsd/qa_coordinator/most-visited-ideas', function( data ) {
 															  $("#most-viewed-ideas-container").html("");
 															  var content = "";
@@ -395,8 +443,30 @@
 															  
 															  $("#most-viewed-ideas-container").html(content);
 															});
-													</script>
-													</div>
+														setInterval(function(){
+															$.get( '/ewsd/qa_coordinator/most-visited-ideas', function( data ) {
+																  $("#most-viewed-ideas-container").html("");
+																  var content = "";
+																  if(data.length<1){
+																	  content = '<p>No idea was viewed by any user.</p>';
+																  }else{
+																	  if(data.length>4){
+																		  for(i = 0; i<5; i++){
+																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  }
+																	  }else{
+																		  for(i = 0; i<data.length; i++){
+																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  }
+																	  }
+																  }
+																  
+																  $("#most-viewed-ideas-container").html(content);
+																});
+
+														}, 1500);
+														
+														</script>
 												</div>
 												<!-- /.box-body -->
 											</div>
@@ -411,7 +481,9 @@
 													<hr>
 
 													<div id="most-seen-ideas-container">
-														<script>
+														
+													</div>
+													<script>
 														$.get( '/ewsd/qa_coordinator/most-seen-ideas', function( data ) {
 															  $("#most-seen-ideas-container").html("");
 															  var content = "";
@@ -431,8 +503,29 @@
 															  
 															  $("#most-seen-ideas-container").html(content);
 															});
+														
+														setInterval(function(){
+															$.get( '/ewsd/qa_coordinator/most-seen-ideas', function( data ) {
+																  $("#most-seen-ideas-container").html("");
+																  var content = "";
+																  if(data.length<1){
+																	  content = '<p> No idea has been seen by anyone.</p>';
+																  }else{
+																	  if(data.length>4){
+																		  for(i = 0; i<5; i++){
+																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  }
+																	  }else{
+																		  for(i = 0; i<data.length; i++){
+																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  }
+																	  }
+																  }
+																  
+																  $("#most-seen-ideas-container").html(content);
+																});
+														}, 1500);
 													</script>
-													</div>
 												</div>
 												<!-- /.box-body -->
 											</div>
