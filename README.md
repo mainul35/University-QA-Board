@@ -1,3 +1,6 @@
+## Live URL
+http://ec2-13-127-223-157.ap-south-1.compute.amazonaws.com:8080/ewsd/
+
 ## Assumption
 - Developed as a sub system of a complete University management system. Only QA Management panel has been added in here.
 - A student activity is counted if a student submits an idea or comments on an idea.
