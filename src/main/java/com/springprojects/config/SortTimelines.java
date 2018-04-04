@@ -6,42 +6,40 @@ import com.springprojects.customModel.Timeline;
 
 @Component
 public class SortTimelines {
-	private Timeline[] timelines = new Timeline[0];
-	private int number;
+
 	public int SORT_TYPE;
-	public final int SORT_BY_TOTAL_THUMB_UP = 1;
-	public final int SORT_BY_TOTAL_THUMB_DOWN = 2;
-	public final int SORT_BY_TOTAL_VIEWS = 3;
-	public final int SORT_BY_TOTAL_SEEN_BY = 4;
-	public final int SORT_BY_TOTAL_COMMENTS = 5;
+	public static final int SORT_BY_TOTAL_THUMB_UP = 1;
+	public static final int SORT_BY_TOTAL_THUMB_DOWN = 2;
+	public static final int SORT_BY_TOTAL_VIEWS = 3;
+	public static final int SORT_BY_TOTAL_SEEN_BY = 4;
+	public static final int SORT_BY_TOTAL_COMMENTS = 5;
 
 	public Timeline[] sort(Timeline[] values) {
 		// check for empty or null array
 		if (values == null || values.length == 0) {
 			return values;
 		}
-		this.timelines = values;
-		number = values.length;
-		quicksort(0, number - 1);
-		return timelines;
+		int number = values.length;
+		quicksort(0, number - 1, values);
+		return values;
 	}
 
-	private void quicksort(int low, int high) {
+	private void quicksort(int low, int high, Timeline[] timelines) {
 		if(SORT_TYPE==SORT_BY_TOTAL_THUMB_UP) {
-			sortByThumbUps(low, high);
+			sortByThumbUps(low, high, timelines);
 		}else if(SORT_TYPE==SORT_BY_TOTAL_THUMB_DOWN) {
-			sortByThumbDowns(low, high);
+			sortByThumbDowns(low, high, timelines);
 		}else if(SORT_TYPE==SORT_BY_TOTAL_COMMENTS) {
-			sortByMostComments(low, high);
+			sortByMostComments(low, high, timelines);
 		}else if(SORT_TYPE==SORT_BY_TOTAL_SEEN_BY) {
-			sortByMostSeenBy(low, high);
+			sortByMostSeenBy(low, high, timelines);
 		}else if(SORT_TYPE==SORT_BY_TOTAL_VIEWS) {
-			sortByMostViews(low, high);
+			sortByMostViews(low, high,timelines);
 		}
 	}
 
 	
-	private void sortByThumbUps(int low, int high) {
+	private void sortByThumbUps(int low, int high, Timeline[] timelines) {
 		int i = low, j = high;
 		// Get the pivot element from the middle of the list
 		Timeline pivot = timelines[low + (high - low) / 2];
@@ -65,7 +63,7 @@ public class SortTimelines {
 			// values.
 			// As we are done we can increase i and j
 			if (i <= j) {
-				exchange(i, j);
+				exchange(i, j,timelines);
 				i++;
 				j--;
 			}
@@ -73,13 +71,13 @@ public class SortTimelines {
 		}
 		// Recursion
 		if (low < j)
-			quicksort(low, j);
+			quicksort(low, j, timelines);
 		if (i < high)
-			quicksort(i, high);
+			quicksort(i, high, timelines);
 
 	}
 
-	private void sortByThumbDowns(int low, int high) {
+	private void sortByThumbDowns(int low, int high, Timeline[] timelines) {
 		int i = low, j = high;
 		// Get the pivot element from the middle of the list
 		Timeline pivot = timelines[low + (high - low) / 2];
@@ -103,7 +101,7 @@ public class SortTimelines {
 			// values.
 			// As we are done we can increase i and j
 			if (i <= j) {
-				exchange(i, j);
+				exchange(i, j,timelines);
 				i++;
 				j--;
 			}
@@ -111,13 +109,13 @@ public class SortTimelines {
 		}
 		// Recursion
 		if (low < j)
-			quicksort(low, j);
+			quicksort(low, j,timelines);
 		if (i < high)
-			quicksort(i, high);
+			quicksort(i, high,timelines);
 
 	}
 
-	private void sortByMostComments(int low, int high) {
+	private void sortByMostComments(int low, int high, Timeline[] timelines) {
 		int i = low, j = high;
 		// Get the pivot element from the middle of the list
 		Timeline pivot = timelines[low + (high - low) / 2];
@@ -141,7 +139,7 @@ public class SortTimelines {
 			// values.
 			// As we are done we can increase i and j
 			if (i <= j) {
-				exchange(i, j);
+				exchange(i, j,timelines);
 				i++;
 				j--;
 			}
@@ -149,13 +147,13 @@ public class SortTimelines {
 		}
 		// Recursion
 		if (low < j)
-			quicksort(low, j);
+			quicksort(low, j,timelines);
 		if (i < high)
-			quicksort(i, high);
+			quicksort(i, high,timelines);
 
 	}
 
-	private void sortByMostViews(int low, int high) {
+	private void sortByMostViews(int low, int high, Timeline[] timelines) {
 		int i = low, j = high;
 		// Get the pivot element from the middle of the list
 		Timeline pivot = timelines[low + (high - low) / 2];
@@ -179,7 +177,7 @@ public class SortTimelines {
 			// values.
 			// As we are done we can increase i and j
 			if (i <= j) {
-				exchange(i, j);
+				exchange(i, j,timelines);
 				i++;
 				j--;
 			}
@@ -187,13 +185,13 @@ public class SortTimelines {
 		}
 		// Recursion
 		if (low < j)
-			quicksort(low, j);
+			quicksort(low, j,timelines);
 		if (i < high)
-			quicksort(i, high);
+			quicksort(i, high,timelines);
 
 	}
 
-	private void sortByMostSeenBy(int low, int high) {
+	private void sortByMostSeenBy(int low, int high, Timeline[] timelines) {
 		int i = low, j = high;
 		// Get the pivot element from the middle of the list
 		Timeline pivot = timelines[low + (high - low) / 2];
@@ -217,7 +215,7 @@ public class SortTimelines {
 			// values.
 			// As we are done we can increase i and j
 			if (i <= j) {
-				exchange(i, j);
+				exchange(i, j, timelines);
 				i++;
 				j--;
 			}
@@ -225,14 +223,14 @@ public class SortTimelines {
 		}
 		// Recursion
 		if (low < j)
-			quicksort(low, j);
+			quicksort(low, j,timelines);
 		if (i < high)
-			quicksort(i, high);
+			quicksort(i, high,timelines);
 
 	}
 
 	
-	private void exchange(int i, int j) {
+	private void exchange(int i, int j, Timeline[] timelines) {
 		Timeline temp = timelines[i];
 		timelines[i] = timelines[j];
 		timelines[j] = temp;

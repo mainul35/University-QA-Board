@@ -11,6 +11,7 @@ import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor;
 import org.springframework.mobile.device.site.SitePreferenceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
@@ -93,6 +94,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
     @Bean
     @Description("Thymeleaf View Resolver")
     public ThymeleafViewResolver viewResolver(ServletContext servletContext) {
+    	
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
         templateResolver.setTemplateMode("LEGACYHTML5");
         templateResolver.setPrefix("/WEB-INF/views/");
