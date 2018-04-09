@@ -19,7 +19,11 @@ import java.util.logging.Logger;
 public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
     private Logger logger = Logger.getLogger(CustomAuthSuccessHandler.class.getName());
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(
+    		HttpServletRequest httpServletRequest, 
+    		HttpServletResponse httpServletResponse, 
+    		Authentication authentication
+    		) throws IOException, ServletException {
         HttpSession session = httpServletRequest.getSession();
         UserEntity authUser = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         session.setAttribute("usr", authUser);

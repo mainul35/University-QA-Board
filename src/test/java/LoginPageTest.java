@@ -15,18 +15,18 @@ public class LoginPageTest {
 //detect crome driver
 	public static void main(String[] args) throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver",
-				"Desktop\\chromedriver.exe");
+				"C:\\Users\\Mainul Hasan\\Desktop\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		//url to test
 		driver.get("http://localhost:8080/ewsd/");
-		Thread.sleep(5000); // Let the user actually see something!
+		Thread.sleep(7000); // Let the user actually see something!
 		captureScreen(driver, "login_page");
 
 		
 		//invalid email and pass entered. try wrong email
-		WebElement emailBox = driver.findElement(By.name("email"));
-		emailBox.sendKeys("teamg5.bit@gmail.com");
-		WebElement passwordBox=driver.findElement(By.name("password"));
+		WebElement emailBox = driver.findElement(By.id("inputEmail"));
+		emailBox.sendKeys("admin");
+		WebElement passwordBox=driver.findElement(By.id("inputPassword"));
 		passwordBox.sendKeys("secre");
 		captureScreen(driver, "invalide Input_Entered");
 		WebElement submit = driver.findElement(By.className("btn"));
@@ -38,9 +38,9 @@ public class LoginPageTest {
 		
 		
 		//valid entry
-		emailBox = driver.findElement(By.name("email"));
-		emailBox.sendKeys("teamg5.bit");
-		passwordBox=driver.findElement(By.name("password"));
+		emailBox = driver.findElement(By.id("inputEmail"));
+		emailBox.sendKeys("admin");
+		passwordBox=driver.findElement(By.id("inputPassword"));
 		passwordBox.sendKeys("secret");
 		captureScreen(driver, "Valide_Input_Entered");
 		submit = driver.findElement(By.className("btn"));

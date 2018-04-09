@@ -32,17 +32,17 @@ public class UserEntity implements UserDetails, Serializable {
 	private String password;
     @Column(name = "email", nullable = false, unique = true,length = 200)
 	private String email;
-    @Column(name="dept", nullable= false, length = 200)
-	private String department;
-    @Column(name="created_on")
-	private Timestamp dateTime;
-	
     @ManyToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinTable(name="user_authority",
             joinColumns = {@JoinColumn(name="user_id", referencedColumnName="user_uuid")},
             inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="role_uuid")}
     )
 	private Set<Authority> authorities;
+    @Column(name="dept", nullable= false, length = 200)
+	private String department;
+    @Column(name="created_on")
+	private Timestamp dateTime;
+	  
     @OneToOne(optional=false, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_image", unique = true, nullable = false, updatable = false)
 	private Attachment userImage;

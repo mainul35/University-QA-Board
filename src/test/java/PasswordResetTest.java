@@ -16,7 +16,7 @@ public class PasswordResetTest {
 	
 	public static void main(String[] args) throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver",
-				"C:\\Users\\hossa\\Desktop\\chromedriver.exe");
+				"C:\\Users\\Mainul Hasan\\Desktop\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		//url to test
 		driver.get("http://localhost:8080/ewsd/login");

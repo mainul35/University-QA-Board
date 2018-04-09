@@ -424,9 +424,6 @@ public class UserController {
 		int resultPerPage = 5;
 
 		List<Idea> ideas = new ArrayList<>();
-//		ideaService.getPageOfIdeas(pageNumber, resultPerPage).iterator().forEachRemaining(idea -> {
-//			ideas.add(idea);
-//		});
 		
 		index = 0;
 		countIdeas = 0;
