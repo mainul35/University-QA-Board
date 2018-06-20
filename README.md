@@ -2,7 +2,7 @@
 https://www.youtube.com/watch?v=1HTjNi27dK8
 
 ## Live URL
-http://ec2-13-127-159-104.ap-south-1.compute.amazonaws.com:8080/ewsd/
+http://www.mainul35.info:8080/ewsd/
 
 ## Assumption
 - Developed as a sub system of a complete University management system. Only QA Management panel has been added in here.
