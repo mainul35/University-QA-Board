@@ -26,7 +26,7 @@ public class AttachmentService {
 	private AttachmentRepository attachmentRepository;
 
 	// Save the uploaded file to this folder
-	private static final String UPLOADED_FOLDER = "C://temp//";
+	private static final String UPLOADED_FOLDER = Properties.TEMP_PATH;
 
 	private Logger logger = Logger.getLogger(AttachmentService.class.getName());
 

@@ -1,5 +1,6 @@
 package com.springprojects.config.application;
 
+import com.springprojects.config.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -146,7 +147,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         		"/qa_manager/temp/**", 
         		"/qa_coordinator/temp/**", 
         		"/ideas/temp/**"
-        		).addResourceLocations("file:///C:/temp/").setCachePeriod(999999999);
+        		).addResourceLocations(Properties.TEMP_PATH).setCachePeriod(999999999);
     }
 
 }

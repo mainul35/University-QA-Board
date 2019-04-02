@@ -1,6 +1,7 @@
 package com.springprojects.controller;
 
 import com.springprojects.config.Initializer;
+import com.springprojects.config.Properties;
 import com.springprojects.config.Utils;
 import com.springprojects.customModel.Timeline;
 import com.springprojects.entity.Attachment;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -78,6 +80,8 @@ public class UserController {
 	private DepartmentService departmentService;
 	@Autowired
 	private IssueService issueService;
+	@Autowired
+	private ServletContext servletContext;
 	private int index = 0;
 	private int countIdeas = 0;
 
@@ -107,8 +111,9 @@ public class UserController {
 		if (sitePreference == SitePreference.NORMAL) {
 			log(request);
 			model.addAttribute("msg", "some message");
-			Initializer initializer = new Initializer(authorityService, userService, attachmentService,
-					departmentService, encoder);
+//			Initializer initializer = new Initializer(authorityService, userService, attachmentService,
+//					departmentService, encoder);
+			Properties.TEMP_PATH = servletContext.getRealPath("\\");
 			return "/templates/login";
 		} else if (sitePreference == SitePreference.MOBILE) {
 			logger.info("Site preference is mobile");

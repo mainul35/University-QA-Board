@@ -24,7 +24,7 @@ public class MySqlConfig {
     public static DriverManagerDataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(com.springprojects.config.Properties.DB_DRIVER_CLASS);
-        dataSource.setUrl(com.springprojects.config.Properties.DB_URL+"?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false");
+        dataSource.setUrl(com.springprojects.config.Properties.DB_URL);     //MySQL Specific: +"?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false"
         dataSource.setUsername(com.springprojects.config.Properties.DB_USER);
         dataSource.setPassword(com.springprojects.config.Properties.DB_PASSWORD);
         return dataSource;
