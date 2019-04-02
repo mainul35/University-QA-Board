@@ -16,7 +16,7 @@
 
 		<div id="main-header"></div>
 		<script type="text/javascript">
-			$("#main-header").load("/ewsd/main-header");
+			$("#main-header").load("/main-header");
 		</script>
 
 		<!-- Left side column. contains the logo and sidebar -->
@@ -205,7 +205,7 @@
 																				}
 																				$.ajax({
 																					  type: "GET",
-																					  url: "/ewsd/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
+																					  url: "/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
 																				});
 																		
 																			}
@@ -235,7 +235,7 @@
 																				}
 																				$.ajax({
 																					  type: "GET",
-																					  url: "/ewsd/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
+																					  url: "/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
 																				});
 																		
 																			}
@@ -361,9 +361,9 @@
 																	 	console.log("#anonymous-comment_"+ideaId);
 																		var url = "";
 																		if($("#anonymous-comment_"+ideaId).prop("checked")==true){
-																			url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																			url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
 																		}else{
-																			url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																			url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
 																		}
 																	 	$.ajax({
 																             type: "POST",
@@ -407,9 +407,9 @@
 																 	console.log(comment);
 																	var url = "";
 																	if($("#anonymous-comment_"+ideaId).prop("checked")==true){
-																		url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																		url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
 																	}else{
-																		url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																		url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
 																	}
 																 	$.ajax({
 															             type: "POST",
@@ -504,7 +504,7 @@
 		<!-- /.content-wrapper -->
 		<div id="footer"></div>
 		<script type="text/javascript">
-			$("#footer").load("/ewsd/footer");
+			$("#footer").load("/footer");
 		</script>
 
 		<!-- Add the sidebar's background. This div must be placed

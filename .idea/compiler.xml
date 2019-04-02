@@ -6,19 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-<<<<<<< HEAD
-        <module name="ewsd-project" />
-      </profile>
-    </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ewsd-project" target="1.8" />
-=======
         <module name="ewsd" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ewsd" target="1.8" />
->>>>>>> ec4fe6f9306728ac36f1057005297ffd78a6589e
     </bytecodeTargetLevel>
   </component>
 </project>

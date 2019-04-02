@@ -2,7 +2,7 @@
 <class-diagram version="1.2.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="com.springprojects.entity.Comment" project="ewsd" 
-    file="/ewsd/src/main/java/com/springprojects/entity/Comment.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/src/main/java/com/springprojects/entity/Comment.java" binary="false" corner="BOTTOM_RIGHT">
     <position height="-1" width="-1" x="77" y="275"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -11,7 +11,7 @@
     </display>  
   </class>  
   <class id="2" language="java" name="com.springprojects.entity.Reaction" project="ewsd" 
-    file="/ewsd/src/main/java/com/springprojects/entity/Reaction.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/src/main/java/com/springprojects/entity/Reaction.java" binary="false" corner="BOTTOM_RIGHT">
     <position height="-1" width="-1" x="734" y="820"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -20,7 +20,7 @@
     </display>  
   </class>  
   <class id="3" language="java" name="com.springprojects.entity.UserEntity" project="ewsd" 
-    file="/ewsd/src/main/java/com/springprojects/entity/UserEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/src/main/java/com/springprojects/entity/UserEntity.java" binary="false" corner="BOTTOM_RIGHT">
     <position height="-1" width="-1" x="366" y="1258"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -29,7 +29,7 @@
     </display>  
   </class>  
   <class id="4" language="java" name="com.springprojects.entity.Idea" project="ewsd" 
-    file="/ewsd/src/main/java/com/springprojects/entity/Idea.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/src/main/java/com/springprojects/entity/Idea.java" binary="false" corner="BOTTOM_RIGHT">
     <position height="-1" width="-1" x="390" y="352"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -38,7 +38,7 @@
     </display>  
   </class>  
   <class id="5" language="java" name="com.springprojects.entity.Attachment" project="ewsd" 
-    file="/ewsd/src/main/java/com/springprojects/entity/Attachment.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/src/main/java/com/springprojects/entity/Attachment.java" binary="false" corner="BOTTOM_RIGHT">
     <position height="-1" width="-1" x="47" y="1117"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -47,7 +47,7 @@
     </display>  
   </class>  
   <class id="6" language="java" name="com.springprojects.entity.Authority" project="ewsd" 
-    file="/ewsd/src/main/java/com/springprojects/entity/Authority.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/src/main/java/com/springprojects/entity/Authority.java" binary="false" corner="BOTTOM_RIGHT">
     <position height="-1" width="-1" x="752" y="1279"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -56,7 +56,7 @@
     </display>  
   </class>  
   <class id="7" language="java" name="com.springprojects.entity.Tag" project="ewsd" 
-    file="/ewsd/src/main/java/com/springprojects/entity/Tag.java" binary="false" corner="BOTTOM_RIGHT">    
+    file="/src/main/java/com/springprojects/entity/Tag.java" binary="false" corner="BOTTOM_RIGHT">
     <position height="-1" width="-1" x="708" y="276"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

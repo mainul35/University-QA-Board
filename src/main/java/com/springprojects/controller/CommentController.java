@@ -102,7 +102,7 @@ public class CommentController {
 			notification.setNotificationId(comment.getCommentId());
 			notification.setNotificationMsg("Commented on your idea - "+idea.getIdeaTitle());
 			notification.setNotificationType("notification");
-			notification.setNotificationUrl("/ewsd/ideas/"+idea.getIdeaId());
+			notification.setNotificationUrl("/ideas/"+idea.getIdeaId());
 			notification.setNotifyTo(userService.getUserByEmail(idea.getAuthorEmail()));
 			notification.setNotificationFrom(comment.getCommentedUser());
 			notification.setSeen("no");

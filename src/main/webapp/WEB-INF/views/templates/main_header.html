@@ -35,7 +35,7 @@
 								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='no'" style="background-color:#cccccc; word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
-											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+											<img width="40" height="40" th:src="'/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
 										</div>
 										<h4>
 											<span th:text="${notification.notificationFrom.name}"></span>
@@ -48,7 +48,7 @@
 								<li  th:each="notification : ${notifications}"  th:if="${notification.seen}=='yes'" style="word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
-											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+											<img width="40" height="40" th:src="'/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
 										</div>
 										<h4>
 											<span th:text="${notification.notificationFrom.name}"></span>
@@ -80,7 +80,7 @@
 								<li  th:each="notification : ${announcements}"   th:if="${notification.seen}=='no'" style="background-color:#cccccc; word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
-											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+											<img width="40" height="40" th:src="'/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
 										</div>
 										<h4>
 											<span th:text="${notification.notificationFrom.name}"></span>
@@ -94,7 +94,7 @@
 								<li  th:each="notification : ${announcements}" th:if="${notification.seen}=='yes'" style="word-wrap: break-word;">
 									<!-- start message --> <a th:href="${notification.notificationUrl}+'?notif_id='+${notification.notificationId}">
 										<div class="pull-left">
-											<img width="40" height="40" th:src="'/ewsd/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
+											<img width="40" height="40" th:src="'/'+${notification.notificationFrom.userImage.fileURL}" class="img-circle" alt="User Image">
 										</div>
 										<h4>
 											<span th:text="${notification.notificationFrom.name}"></span>
@@ -124,7 +124,7 @@
 								<li  th:each="issue : ${issues}"  th:if="${issue.issueStatus}=='created'" style="background-color:#cccccc; word-wrap: break-word;">
 									<!-- start message --> <a th:href="'/ewsd'+${issue.issueUrl}">
 										<div class="pull-left">
-											<img width="40" height="40" th:src="'/ewsd/'+${issue.issueSubmittedBy.userImage.fileURL}" class="img-circle" alt="User Image">
+											<img width="40" height="40" th:src="'/'+${issue.issueSubmittedBy.userImage.fileURL}" class="img-circle" alt="User Image">
 										</div>
 										<h4>
 											<span th:text="${issue.issueSubmittedBy.name}"></span>

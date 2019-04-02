@@ -87,7 +87,7 @@
                                 	setInterval(function(){
                                 		tagId = /*[[${tag.tagId}]]*/;
                                 		$.ajax({
-                                			url: '/ewsd/qa_manager/tag-status/'+tagId,
+                                			url: '/qa_manager/tag-status/'+tagId,
                                 			method:'GET',
                                 			data: '',
                                 			success:function(data){
@@ -103,7 +103,7 @@
                                 	$("#btn_"+tagId).click(function(btn){
                                 		var tagId = /*[[${tag.tagId}]]*/;
                                 		$.ajax({
-                                			url:'/ewsd/qa_manager/delete-tag/'+tagId,
+                                			url:'/qa_manager/delete-tag/'+tagId,
                                 			method:'GET',
                                 			data:'',
                                 			success:function(data){

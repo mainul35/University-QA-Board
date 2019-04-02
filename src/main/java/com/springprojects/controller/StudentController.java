@@ -158,7 +158,7 @@ public class StudentController {
 		notification.setNotificationFrom(userEntity);
 		notification.setNotificationType("notification");
 		notification.setNotificationMsg("EWSD - A new idea is submitted from your department.");
-		notification.setNotificationUrl("/ewsd/ideas/" + idea.getIdeaId());
+		notification.setNotificationUrl("/ideas/" + idea.getIdeaId());
 		notification.setSeen("no");
 		userService.getUsersByDepartment(userEntity.getDepartment()).forEach(user -> {
 			for (Authority authority : user.getAuthorities()) {

@@ -120,7 +120,7 @@ public class UserService implements UserDetailsService {
 			IP = Inet4Address.getLocalHost();
 			System.out.println("IP of my system is := " + IP.getHostAddress());
 			Mailer.sendMail(email, "DoNotReply", "Here is the password reset link for you.\n"
-					+ " Please click to reset password. " + "\n http://ec2-13-127-223-157.ap-south-1.compute.amazonaws.com:8080/ewsd/update-password?id="+userEntity.getUsername()+"&adp="+System.currentTimeMillis());
+					+ " Please click to reset password. " + "\n http://ec2-13-127-223-157.ap-south-1.compute.amazonaws.com:8080/update-password?id="+userEntity.getUsername()+"&adp="+System.currentTimeMillis());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

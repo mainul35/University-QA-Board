@@ -16,7 +16,7 @@
 
 		<div id="main-header"></div>
 		<script type="text/javascript">
-			$("#main-header").load("/ewsd/main-header");
+			$("#main-header").load("/main-header");
 		</script>
 
 
@@ -121,7 +121,7 @@
 											<script type="text/javascript" th:inline="javascript">
 											var departmentName = /*[[${usr.department}]]*/;
 											$.ajax({
-												url:'/ewsd/qa_coordinator/number-of-ideas-by-department?departmentName='+departmentName,
+												url:'/qa_coordinator/number-of-ideas-by-department?departmentName='+departmentName,
 												data:'',
 												method:'GET',
 												success:function(data){
@@ -131,7 +131,7 @@
 											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
-													url:'/ewsd/qa_coordinator/number-of-ideas-by-department?departmentName='+departmentName,
+													url:'/qa_coordinator/number-of-ideas-by-department?departmentName='+departmentName,
 													data:'',
 													method:'GET',
 													success:function(data){
@@ -159,7 +159,7 @@
 											<script type="text/javascript" th:inline="javascript">
 											var departmentName = /*[[${usr.department}]]*/;
 											$.ajax({
-												url:'/ewsd/qa_coordinator/percentage-of-ideas-by-department?departmentName='+departmentName,
+												url:'/qa_coordinator/percentage-of-ideas-by-department?departmentName='+departmentName,
 												data:'',
 												method:'GET',
 												success:function(data){
@@ -169,7 +169,7 @@
 											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
-													url:'/ewsd/qa_coordinator/percentage-of-ideas-by-department?departmentName='+departmentName,
+													url:'/qa_coordinator/percentage-of-ideas-by-department?departmentName='+departmentName,
 													data:'',
 													method:'GET',
 													success:function(data){
@@ -196,7 +196,7 @@
 											<script type="text/javascript" th:inline="javascript">
 											var departmentName = /*[[${usr.department}]]*/;
 											$.ajax({
-												url:'/ewsd/qa_coordinator/number-of-contributions-by-department?departmentName='+departmentName,
+												url:'/qa_coordinator/number-of-contributions-by-department?departmentName='+departmentName,
 												data:'',
 												method:'GET',
 												success:function(data){
@@ -206,7 +206,7 @@
 											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
-													url:'/ewsd/qa_coordinator/number-of-contributions-by-department?departmentName='+departmentName,
+													url:'/qa_coordinator/number-of-contributions-by-department?departmentName='+departmentName,
 													data:'',
 													method:'GET',
 													success:function(data){
@@ -233,7 +233,7 @@
 											<script type="text/javascript" th:inline="javascript">
 											var departmentName = /*[[${usr.department}]]*/;
 											$.ajax({
-												url:'/ewsd/qa_coordinator/number-of-ideas-without-comment?departmentName='+departmentName,
+												url:'/qa_coordinator/number-of-ideas-without-comment?departmentName='+departmentName,
 												data:'',
 												method:'GET',
 												success:function(data){
@@ -243,7 +243,7 @@
 											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
-													url:'/ewsd/qa_coordinator/number-of-ideas-without-comment?departmentName='+departmentName,
+													url:'/qa_coordinator/number-of-ideas-without-comment?departmentName='+departmentName,
 													data:'',
 													method:'GET',
 													success:function(data){
@@ -270,7 +270,7 @@
 											<script type="text/javascript" th:inline="javascript">
 											var departmentName = /*[[${usr.department}]]*/;
 											$.ajax({
-												url:'/ewsd/qa_coordinator/number-of-anonymous-comments?departmentName='+departmentName,
+												url:'/qa_coordinator/number-of-anonymous-comments?departmentName='+departmentName,
 												data:'',
 												method:'GET',
 												success:function(data){
@@ -280,7 +280,7 @@
 											setInterval(function(){
 												var departmentName = /*[[${usr.department}]]*/;
 												$.ajax({
-													url:'/ewsd/qa_coordinator/number-of-anonymous-comments?departmentName='+departmentName,
+													url:'/qa_coordinator/number-of-anonymous-comments?departmentName='+departmentName,
 													data:'',
 													method:'GET',
 													success:function(data){
@@ -306,7 +306,7 @@
 														
 													</div>
 													<script>
-														$.get( '/ewsd/qa_coordinator/most-liked-ideas', function( data ) {
+														$.get( '/qa_coordinator/most-liked-ideas', function( data ) {
 															  $("#most-popular-ideas-container").html("");
 															  var content = "";
 															  if(data.length<1){
@@ -314,11 +314,11 @@
 															  }else{
 																  if(data.length>4){
 																	  for(i = 0; i<5; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }else{
 																	  for(i = 0; i<data.length; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }
 															  }
@@ -344,7 +344,7 @@
 													</div>
 													<script>
 														
-														$.get( '/ewsd/qa_coordinator/most-comented-ideas', function( data ) {
+														$.get( '/qa_coordinator/most-comented-ideas', function( data ) {
 															  $("#most-commented-ideas-container").html("");
 															  var content = "";
 															  if(data.length<1){
@@ -352,11 +352,11 @@
 															  }else{
 																  if(data.length>4){
 																	  for(i = 0; i<5; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }else{
 																	  for(i = 0; i<data.length; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }
 															  }
@@ -381,7 +381,7 @@
 														
 													</div>
 													<script>
-														$.get( '/ewsd/qa_coordinator/most-visited-ideas', function( data ) {
+														$.get( '/qa_coordinator/most-visited-ideas', function( data ) {
 															  $("#most-viewed-ideas-container").html("");
 															  var content = "";
 															  if(data.length<1){
@@ -389,11 +389,11 @@
 															  }else{
 																  if(data.length>4){
 																	  for(i = 0; i<5; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }else{
 																	  for(i = 0; i<data.length; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }
 															  }
@@ -419,7 +419,7 @@
 														
 													</div>
 													<script>
-														$.get( '/ewsd/qa_coordinator/most-seen-ideas', function( data ) {
+														$.get( '/qa_coordinator/most-seen-ideas', function( data ) {
 															  $("#most-seen-ideas-container").html("");
 															  var content = "";
 															  if(data.length<1){
@@ -427,11 +427,11 @@
 															  }else{
 																  if(data.length>4){
 																	  for(i = 0; i<5; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }else{
 																	  for(i = 0; i<data.length; i++){
-																		  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+																		  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 																	  }
 																  }
 															  }
@@ -440,7 +440,7 @@
 															});
 														
 // 														setInterval(function(){
-// 															$.get( '/ewsd/qa_coordinator/most-liked-ideas', function( data ) {
+// 															$.get( '/qa_coordinator/most-liked-ideas', function( data ) {
 // 																  $("#most-popular-ideas-container").html("");
 // 																  var content = "";
 // 																  if(data.length<1){
@@ -448,11 +448,11 @@
 // 																  }else{
 // 																	  if(data.length>4){
 // 																		  for(i = 0; i<5; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }else{
 // 																		  for(i = 0; i<data.length; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }
 // 																  }
@@ -460,7 +460,7 @@
 // 																  $("#most-popular-ideas-container").html(content);
 // 																});
 															
-// 															$.get( '/ewsd/qa_coordinator/most-comented-ideas', function( data ) {
+// 															$.get( '/qa_coordinator/most-comented-ideas', function( data ) {
 // 																  $("#most-commented-ideas-container").html("");
 // 																  var content = "";
 // 																  if(data.length<1){
@@ -468,11 +468,11 @@
 // 																  }else{
 // 																	  if(data.length>4){
 // 																		  for(i = 0; i<5; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }else{
 // 																		  for(i = 0; i<data.length; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }
 // 																  }
@@ -480,7 +480,7 @@
 // 																  $("#most-commented-ideas-container").html(content);
 // 																});
 															
-// 															$.get( '/ewsd/qa_coordinator/most-visited-ideas', function( data ) {
+// 															$.get( '/qa_coordinator/most-visited-ideas', function( data ) {
 // 																  $("#most-viewed-ideas-container").html("");
 // 																  var content = "";
 // 																  if(data.length<1){
@@ -488,11 +488,11 @@
 // 																  }else{
 // 																	  if(data.length>4){
 // 																		  for(i = 0; i<5; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }else{
 // 																		  for(i = 0; i<data.length; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }
 // 																  }
@@ -500,7 +500,7 @@
 // 																  $("#most-viewed-ideas-container").html(content);
 // 																});
 
-// 															$.get( '/ewsd/qa_coordinator/most-seen-ideas', function( data ) {
+// 															$.get( '/qa_coordinator/most-seen-ideas', function( data ) {
 // 																  $("#most-seen-ideas-container").html("");
 // 																  var content = "";
 // 																  if(data.length<1){
@@ -508,11 +508,11 @@
 // 																  }else{
 // 																	  if(data.length>4){
 // 																		  for(i = 0; i<5; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span class="fa fa-file-text"></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }else{
 // 																		  for(i = 0; i<data.length; i++){
-// 																			  content+='<a href="/ewsd/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
+// 																			  content+='<a href="/ideas/'+data[i].idea.ideaId+'"><span></span>'+data[i].idea.ideaTitle+'</a><br>';
 // 																		  }
 // 																	  }
 // 																  }
@@ -550,7 +550,7 @@
 		<!-- /.content-wrapper -->
 		<div id="footer"></div>
 		<script type="text/javascript">
-			$("#footer").load("/ewsd/footer");
+			$("#footer").load("/footer");
 		</script>
 
 		<!-- Add the sidebar's background. This div must be placed

@@ -19,7 +19,7 @@ public class PasswordResetTest {
 				"C:\\Users\\Mainul Hasan\\Desktop\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		//url to test
-		driver.get("http://localhost:8080/ewsd/login");
+		driver.get("http://localhost:8080/login");
 		Thread.sleep(2000); // Let the user actually see something!
 		captureScreen(driver, "login_page");
 

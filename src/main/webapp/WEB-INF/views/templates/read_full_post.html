@@ -16,7 +16,7 @@
 
 		<div id="main-header"></div>
 		<script type="text/javascript">
-			$("#main-header").load("/ewsd/main-header");
+			$("#main-header").load("/main-header");
 		</script>
 
 		<!-- Left side column. contains the logo and sidebar -->
@@ -41,7 +41,7 @@
 
 				</ul>
 				<script type="text/javascript">
-					$(".sidebar-menu").load("/ewsd/side-nav");
+					$(".sidebar-menu").load("/side-nav");
 				</script>
 			</section>
 			<!-- /.sidebar -->
@@ -165,7 +165,7 @@
  																function() {
 																	videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
  																	var sourceId = /*[[${'source'+attachment.attachmentId}]]*/;
- 																	var src = '/ewsd/'+/*[[${attachment.fileURL}]]*/;
+ 																	var src = '/'+/*[[${attachment.fileURL}]]*/;
  																	vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
  																	fileType=/*[[${attachment.fileType}]]*/;
  																	$('#'+sourceId).attr('src', src);
@@ -185,7 +185,7 @@
 															
 																	$.ajax({
  																				type : "GET",
- 																				url : "/ewsd/videos?ideaId="+ideaId,
+ 																				url : "/videos?ideaId="+ideaId,
  																				data: data,
  																				timeout : 100000,
  																				beforeSend : function() {
@@ -211,7 +211,7 @@
  																					var left = 0;
  																					for (var i = 0; i < len; i++) {
  																						html += ''
- 																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="/ewsd/'+data[i]+'" id="video_'+i+'" src="/ewsd/'+data[i]+'" type="video/mp4"></video>';
+ 																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="/'+data[i]+'" id="video_'+i+'" src="/ewsd/'+data[i]+'" type="video/mp4"></video>';
  																						left = left+20;
  																					}
 																			
@@ -352,7 +352,7 @@
 																				
 																				$.ajax({
 																					  type: "GET",
-																					  url: "/ewsd/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
+																					  url: "/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
 																				});
 																		
 																			}
@@ -382,7 +382,7 @@
 																				}
 																				$.ajax({
 																					  type: "GET",
-																					  url: "/ewsd/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
+																					  url: "/"+userType+"/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
 																				});
 																		
 																			}
@@ -504,9 +504,9 @@
 																	 	console.log("#anonymous-comment_"+ideaId);
 																		var url = "";
 																		if($("#anonymous-comment_"+ideaId).prop("checked")==true){
-																			url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																			url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
 																		}else{
-																			url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																			url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
 																		}
 																	 	$.ajax({
 																             type: "POST",
@@ -550,9 +550,9 @@
 																 	console.log(comment);
 																	var url = "";
 																	if($("#anonymous-comment_"+ideaId).prop("checked")==true){
-																		url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																		url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
 																	}else{
-																		url = "/ewsd/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																		url = "/"+userType+"/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
 																	}
 																 	$.ajax({
 															             type: "POST",
@@ -604,7 +604,7 @@
 									<script th:inline="javascript">
 									ideaId = /*[[${timeline.idea.ideaId}]]*/;
 									
-									$.get( '/ewsd/other-attachments?ideaId='+ideaId, function( data ) {
+									$.get( '/other-attachments?ideaId='+ideaId, function( data ) {
 										  $("#doc-container").html("");
 										  console.log( data );
 										  var content = "";
@@ -612,7 +612,7 @@
 											  content = '<p>No other attachments available.</p>';
 										  }else{
 											  for(i = 0; i<data.length; i++){
-												  content+='<a href="/ewsd/'+data[i]+'"><span class="fa fa-file-text"></span>File '+(i+1)+'</a><br>';
+												  content+='<a href="/'+data[i]+'"><span class="fa fa-file-text"></span>File '+(i+1)+'</a><br>';
 											  }
 										  }
 										  
@@ -668,7 +668,7 @@
 		<!-- /.content-wrapper -->
 		<div id="footer"></div>
 		<script type="text/javascript">
-			$("#footer").load("/ewsd/footer");
+			$("#footer").load("/footer");
 		</script>
 
 		<!-- Add the sidebar's background. This div must be placed

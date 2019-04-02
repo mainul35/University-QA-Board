@@ -40,6 +40,6 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
         //we will redirect the user after successfully login
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(httpServletRequest, httpServletResponse);
 //        String requestUrl = savedRequest.getRedirectUrl();
-        httpServletResponse.sendRedirect("/ewsd/dashboard"); //requestUrl!=null?requestUrl:
+        httpServletResponse.sendRedirect("/dashboard"); //requestUrl!=null?requestUrl:
     }
 }

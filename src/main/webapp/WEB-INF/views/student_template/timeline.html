@@ -15,7 +15,7 @@
 	<div class="" style="background-color: #222d32;">
 		<div id="main-header"></div>
 		<script type="text/javascript">
-			$("#main-header").load("/ewsd/main-header");
+			$("#main-header").load("/main-header");
 		</script>
 
 
@@ -106,7 +106,7 @@
 										<p class="pull-right last-activity-interval"></p> <script
 											type="text/javascript" th:inline="javascript">
 										$.ajax({
-											  url: '/ewsd/activity-interval',
+											  url: '/activity-interval',
 											  data: '',
 											  success: function(data){
 												  $(".last-activity-interval").text(data);
@@ -114,7 +114,7 @@
 										});	
 										setInterval(function(){
 												$.ajax({
-													  url: '/ewsd/activity-interval',
+													  url: '/activity-interval',
 													  data: '',
 													  success: function(data){
 														  $(".last-activity-interval").text(data);
@@ -257,7 +257,7 @@
 																				}
 																				$.ajax({
 																					  type: "GET",
-																					  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
+																					  url: "/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=1",
 																				});
 																		
 																			}
@@ -287,7 +287,7 @@
 																				}
 																				$.ajax({
 																					  type: "GET",
-																					  url: "/ewsd/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
+																					  url: "/student/ideas/"+ideaId+"/reactions?uid="+uid+"&reactionType=2",
 																				});
 																		
 																			}
@@ -413,9 +413,9 @@
 																	 	console.log("#anonymous-comment_"+ideaId);
 																		var url = "";
 																		if($("#anonymous-comment_"+ideaId).prop("checked")==true){
-																			url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																			url = "/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
 																		}else{
-																			url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																			url = "/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
 																		}
 																	 	$.ajax({
 																             type: "POST",
@@ -459,9 +459,9 @@
 																 	console.log(comment);
 																	var url = "";
 																	if($("#anonymous-comment_"+ideaId).prop("checked")==true){
-																		url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
+																		url = "/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=true";
 																	}else{
-																		url = "/ewsd/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
+																		url = "/student/ideas/"+ideaId+"/comments?uid="+uid+"&anonymous=false";
 																	}
 																 	$.ajax({
 															             type: "POST",
@@ -551,7 +551,7 @@
 
 		<div id="footer"></div>
 		<script type="text/javascript">
-			$("#footer").load("/ewsd/footer");
+			$("#footer").load("/footer");
 		</script>
 
 

@@ -216,7 +216,7 @@ public class AdminController {
 		notification.setNotifiableDepartments("QA");
 		notification.setNotificationFrom(userEntity);
 		notification.setNotificationType("notification");
-		notification.setNotificationUrl("/ewsd/qa_manager/manage-tags");
+		notification.setNotificationUrl("/qa_manager/manage-tags");
 		notification.setNotifyTo(userService.getUserByUsername("qa_manager"));
 		notification.setSeen("no");
 		notificationService.save(notification);

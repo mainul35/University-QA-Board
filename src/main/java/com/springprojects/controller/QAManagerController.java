@@ -148,7 +148,7 @@ public class QAManagerController {
 					notification.setNotificationId(System.currentTimeMillis());
 					notification.setNotificationMsg("A new category has been opened.");
 					notification.setNotificationType("announcement");
-					notification.setNotificationUrl("/ewsd/" + userType + "/post-new-idea");
+					notification.setNotificationUrl("/" + userType + "/post-new-idea");
 					notification.setNotifyTo(userEntity2);
 					notification.setNotificationFrom(userEntity);
 					notification.setNotifiableDepartments(tag.getDepartments());
