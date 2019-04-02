@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "tbl_user", catalog="ewsd")
+@Table(name = "ewsd_tbl_user")
 public class UserEntity implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 3581290407206583877L;

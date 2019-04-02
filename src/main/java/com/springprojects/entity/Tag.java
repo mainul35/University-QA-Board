@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tag", catalog="ewsd")
+@Table(name="ewsd_tag")
 public class Tag  implements Serializable{
 	@Id
 	@Column(nullable=false, length=20)

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="comment", catalog="ewsd")
+@Table(name="ewsd_comment")
 public class Comment  implements Serializable, Comparable<Comment>{
 
 	@Id

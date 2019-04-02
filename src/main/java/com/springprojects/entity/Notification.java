@@ -1,12 +1,9 @@
 package com.springprojects.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "ewsd_notification")
 public class Notification {
 	@Id
 	@Column(name="notification_id")

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="attachment", catalog="ewsd")
+@Table(name="ewsd_attachment")
 public class Attachment implements Serializable{
 
 	@Id

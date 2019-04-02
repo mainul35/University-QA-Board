@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tbl_authority", catalog="ewsd")
+@Table(name = "ewsd_tbl_authority")
 public class Authority implements GrantedAuthority, Serializable {
     /**
 	 * 

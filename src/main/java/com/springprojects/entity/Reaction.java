@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="reaction", schema="ewsd")
+@Table(name="ewsd_reaction")
 public class Reaction  implements Serializable, Comparable<Reaction>{
 
 	@Id
