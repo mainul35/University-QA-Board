@@ -9,9 +9,9 @@ import javax.servlet.ServletContext;
 public class Properties {
 
     public static final String DB_DRIVER_CLASS = "org.postgresql.Driver";
-    public static final String DB_URL = "jdbc:postgresql://ec2-50-17-246-114.compute-1.amazonaws.com:5432/d8tpv7eubuqlhv";
-    public static final String DB_USER = "ndzezmaaueijjr";
-    public static final String DB_PASSWORD = "0b4f23d0ff5c61debe887e4214c9a91a7d26044b073d9938dc2f82b9e72a1d47";
+    public static final String DB_URL = "jdbc:postgresql://ec2-23-23-92-204.compute-1.amazonaws.com:5432/dep3k85tqarnsr";
+    public static final String DB_USER = "drolrscduhrgip";
+    public static final String DB_PASSWORD = "e330e8f86b18b275367be467f7e14d9e45fdcfbdb736a03411a76e0b9fb83ebf";
 
     public static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
     public static final String HIBERNATE_SHOW_SQL = "true";
