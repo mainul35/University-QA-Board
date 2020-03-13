@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public UserEntity getUserById(Long id) {
-		return userRepository.findOne(id);
+		return userRepository.findById(id).get();
 	}
 
 	public UserEntity getUserByUsername(String username) {
@@ -84,7 +84,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public void createUser(UserEntity userEntity) {
-		if(userRepository.findOne(userEntity.getId())==null && existsWithEmail(userEntity.getEmail())==false && existsWithUsername(userEntity.getUsername())==false)
+		if(userRepository.findById(userEntity.getId()).get() == null && existsWithEmail(userEntity.getEmail())==false && existsWithUsername(userEntity.getUsername())==false)
 			userRepository.save(userEntity);
 	}
 

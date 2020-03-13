@@ -147,7 +147,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         		"/qa_manager/temp/**", 
         		"/qa_coordinator/temp/**", 
         		"/ideas/temp/**"
-        		).addResourceLocations(Properties.TEMP_PATH).setCachePeriod(999999999);
+        		).addResourceLocations("file:///" + Properties.WRITE_PATH + "/").setCachePeriod(999999999);
     }
 
 }

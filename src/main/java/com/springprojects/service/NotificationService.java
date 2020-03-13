@@ -35,7 +35,7 @@ public class NotificationService {
 
 	public Notification findById(long id) {
 		// TODO Auto-generated method stub
-		return notificationRepository.findOne(id);
+		return notificationRepository.findById(id).get();
 	}
 
 	public void update(Notification notificaiton) {

@@ -16,9 +16,10 @@ import com.springprojects.repository.IdeaRepository;
 public class IdeaService {
 	@Autowired
 	IdeaRepository ideaRepository;
+
 	
 	public void save(Idea idea) {
-		if(!ideaRepository.exists(idea.getIdeaId())) {
+		if(!ideaRepository.findById(idea.getIdeaId()).isPresent()) {
 			ideaRepository.save(idea);
 		}
 	}
@@ -44,8 +45,7 @@ public class IdeaService {
 	}
 	
 	public PageRequest getPage(int pageNumber, int resultPerPage) {
-        PageRequest request = new PageRequest(pageNumber - 1,  resultPerPage, Sort.Direction.DESC, "ideaId");
-        return request;
+		return PageRequest.of(pageNumber - 1,  resultPerPage, Sort.Direction.DESC, "ideaId");
     }
 	
 	public int count(){
@@ -61,7 +61,7 @@ public class IdeaService {
 	}
 	
 	public Idea getIdea(Long ideaId) {
-		return ideaRepository.findOne(ideaId);
+		return ideaRepository.findById(ideaId).get();
 	}
 
 	public Page<Idea> getPageOfIdeas(int pageNumber, int resultPerPage) {

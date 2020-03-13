@@ -20,7 +20,7 @@ public class ReactionService {
 	private UserService userService;
 	
 	public Reaction findOne(Long id) {
-		return reactionRepository.findOne(id);
+		return reactionRepository.findById(id).get();
 	}
 	
 	public void save(Reaction reaction) {

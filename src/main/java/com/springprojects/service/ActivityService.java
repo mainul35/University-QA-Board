@@ -34,10 +34,10 @@ public class ActivityService {
 	}
 
 	public String getLastActivityDifferenceOfUser(UserEntity userEntity) {
-		if(null==activityRepository.findOne(userEntity.getId())) {
+		if(null==activityRepository.findById(userEntity.getId())) {
 			return "None";
 		}
-		Activity activity = activityRepository.findOne(userEntity.getId());
+		Activity activity = activityRepository.findById(userEntity.getId()).get();
 
 		Date firstDate = new Date(activity.getLastActivityDateTime().getTime());
 		Date secondDate = new Date(System.currentTimeMillis());

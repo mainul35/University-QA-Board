@@ -109,7 +109,7 @@ public class Utils {
 		String attachmentUrl = attachmentService.readAttachment(fileId).getFileURL();
 		InputStream in = null;
 		if (servletContext.getResourceAsStream(attachmentUrl) == null) {
-			in = new FileInputStream(new File(attachmentUrl));
+			in = new FileInputStream(new File(Properties.READ_FROM_PATH + attachmentUrl));
 		} else {
 			in = servletContext.getResourceAsStream(attachmentUrl);
 		}

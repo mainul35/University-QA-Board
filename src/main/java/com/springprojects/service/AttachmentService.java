@@ -26,7 +26,7 @@ public class AttachmentService {
 	private AttachmentRepository attachmentRepository;
 
 	// Save the uploaded file to this folder
-	private static final String UPLOADED_FOLDER = Properties.TEMP_PATH;
+	private static final String UPLOADED_FOLDER = Properties.WRITE_PATH;
 
 	private Logger logger = Logger.getLogger(AttachmentService.class.getName());
 
@@ -35,7 +35,7 @@ public class AttachmentService {
 			// Get the file and save it somewhere
 			byte[] bytes = file.getBytes();
 
-			File dir = Paths.get(Properties.TEMP_PATH + userId + "//").toFile();
+			File dir = new File(UPLOADED_FOLDER  + "/" + userId + "/");
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
@@ -44,13 +44,13 @@ public class AttachmentService {
 			while (tokenizer.hasMoreTokens()) {
 				extension = tokenizer.nextToken();
 			}
-			String url = Properties.TEMP_PATH + userId + "//" + attachment.getAttachmentId() + "." + extension;
+			String url = UPLOADED_FOLDER + "/" + userId + "/" + attachment.getAttachmentId() + "." + extension;
 			File serverFile = new File(url);
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
 			logger.info("File written successfully.");
-			url = "/temp/" + userId + "//" + attachment.getAttachmentId() + "." + extension;
+			url = "/temp/" + userId + "/" + attachment.getAttachmentId() + "." + extension;
 			attachment.setFileURL(url);
 			attachment.setFileType(Files.probeContentType(Paths.get(url)));
 		} catch (IOException e) {
@@ -66,7 +66,7 @@ public class AttachmentService {
 	}
 
 	public Attachment readAttachment(Long id) {
-		return attachmentRepository.findOne(id);
+		return attachmentRepository.findById(id).get();
 	}
 
 }

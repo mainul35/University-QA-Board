@@ -27,7 +27,7 @@ public class DepartmentService {
 	}
 	
 	public Department findByDepartmentId(Long departmentId) {
-		return departmentRepository.findOne(departmentId);
+		return departmentRepository.findById(departmentId).get();
 	}
 
 	public String saveOrUpdate(Department department) {
