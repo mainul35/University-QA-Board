@@ -22,7 +22,7 @@ public class CommentService {
 	private UserService userService;
 	
 	public Comment findOne(Long id) {
-		return commentRepository.findById(id).get();
+		return commentRepository.findById(id).orElse(null);
 	}
 	
 	public Comment save(Comment comment) {

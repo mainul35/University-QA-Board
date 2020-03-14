@@ -25,7 +25,7 @@ public class IssueService {
 	}
 	
 	public Issue findById(Long issueId) {
-		return issueRepository.findById(issueId).get();
+		return issueRepository.findById(issueId).orElse(null);
 	}
 	
 	public List<Issue> findByIssueSubmittedBy(UserEntity userEntity){

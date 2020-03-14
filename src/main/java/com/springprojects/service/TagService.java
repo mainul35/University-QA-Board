@@ -42,7 +42,7 @@ public class TagService {
 
 	public Tag findById(Long tagId) {
 		// TODO Auto-generated method stub
-		return tagRepository.findById(tagId).get();
+		return tagRepository.findById(tagId).orElse(null);
 	}
 
 	public boolean delete(Tag tag) {

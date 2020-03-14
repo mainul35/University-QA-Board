@@ -1,28 +1,21 @@
 package com.springprojects.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ewsd_idea")
+//@EntityListeners(AuditingEntityListener.class)
 public class Idea implements Serializable {
 
 	@Id
@@ -30,8 +23,7 @@ public class Idea implements Serializable {
 	private Long ideaId;
 	@Column(name = "idea_title", length = 200, nullable = false)
 	private String ideaTitle;
-	@Lob
-	@Column(name = "idea_body", nullable = false)
+	@Column(name = "idea_body", nullable = false, columnDefinition = "TEXT")
 	private String ideaBody;
 	@Column(name = "author_email", length = 200, nullable = false)
 	private String authorEmail;
@@ -51,6 +43,29 @@ public class Idea implements Serializable {
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "idea_seen_by")
 	private Set<String> seenBy = new HashSet<>();
+	/*@CreatedDate
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+
+	@LastModifiedDate
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
+*/
+	/*public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}*/
 
 	public Long getIdeaId() {
 		return ideaId;

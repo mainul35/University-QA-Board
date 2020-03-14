@@ -245,9 +245,7 @@ public class StudentController {
 
 		List<Idea> ideas = new ArrayList<>();
 		ideaService.listAllIdeasByAuthorEmail(userEntity.getEmail(), pageNumber, resultPerPage).iterator()
-				.forEachRemaining(idea -> {
-					ideas.add(idea);
-				});
+				.forEachRemaining(ideas::add);
 
 		// Collections.reverse(ideas);
 		Map<String, List<Timeline>> dates = new TreeMap<>(Comparator.reverseOrder());

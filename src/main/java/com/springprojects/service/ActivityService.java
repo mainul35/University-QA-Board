@@ -34,27 +34,29 @@ public class ActivityService {
 	}
 
 	public String getLastActivityDifferenceOfUser(UserEntity userEntity) {
-		if(null==activityRepository.findById(userEntity.getId())) {
+		if(!activityRepository.findById(userEntity.getId()).isPresent()) {
 			return "None";
 		}
-		Activity activity = activityRepository.findById(userEntity.getId()).get();
+		Activity activity = activityRepository.findById(userEntity.getId()).orElse(null);
+		if (activity != null) {
+			Date firstDate = new Date(activity.getLastActivityDateTime().getTime());
+			Date secondDate = new Date(System.currentTimeMillis());
+			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+			long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-		Date firstDate = new Date(activity.getLastActivityDateTime().getTime());
-		Date secondDate = new Date(System.currentTimeMillis());
-
-		long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-		long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-		if (diff<60) {
-			return diff +"m";
-		}else if(diff>60 && diff<1440) {
-			return diff/60 +"h";
-		}else if(diff>1439 && diff<10080) {
-			return diff/1440 +"d";
-		}else if(diff>10079 && diff<525600) {
-			return diff/10079 +"w";
-		}else {
-			return diff/525600 +"y";
+			if (diff<60) {
+				return diff +"m";
+			}else if(diff>60 && diff<1440) {
+				return diff/60 +"h";
+			}else if(diff>1439 && diff<10080) {
+				return diff/1440 +"d";
+			}else if(diff>10079 && diff<525600) {
+				return diff/10079 +"w";
+			}else {
+				return diff/525600 +"y";
+			}
+		} else {
+			return null;
 		}
 	}
 

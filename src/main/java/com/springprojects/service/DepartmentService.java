@@ -1,6 +1,7 @@
 package com.springprojects.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class DepartmentService {
 	}
 	
 	public Department findByDepartmentId(Long departmentId) {
-		return departmentRepository.findById(departmentId).get();
+		return departmentRepository.findById(departmentId).orElse(null);
 	}
 
 	public String saveOrUpdate(Department department) {

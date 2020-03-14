@@ -66,7 +66,7 @@ public class AttachmentService {
 	}
 
 	public Attachment readAttachment(Long id) {
-		return attachmentRepository.findById(id).get();
+		return attachmentRepository.findById(id).orElse(null);
 	}
 
 }

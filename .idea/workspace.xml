@@ -2,186 +2,90 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ewsd:war" />
+      <artifact name="University-QA-Board:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f371c89-667e-4c0f-a635-13610b6cb00a" name="Default Changelist" comment="updated table names, DB config, initialization of an temp resource files">
+    <list default="true" id="9f371c89-667e-4c0f-a635-13610b6cb00a" name="Default Changelist" comment="Migrated to Spring 5">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/entity/AuditingEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/config/Properties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/config/Properties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/config/application/ServletConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/config/application/ServletConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/config/persistence/MySqlConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/config/persistence/MySqlConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/controller/StudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/entity/Idea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/entity/Idea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/ActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/ActivityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/AttachmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/AttachmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/CommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/DepartmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/DepartmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/IdeaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/IdeaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/IssueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/IssueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/ReactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/ReactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/service/UserService.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="232088934">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="java" value="9" />
-          <entry key="xml" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="9" />
-          <entry key="XML" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="65" />
-          <entry key="txt" value="100" />
-          <entry key="xml" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="65" />
-          <entry key="PLAIN_TEXT" value="100" />
-          <entry key="XML" value="2" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="295" column="40" selection-start-line="295" selection-start-column="40" selection-end-line="295" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Properties.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/application/ServletConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/persistence/MySqlConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="25" column="82" lean-forward="true" selection-start-line="25" selection-start-column="82" selection-end-line="25" selection-end-column="82" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Utils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Initializer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/controller/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2527">
-              <caret line="114" column="27" selection-start-line="113" selection-start-column="13" selection-end-line="114" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Mailer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/controller/QAManagerController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="144" column="27" selection-start-line="144" selection-start-column="27" selection-end-line="144" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/controller/AdminController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="223" column="18" lean-forward="true" selection-start-line="223" selection-start-column="18" selection-end-line="223" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>C:</find>
-      <find>&lt;configure</find>
-    </findStrings>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GradleLocalSettings">
-    <option name="projectSyncType">
-      <map>
-        <entry key="$PROJECT_DIR$/../../../../Codes/Mainul35-sm-trading-erp" value="PREVIEW" />
-        <entry key="$PROJECT_DIR$/../../../../Codes/grails-login-app" value="PREVIEW" />
-        <entry key="$PROJECT_DIR$/../../../../Codes/multiple-interceptors" value="PREVIEW" />
-        <entry key="$PROJECT_DIR$/../../../../Codes/sm-trading-erp" value="PREVIEW" />
-      </map>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
     </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="PostgreSQL - qa_board@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="PostgreSQL - qa_board@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="PostgreSQL - qa_board@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="qa_board: database" type="162271b6:PgImplModel$Database" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="PostgreSQL - qa_board@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="qa_board: database" type="162271b6:PgImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="PostgreSQL - qa_board@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="qa_board: database" type="162271b6:PgImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/springprojects/config/Properties.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/springprojects/controller/UserController.java" />
+        <option value="Class" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -197,152 +101,47 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/src/main/webapp/resources/contents/lib/bootstrap-datepicker/package.json" />
-      <path value="$PROJECT_DIR$/src/main/webapp/resources/contents/lib/bootstrap-daterangepicker/package.json" />
-      <path value="$PROJECT_DIR$/src/main/webapp/resources/contents/lib/bootstrap/package.json" />
-      <path value="$PROJECT_DIR$/src/main/webapp/resources/contents/lib/jquery-knob/package.json" />
-      <path value="$PROJECT_DIR$/src/main/webapp/resources/contents/lib/jquery-slimscroll/package.json" />
-      <path value="$PROJECT_DIR$/src/main/webapp/resources/contents/lib/jquery-ui/package.json" />
-      <path value="$PROJECT_DIR$/src/main/webapp/resources/contents/lib/morris.js/package.json" />
-    </packageJsonPaths>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="springprojects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="springprojects" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="springprojects" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="springprojects" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-              <item name="persistence" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ewsd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ewsd-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="springprojects" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-    </panes>
+  <component name="ProjectId" id="1Ynm07loI13NDxAEH98tdvW4SJp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="SearchEverywhereHistoryKey" value="mail&#9;PSI&#9;JAVA://com.springprojects.config.Mailer" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554228682882" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" activateToolWindowBeforeRun="false" APPLICATION_SERVER_NAME="Tomcat 9.0.17" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
-      <option name="START_JAVASCRIPT_DEBUGGER" value="true" />
+    <configuration name="Tomcat 9.0.17" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.17" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="ewsd:war">
+        <artifact name="University-QA-Board:war exploded">
           <settings>
             <option name="CONTEXT_PATH" value="/" />
           </settings>
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="Unnamed_ewsd_2" />
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_University-QA-Board" />
+        <option name="HTTP_PORT" value="8081" />
+        <option name="JNDI_PORT" value="1098" />
       </server-settings>
-      <predefined_log_file id="Tomcat" enabled="true" />
-      <predefined_log_file id="Tomcat Catalina" enabled="true" />
-      <predefined_log_file id="Tomcat Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <log_file alias="Tomcat Host Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/host-manager.*" />
+      <log_file alias="Tomcat Localhost Access Log" path="%IDEA_RUN:CATALINA_BASE%/logs/localhost_access_log.*" />
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file enabled="true" id="Tomcat Manager" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="50557" />
+        <option name="DEBUG_PORT" value="40573" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -390,11 +189,39 @@
         </SHUTDOWN>
       </ConfigurationWrapper>
       <method v="2">
+        <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="ewsd:war" />
+          <artifact name="University-QA-Board:war exploded" />
         </option>
       </method>
     </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <option name="contentProportion" value="0.15555556" />
+          <treeState>
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:PostgreSQL - qa_board@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -408,6 +235,14 @@
       <updated>1554220875950</updated>
       <workItem from="1554220889117" duration="6914000" />
       <workItem from="1554526451784" duration="1314000" />
+      <workItem from="1583586508923" duration="6056000" />
+      <workItem from="1583610228298" duration="2162000" />
+      <workItem from="1583726943622" duration="1004000" />
+      <workItem from="1583947449677" duration="2693000" />
+      <workItem from="1583984114343" duration="235000" />
+      <workItem from="1584062174970" duration="10436000" />
+      <workItem from="1584118926057" duration="12639000" />
+      <workItem from="1584151565417" duration="8151000" />
     </task>
     <task id="LOCAL-00001" summary="updated table names, DB config, initialization of an temp resource files">
       <created>1554224806462</created>
@@ -416,221 +251,297 @@
       <option name="project" value="LOCAL" />
       <updated>1554224806462</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="QA Board source code update">
+      <created>1584073274247</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584073274247</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8228000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25340393" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info id="Learn" order="7" />
-      <window_info id="Web" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39934534" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Application Servers" order="7" />
-      <window_info anchor="bottom" id="Spring" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3289689" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" />
-      <window_info anchor="bottom" id="Java Enterprise" order="12" />
-      <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="14" weight="0.3289689" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="updated table names, DB config, initialization of an temp resource files" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated table names, DB config, initialization of an temp resource files" />
+    <MESSAGE value="QA Board source code update" />
+    <option name="LAST_COMMIT_MESSAGE" value="QA Board source code update" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="295" column="40" selection-start-line="295" selection-start-column="40" selection-end-line="295" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/application/ServletConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Initializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/persistence/MySqlConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="25" column="82" lean-forward="true" selection-start-line="25" selection-start-column="82" selection-end-line="25" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/controller/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2527">
-          <caret line="114" column="27" selection-start-line="113" selection-start-column="13" selection-end-line="114" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Properties.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/controller/AdminController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="223" column="18" lean-forward="true" selection-start-line="223" selection-start-column="18" selection-end-line="223" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/config/Mailer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/springprojects/controller/QAManagerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="144" column="27" selection-start-line="144" selection-start-column="27" selection-end-line="144" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="555" y="214" width="800" height="684" key="#Tomcat_Server" timestamp="1583589057620">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="555" y="214" width="800" height="684" key="#Tomcat_Server/0.27.1920.1053@0.27.1920.1053" timestamp="1583589057620" />
+    <state x="418" y="211" width="898" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584073089054">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="418" y="211" width="898" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1584073089054" />
+    <state x="768" y="240" width="374" height="633" key="#com.intellij.ide.util.MemberChooser" timestamp="1584158208292">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="768" y="240" width="374" height="633" key="#com.intellij.ide.util.MemberChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1584158208292" />
+    <state x="733" y="383" width="1063" height="697" key="#xdebugger.evaluate" timestamp="1584156736702">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="733" y="383" width="1063" height="697" key="#xdebugger.evaluate/0.27.1920.1053@0.27.1920.1053" timestamp="1584156736702" />
+    <state x="480" y="96" width="949" height="921" key="CommitChangelistDialog2" timestamp="1584160853020">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="480" y="96" width="949" height="921" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1584160853020" />
+    <state width="510" height="540" key="DebuggerActiveHint" timestamp="1584156302861">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="510" height="540" key="DebuggerActiveHint/0.27.1920.1053@0.27.1920.1053" timestamp="1584156302861" />
+    <state x="100" y="127" width="1720" height="853" key="DiffContextDialog" timestamp="1584158346303">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="100" y="127" width="1720" height="853" key="DiffContextDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1584158346303" />
+    <state x="738" y="299" width="424" height="521" key="FileChooserDialogImpl" timestamp="1583610589295">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="738" y="299" width="424" height="521" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1583610589295" />
+    <state width="1557" height="275" key="GridCell.Tab.0.bottom" timestamp="1584160664555">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664555" />
+    <state width="1557" height="275" key="GridCell.Tab.0.center" timestamp="1584160664554">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664554" />
+    <state width="1557" height="275" key="GridCell.Tab.0.left" timestamp="1584160664554">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664554" />
+    <state width="1557" height="275" key="GridCell.Tab.0.right" timestamp="1584160664555">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664555" />
+    <state width="1557" height="275" key="GridCell.Tab.1.bottom" timestamp="1584160664556">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.1.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664556" />
+    <state width="1557" height="275" key="GridCell.Tab.1.center" timestamp="1584160664555">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.1.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664555" />
+    <state width="1557" height="275" key="GridCell.Tab.1.left" timestamp="1584160664555">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.1.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664555" />
+    <state width="1557" height="275" key="GridCell.Tab.1.right" timestamp="1584160664555">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.1.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664555" />
+    <state width="1291" height="275" key="GridCell.Tab.10.bottom" timestamp="1583949692205">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.10.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1583949692205" />
+    <state width="1291" height="275" key="GridCell.Tab.10.center" timestamp="1583949692205">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.10.center/0.27.1920.1053@0.27.1920.1053" timestamp="1583949692205" />
+    <state width="1291" height="275" key="GridCell.Tab.10.left" timestamp="1583949692205">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.10.left/0.27.1920.1053@0.27.1920.1053" timestamp="1583949692205" />
+    <state width="1291" height="275" key="GridCell.Tab.10.right" timestamp="1583949692205">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.10.right/0.27.1920.1053@0.27.1920.1053" timestamp="1583949692205" />
+    <state width="1291" height="275" key="GridCell.Tab.11.bottom" timestamp="1583949524821">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.11.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1583949524821" />
+    <state width="1291" height="275" key="GridCell.Tab.11.center" timestamp="1583949524820">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.11.center/0.27.1920.1053@0.27.1920.1053" timestamp="1583949524820" />
+    <state width="1291" height="275" key="GridCell.Tab.11.left" timestamp="1583949524820">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.11.left/0.27.1920.1053@0.27.1920.1053" timestamp="1583949524820" />
+    <state width="1291" height="275" key="GridCell.Tab.11.right" timestamp="1583949524821">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.11.right/0.27.1920.1053@0.27.1920.1053" timestamp="1583949524821" />
+    <state width="1291" height="275" key="GridCell.Tab.12.bottom" timestamp="1583949522099">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.12.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1583949522099" />
+    <state width="1291" height="275" key="GridCell.Tab.12.center" timestamp="1583949522098">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.12.center/0.27.1920.1053@0.27.1920.1053" timestamp="1583949522098" />
+    <state width="1291" height="275" key="GridCell.Tab.12.left" timestamp="1583949522097">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.12.left/0.27.1920.1053@0.27.1920.1053" timestamp="1583949522097" />
+    <state width="1291" height="275" key="GridCell.Tab.12.right" timestamp="1583949522098">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1291" height="275" key="GridCell.Tab.12.right/0.27.1920.1053@0.27.1920.1053" timestamp="1583949522098" />
+    <state width="1557" height="275" key="GridCell.Tab.2.bottom" timestamp="1584160664557">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.2.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664557" />
+    <state width="1557" height="275" key="GridCell.Tab.2.center" timestamp="1584160664556">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.2.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664556" />
+    <state width="1557" height="275" key="GridCell.Tab.2.left" timestamp="1584160664556">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.2.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664556" />
+    <state width="1557" height="275" key="GridCell.Tab.2.right" timestamp="1584160664556">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.2.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664556" />
+    <state width="1557" height="275" key="GridCell.Tab.3.bottom" timestamp="1584160664557">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.3.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664557" />
+    <state width="1557" height="275" key="GridCell.Tab.3.center" timestamp="1584160664557">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.3.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664557" />
+    <state width="1557" height="275" key="GridCell.Tab.3.left" timestamp="1584160664557">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.3.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664557" />
+    <state width="1557" height="275" key="GridCell.Tab.3.right" timestamp="1584160664557">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.3.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664557" />
+    <state width="1557" height="275" key="GridCell.Tab.4.bottom" timestamp="1584160664558">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.4.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664558" />
+    <state width="1557" height="275" key="GridCell.Tab.4.center" timestamp="1584160664558">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.4.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664558" />
+    <state width="1557" height="275" key="GridCell.Tab.4.left" timestamp="1584160664558">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.4.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664558" />
+    <state width="1557" height="275" key="GridCell.Tab.4.right" timestamp="1584160664558">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.4.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664558" />
+    <state width="1557" height="275" key="GridCell.Tab.5.bottom" timestamp="1584160664559">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.5.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664559" />
+    <state width="1557" height="275" key="GridCell.Tab.5.center" timestamp="1584160664559">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.5.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664559" />
+    <state width="1557" height="275" key="GridCell.Tab.5.left" timestamp="1584160664559">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.5.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664559" />
+    <state width="1557" height="275" key="GridCell.Tab.5.right" timestamp="1584160664559">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.5.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664559" />
+    <state width="1557" height="275" key="GridCell.Tab.6.bottom" timestamp="1584160664560">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.6.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664560" />
+    <state width="1557" height="275" key="GridCell.Tab.6.center" timestamp="1584160664560">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.6.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664560" />
+    <state width="1557" height="275" key="GridCell.Tab.6.left" timestamp="1584160664559">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.6.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664559" />
+    <state width="1557" height="275" key="GridCell.Tab.6.right" timestamp="1584160664560">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.6.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664560" />
+    <state width="1557" height="275" key="GridCell.Tab.7.bottom" timestamp="1584160664561">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.7.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664561" />
+    <state width="1557" height="275" key="GridCell.Tab.7.center" timestamp="1584160664560">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.7.center/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664560" />
+    <state width="1557" height="275" key="GridCell.Tab.7.left" timestamp="1584160664560">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.7.left/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664560" />
+    <state width="1557" height="275" key="GridCell.Tab.7.right" timestamp="1584160664560">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1557" height="275" key="GridCell.Tab.7.right/0.27.1920.1053@0.27.1920.1053" timestamp="1584160664560" />
+    <state width="257" height="520" key="HiddenNamespacesPopup" timestamp="1584062585371">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="257" height="520" key="HiddenNamespacesPopup/0.27.1920.1053@0.27.1920.1053" timestamp="1584062585371" />
+    <state x="660" y="214" width="589" height="685" key="RollbackChangesDialog" timestamp="1584158354452">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="660" y="214" width="589" height="685" key="RollbackChangesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1584158354452" />
+    <state x="443" y="131" width="1024" height="852" key="SettingsEditor" timestamp="1584070044569">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="443" y="131" width="1024" height="852" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1584070044569" />
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog" timestamp="1584070253871">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="100" y="127" width="1720" height="853" key="VCS.FileHistoryDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1584070253871" />
+    <state width="960" height="526" key="XDebugger.FullValuePopup" timestamp="1584156291602">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="960" height="526" key="XDebugger.FullValuePopup/0.27.1920.1053@0.27.1920.1053" timestamp="1584156291602" />
+    <state x="818" y="441" width="363" height="255" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1584159536349">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="818" y="441" width="363" height="255" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.27.1920.1053@0.27.1920.1053" timestamp="1584159536349" />
+    <state x="620" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1584151568519">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="620" y="381" key="com.intellij.ide.util.TipDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1584151568519" />
+    <state x="498" y="241" width="913" height="631" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1584068960901">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="498" y="241" width="913" height="631" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.27.1920.1053@0.27.1920.1053" timestamp="1584068960901" />
+    <state x="608" y="261" width="703" height="584" key="find.popup" timestamp="1584160580921">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="608" y="261" width="703" height="584" key="find.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1584160580921" />
+    <state x="281" y="143" width="1347" height="827" key="new project wizard" timestamp="1583774607428">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="281" y="143" width="1347" height="827" key="new project wizard/0.27.1920.1053@0.27.1920.1053" timestamp="1583774607428" />
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1584160635297">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="623" y="259" width="672" height="678" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1584160635297" />
   </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>ewsd:war exploded</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>Spring</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>ewsd</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/springprojects/service/IdeaService.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

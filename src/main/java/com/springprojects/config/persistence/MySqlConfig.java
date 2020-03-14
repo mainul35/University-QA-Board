@@ -44,6 +44,7 @@ public class MySqlConfig {
         hibernateProperties.put("hibernate.dialect", com.springprojects.config.Properties.HIBERNATE_DIALECT);
         hibernateProperties.put("hibernate.show_sql", com.springprojects.config.Properties.HIBERNATE_SHOW_SQL);
         hibernateProperties.put("hibernate.hbm2ddl.auto", com.springprojects.config.Properties.HBM2DDL_AUTO);
+        hibernateProperties.put("hibernate.connection.autocommit", false);
         hibernateProperties.put("hibernate.enable_lazy_load_no_trans", true);
         sessionFactoryBean.setHibernateProperties(hibernateProperties);
 

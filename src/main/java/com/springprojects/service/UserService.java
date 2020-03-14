@@ -1,8 +1,10 @@
 package com.springprojects.service;
 
 import com.springprojects.config.Mailer;
+import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Authority;
 import com.springprojects.entity.UserEntity;
+import com.springprojects.repository.AuthorityRepository;
 import com.springprojects.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -42,7 +44,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public UserEntity getUserById(Long id) {
-		return userRepository.findById(id).get();
+		return userRepository.findById(id).orElse(null);
 	}
 
 	public UserEntity getUserByUsername(String username) {
@@ -84,7 +86,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public void createUser(UserEntity userEntity) {
-		if(userRepository.findById(userEntity.getId()).get() == null && existsWithEmail(userEntity.getEmail())==false && existsWithUsername(userEntity.getUsername())==false)
+		if(userRepository.findById(userEntity.getId()).orElse(null) == null && existsWithEmail(userEntity.getEmail())==false && existsWithUsername(userEntity.getUsername())==false)
 			userRepository.save(userEntity);
 	}
 
