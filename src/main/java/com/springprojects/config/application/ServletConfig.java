@@ -12,12 +12,11 @@ import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor;
 import org.springframework.mobile.device.site.SitePreferenceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver;
-import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.List;
@@ -27,7 +26,7 @@ import javax.servlet.ServletContext;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.springprojects.controller"})
-public class ServletConfig extends WebMvcConfigurerAdapter {
+public class ServletConfig implements WebMvcConfigurer {
 
     @Autowired
     ThymeleafViewResolver viewResolver;
