@@ -7,10 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f371c89-667e-4c0f-a635-13610b6cb00a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/springprojects/config/Properties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/springprojects/config/Properties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/templates/read_full_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/templates/read_full_post.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,6 +244,7 @@
       <workItem from="1584062174970" duration="10436000" />
       <workItem from="1584118926057" duration="12639000" />
       <workItem from="1584151565417" duration="21609000" />
+      <workItem from="1585040284575" duration="4008000" />
     </task>
     <task id="LOCAL-00001" summary="updated table names, DB config, initialization of an temp resource files">
       <created>1554224806462</created>
@@ -296,7 +295,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -322,6 +323,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="768" y="240" width="374" height="633" key="#com.intellij.ide.util.MemberChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1584158208292" />
+    <state x="801" y="445" width="307" height="223" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585040308394">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="801" y="445" width="307" height="223" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585040308394" />
     <state x="733" y="383" width="1063" height="697" key="#xdebugger.evaluate" timestamp="1584156736702">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -606,5 +611,8 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="se.expertsystem.intellij.aop.aspectj.AspectJProjectComponent">
+    <setting name="isActivated" value="false" />
   </component>
 </project>
