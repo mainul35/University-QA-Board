@@ -195,9 +195,7 @@ public class QAManagerController {
 		if (notification != null) {
 			notificationService.delete(notification);
 		}
-		return ideaService.listIdeasByTag(tagService.findById(tagId)).size() == 0
-				? tagService.delete(tagService.findById(tagId))
-				: false;
+		return ideaService.listIdeasByTag(tagService.findById(tagId)).size() == 0 && tagService.delete(tagService.findById(tagId));
 	}
 
 	@RequestMapping(value = "/read-issue", method = RequestMethod.GET)
