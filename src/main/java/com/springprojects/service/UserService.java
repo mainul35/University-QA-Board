@@ -1,13 +1,10 @@
 package com.springprojects.service;
 
 import com.springprojects.config.Mailer;
-import com.springprojects.entity.Attachment;
 import com.springprojects.entity.Authority;
 import com.springprojects.entity.UserEntity;
-import com.springprojects.repository.AuthorityRepository;
 import com.springprojects.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

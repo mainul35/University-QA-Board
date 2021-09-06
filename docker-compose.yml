@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  authorization-server:
+    container_name: 'qa_board'
+    image: 'mainul35/university-qa-board'
+    build: ./
+    ports:
+    - '8083:8080'
+    depends_on:
+    - qaboard_db
+    command: catalina.sh run
+    # Pass environment variables to the service
+    environment:
+      # The inside port will be used by the dependent services
+      SPRING_DATASOURCE_URL: jdbc:postgresql://qaboard_db:5432/qabord_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SERVER_PORT: 8083
+    networks:
+    - qaboard_netwok
+  qaboard_db:
+    image: 'postgres'
+    container_name: 'qaboard_db'
+    volumes:
+    - type: volume
+      source: qabord
+      target: "$PWD/Documents/docker_data/qaboard_data"
+    ports:
+    - '5433:5432'
+    environment:
+    - 'POSTGRES_PASSWORD=postgres'
+    - 'POSTGRES_USER=postgres'
+    - 'POSTGRES_DB=qabord_db'
+    networks:
+    - qaboard_netwok
+volumes:
+  qabord:
+networks:
+  qaboard_netwok:

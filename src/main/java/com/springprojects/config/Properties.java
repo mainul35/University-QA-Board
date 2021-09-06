@@ -1,20 +1,23 @@
 package com.springprojects.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.ServletContext;
 
 @Component
 public class Properties {
 
-//    public static final String DB_DRIVER_CLASS = "org.postgresql.Driver";
-//    public static final String DB_URL = "jdbc:postgresql://ec2-23-23-92-204.compute-1.amazonaws.com:5432/dep3k85tqarnsr";
-//    public static final String DB_USER = "drolrscduhrgip";
-//    public static final String DB_PASSWORD = "e330e8f86b18b275367be467f7e14d9e45fdcfbdb736a03411a76e0b9fb83ebf";
-    public static final String DB_URL = "jdbc:postgresql://localhost:5432/qa_board";
-    public static final String DB_USER = "postgres";
-    public static final String DB_PASSWORD = "secret";
+    public static final String DB_DRIVER_CLASS = "org.postgresql.Driver";
+//    public static final String DB_URL = "jdbc:postgresql://ec2-54-205-26-79.compute-1.amazonaws.com:5432/d8m2g75h27dgi7";
+//    public static final String DB_USER = "dthxxskpwprcxy";
+//    public static final String DB_PASSWORD = "2de423f64ae5cc7b0e63298e2e1cb6becf030a2976904471a94eaabd9fa84e9c";
+//    public static final String DB_URL = "jdbc:postgresql://localhost:5432/qa_board";
+//    public static final String DB_USER = "postgres";
+//    public static final String DB_PASSWORD = "secret";
+
+    public static volatile String DB_URL = "jdbc:postgresql://qaboard_db:5432/qabord_db";
+
+    public static volatile String DB_USER = "postgres";
+
+    public static volatile String DB_PASSWORD = "postgres";
 
     public static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQL94Dialect";
     public static final String HIBERNATE_SHOW_SQL = "true";

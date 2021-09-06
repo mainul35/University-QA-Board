@@ -4,55 +4,22 @@ import com.springprojects.config.Initializer;
 import com.springprojects.config.Properties;
 import com.springprojects.config.Utils;
 import com.springprojects.customModel.Timeline;
-import com.springprojects.entity.Attachment;
-import com.springprojects.entity.Authority;
-import com.springprojects.entity.Comment;
-import com.springprojects.entity.Idea;
-import com.springprojects.entity.Issue;
-import com.springprojects.entity.Notification;
-import com.springprojects.entity.Reaction;
-import com.springprojects.entity.Tag;
-import com.springprojects.entity.UserEntity;
-import com.springprojects.repository.IssueRepository;
-import com.springprojects.service.AttachmentService;
-import com.springprojects.service.AuthorityService;
-import com.springprojects.service.CommentService;
-import com.springprojects.service.ContributionService;
-import com.springprojects.service.DepartmentService;
-import com.springprojects.service.IdeaService;
-import com.springprojects.service.IssueService;
-import com.springprojects.service.NotificationService;
-import com.springprojects.service.UserService;
+import com.springprojects.entity.*;
+import com.springprojects.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DevicePlatform;
-import org.springframework.mobile.device.DeviceType;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -111,8 +78,8 @@ public class UserController {
 		if (sitePreference == SitePreference.NORMAL) {
 			log(request);
 			model.addAttribute("msg", "some message");
-//			Initializer initializer = new Initializer(authorityService, userService, attachmentService,
-//					departmentService, encoder);
+			Initializer initializer = new Initializer(authorityService, userService, attachmentService,
+					departmentService, encoder);
 			Properties.TEMP_PATH = servletContext.getRealPath("\\");
 			return "/templates/login";
 		} else if (sitePreference == SitePreference.MOBILE) {
@@ -250,7 +217,7 @@ public class UserController {
 	public String mainHeader_GET(Model model, HttpSession session) {
 		UserEntity userEntity = (UserEntity) session.getAttribute("usr");
 		List<Authority> authorities = (List<Authority>) session.getAttribute("authorities");
-		List<Notification> notifications = new ArrayList<>();
+		List<Notification> notifications = new ArrayList<> ();
 		int x = 0;
 		String userType = "";
 		for (Authority authority : authorities) {
@@ -582,7 +549,7 @@ public class UserController {
 			}
 		}
 
-		Set<Attachment> attachments = new HashSet<Attachment>();
+		Set<Attachment> attachments = new HashSet<> ();
 		for (Attachment attachment : idea.getAttachments()) {
 			if (null != attachment.getFileType()) {
 				attachments.add(attachment);

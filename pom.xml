@@ -261,7 +261,7 @@
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>3.0.3</version>
 				<configuration>
-  					<appName>university-qa-board</appName>
+  					<appName>university-qa-board-app</appName>
 					<jdkVersion>1.8</jdkVersion>
 				</configuration>
             </plugin>
