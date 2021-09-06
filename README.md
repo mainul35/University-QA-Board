@@ -1,8 +1,30 @@
 ## YouTube preview
 https://www.youtube.com/watch?v=1HTjNi27dK8
 
-## Live URL
-http://www.mainul35.info:8080/ewsd/
+## Run with Docker
+- Pull the image:
+```
+$ docker pull mainul35/university-qa-board:latest
+```
+- Run the image:
+```
+$ docker run mainul35/university-qa-board
+
+....................................
+06-Sep-2021 18:52:13.411 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/usr/local/tomcat/webapps/ROOT.war] has finished in [4,592] ms
+06-Sep-2021 18:52:13.415 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+06-Sep-2021 18:52:13.426 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [4723] milliseconds
+
+```
+If you see the above lines, run the below command to see running container of our image:
+```
+$ sudo docker ps -a
+CONTAINER ID   IMAGE                          COMMAND                  CREATED              STATUS              PORTS                                       NAMES
+8685eec3b57f   mainul35/university-qa-board   "catalina.sh run"        About a minute ago   Up About a minute   0.0.0.0:8083->8080/tcp, :::8083->8080/tcp   qa_board
+9b6d2a05ccd2   postgres                       "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:5433->5432/tcp, :::5433->5432/tcp   qaboard_db
+```
+Notice that our application is exposed on port **8083**. Now from browser, navigate to http://localhost:8083 to get the login page.
+
 
 ## Assumption
 - Developed as a sub system of a complete University management system. Only QA Management panel has been added in here.
@@ -20,22 +42,23 @@ http://www.mainul35.info:8080/ewsd/
 | sazzad                   |     Student (Computer science Dept.)         |
 | tanjina                  |     Student (Archiology Dept.)               |
 
-## Password for all users: secret
+## Password for all users: 
+**``secret``**
 
 ## Roles and permissions of tasks
 
-** Admin
+### Admin
 - Creates Batch and views all batches (Managing batches was not added in demo version)
 - Creates department and views all departments (Managing departs was not added in demo version)
 - Sets terms and conditions for idea sharing.
 
-** QA Manager
+### QA Manager
 - Sees all the issues created by QA Managers and their status.
 - Creates categories and views existing categories. (Managing catergories was not added in demo version)
 - Can download backup file of database as zip.
 - Can change issue status. (Closed or Solved).
 
-** QA Co-ordinator
+### QA Co-ordinator
 - Can see reports of his department activities
 - Can visit his timeline for viewing all his posted ideas.
 - Can post a new idea.
@@ -46,14 +69,14 @@ http://www.mainul35.info:8080/ewsd/
 - Can view attachments of an ideas, also can download those.
 - Cannot post an idea if the closure date ends or share a comment if the final closure date of current category ends. 
 
-** Student
+### Student
 - Can visit his timeline for viewing all his posted ideas.
 - Can post a new idea.
 - Can view all ideas of the department he is in.
 - Cannot view staff ideas.
 - Cannot post an idea if the closure date ends or share a comment if the final closure date of current category ends. 
 
-** Attachment specifications:
+### Attachment specifications:
 - Maximum upload size is at most 25 MB.
 - Supports only: PDF, Word document, images and videos.
 - Attachments can be found upon clicking "View Full Post".
