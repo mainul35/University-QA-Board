@@ -82,8 +82,10 @@ public class UserService implements UserDetailsService {
 	}
 
 	public void createUser(UserEntity userEntity) {
-		if(userRepository.findById(userEntity.getId()).orElse(null) == null && existsWithEmail(userEntity.getEmail())==false && existsWithUsername(userEntity.getUsername())==false)
-			userRepository.save(userEntity);
+		if (userRepository.findById (userEntity.getId ()).orElse (null) == null
+				&& !existsWithEmail (userEntity.getEmail ())
+				&& !existsWithUsername (userEntity.getUsername ()))
+			userRepository.save (userEntity);
 	}
 
 	public void updateUser(UserEntity userEntity) {

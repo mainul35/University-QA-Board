@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-	lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	  lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
 <!-- Head start -->
 
 <!--/*/ <th:block th:include="@{includes/includes} :: head"></th:block> /*/-->
 
 <!-- Head end -->
-
 
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -111,7 +109,7 @@
 																th:src="@{resources/contents/lib/img/video-file.png}">
 															</a>
 
-															<!-- 															####################################		Start of View video Modal		############################################ -->
+															<!--	####################################		Start of View video Modal		############################################ -->
 															<div class="modal" data-backdrop="static"
 																data-keyboard="false"
 																th:id="${'view_video_'+attachment.attachmentId}"
@@ -164,8 +162,8 @@
 														.click(
  																function() {
 																	videoListPreviewer = /*[[${'videoListPreviewer'+attachment.attachmentId}]]*/;
- 																	var sourceId = /*[[${'source'+attachment.attachmentId}]]*/;
- 																	var src = '/'+/*[[${attachment.fileURL}]]*/;
+																	var sourceId = /*[[${'source'+attachment.attachmentId}]]*/;
+																	var src = '/.' +/*[[${attachment.fileURL}]]*/;
  																	vidProduct = /*[[${'vid-product'+attachment.attachmentId }]]*/;
  																	fileType=/*[[${attachment.fileType}]]*/;
  																	$('#'+sourceId).attr('src', src);
@@ -210,10 +208,11 @@
  																					var html = "";
  																					var left = 0;
  																					for (var i = 0; i < len; i++) {
- 																						html += ''
- 																								+ '<video style="margin-left: '+left+'px;" width="120px" height="110px;" data-vid_id="video_'+i+'" data-vid_url="/'+data[i]+'" id="video_'+i+'" src="/ewsd/'+data[i]+'" type="video/mp4"></video>';
- 																						left = left+20;
- 																					}
+																						html += ''
+																								+ '<video style="margin-left: ' + left + 'px;" width="120px" height="110px;" data-vid_id="video_' + i + '" data-vid_url=".' + data[i] + '" id="video_' + i + '" src="/ewsd' + data[i] + '" type="video/mp4"></video>';
+																						left = left + 20;
+																						debugger;
+																					}
 																			
  																					$('#'+videoListPreviewer).append(html);
  																					left = 0;
@@ -258,7 +257,7 @@
 
  														</script>
 															</div>
-															<!-- 															####################################		End of View video Modal		############################################ -->
+															<!--    ####################################		End of View video Modal		############################################ -->
 
 														</th:block>
 													</div>

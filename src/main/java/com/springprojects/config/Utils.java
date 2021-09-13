@@ -1,36 +1,23 @@
 package com.springprojects.config;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Paths;
-import java.util.Date;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import javax.servlet.ServletContext;
-import javax.sql.DataSource;
-
+import com.springprojects.service.AttachmentService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.stereotype.Component;
 
-import com.springprojects.service.AttachmentService;
+import javax.servlet.ServletContext;
+import java.io.*;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Configuration
 public class Utils {
@@ -109,7 +96,7 @@ public class Utils {
 		String attachmentUrl = attachmentService.readAttachment(fileId).getFileURL();
 		InputStream in = null;
 		if (servletContext.getResourceAsStream(attachmentUrl) == null) {
-			in = new FileInputStream(new File(Properties.READ_FROM_PATH + attachmentUrl));
+			in = new FileInputStream (Properties.READ_FROM_PATH + attachmentUrl);
 		} else {
 			in = servletContext.getResourceAsStream(attachmentUrl);
 		}
