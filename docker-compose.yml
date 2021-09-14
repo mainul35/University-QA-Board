@@ -1,13 +1,13 @@
 version: '3.8'
 services:
-  authorization-server:
+  qa_board_service:
     container_name: 'qa_board'
     image: 'mainul35/university-qa-board'
     build: ./
     ports:
-    - '8083:8080'
+      - '8083:8080'
     depends_on:
-    - qaboard_db
+      - qaboard_db
     command: catalina.sh run
     # Pass environment variables to the service
     environment:
