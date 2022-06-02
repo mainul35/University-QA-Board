@@ -10,7 +10,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<encoding>UTF-8</encoding>
-		<spring.version>5.2.11.RELEASE</spring.version>
+		<spring.version>5.5.7</spring.version>
 	</properties>
 
 	<dependencies>
