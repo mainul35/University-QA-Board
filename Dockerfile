@@ -1,4 +1,4 @@
-FROM tomcat:9.0
+FROM tomcat:10-jdk17-corretto
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 EXPOSE 8080:8080

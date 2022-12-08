@@ -1,11 +1,10 @@
-import java.io.File;
-import java.lang.management.ManagementFactory;
-import java.util.Random;
-
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
+import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.util.Random;
 
 public class ResourceMonitor {
 
