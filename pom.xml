@@ -142,8 +142,14 @@
 			<groupId>jakarta.mail</groupId>
 			<artifactId>jakarta.mail-api</artifactId>
 			<version>2.1.0</version>
+			<scope>provided</scope>
 		</dependency>
-
+		<!-- https://github.com/eclipse-ee4j/angus-mail -->
+		<dependency>
+			<groupId>org.eclipse.angus</groupId>
+			<artifactId>jakarta.mail</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/jakarta.activation/jakarta.activation-api -->
 		<dependency>
 			<groupId>jakarta.activation</groupId>
