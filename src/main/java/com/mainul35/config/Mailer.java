@@ -1,17 +1,10 @@
 package com.mainul35.config;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import jakarta.mail.AuthenticationFailedException;
-import jakarta.mail.Authenticator;
-import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
-import jakarta.mail.Transport;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 
 public class Mailer {
 
@@ -27,7 +20,7 @@ public class Mailer {
 		
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("teamg5.bit@gmail.com", "bit12345");
+                return new PasswordAuthentication("teamg5.bit@gmail.com", "kaphmdtmubyasbcy");
 
             }
         });

@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/resources/**", "/temp/**").permitAll()
+                .requestMatchers("/resources/**", "/temp/**", "/test/**").permitAll()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/admin/**")
                 .hasRole("ADMIN")

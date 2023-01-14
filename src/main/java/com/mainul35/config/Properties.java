@@ -13,7 +13,7 @@ public class Properties {
 //    public static final String DB_USER = "postgres";
 //    public static final String DB_PASSWORD = "secret";
 
-    public static volatile String DB_URL = "jdbc:postgresql://192.168.1.103:5433/qabord_db";
+    public static volatile String DB_URL = "jdbc:postgresql://192.168.178.125:5433/qabord_db";
 
     public static volatile String DB_USER = "postgres";
 
@@ -26,7 +26,7 @@ public class Properties {
 
     public static final String SMTP_HOST = "smtp.gmail.com";
     public static final String SMTP_PORT = "465";
-    public static final String SMTP_CLASS = "jakarta.net.ssl.SSLSocketFactory";
+    public static final String SMTP_CLASS = "javax.net.ssl.SSLSocketFactory";
     public static final String SMTP_AUTH = "true";
 
     public static String TEMP_PATH = System.getProperty("user.home") + "/qa-board/temp";
