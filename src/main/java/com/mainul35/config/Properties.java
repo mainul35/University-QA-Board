@@ -13,7 +13,7 @@ public class Properties {
 //    public static final String DB_USER = "postgres";
 //    public static final String DB_PASSWORD = "secret";
 
-    public static volatile String DB_URL = "jdbc:postgresql://192.168.178.125:5433/qabord_db";
+    public static volatile String DB_URL = "jdbc:postgresql://192.168.1.103:5433/qabord_db";
 
     public static volatile String DB_USER = "postgres";
 
