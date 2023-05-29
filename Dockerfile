@@ -5,5 +5,6 @@ EXPOSE 8080:8080
 
 COPY ./target/ROOT.war /usr/local/tomcat/webapps/ROOT.war
 
-CMD ["catalina.sh","run"]
+ENTRYPOINT ["catalina.sh"]
+CMD ["run"]
 
