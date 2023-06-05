@@ -11,7 +11,7 @@
 	<properties>
 		<encoding>UTF-8</encoding>
 		<spring.version>6.0.2</spring.version>
-		<spring-security.version>6.0.0</spring-security.version>
+		<spring-security.version>6.1.0</spring-security.version>
 		<jakarta.servlet-version>6.0.0</jakarta.servlet-version>
 		<thymeleaf.version>3.1.0.RELEASE</thymeleaf.version>
 	</properties>
@@ -169,6 +169,13 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.3.7</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>8.0.33</version>
 		</dependency>
 
 		<dependency>
