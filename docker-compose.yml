@@ -2,7 +2,7 @@ version: '3.8'
 services:
   qa_board_service:
     container_name: 'qa_board'
-    image: 'mainul35/university-qa-board'
+    image: 'mainul35/university-qa-board:Spring-6'
     build: ./
     ports:
       - '8083:8080'
@@ -34,7 +34,7 @@ services:
     networks:
     - qaboard_netwok
     extra_hosts:
-    - 'qaboard_network:192.168.1.107'
+    - 'qaboard_network:192.168.238.5'
 
 volumes:
   qabord:
