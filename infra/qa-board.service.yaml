@@ -147,9 +147,9 @@ spec:
   selector:
     app-name: qa-board-db
     type: pod
-  clusterIP: none
   ports:
     - port: 5433
+      protocol: TCP
       targetPort: 5432
 ---
 kind: Service
