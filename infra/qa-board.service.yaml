@@ -111,7 +111,7 @@ spec:
     spec:
       containers:
         - name: qa_board
-          image: mainul35/university-qa-board:Spring-6-oracle
+          image: mainul35/university-qa-board:latest
           resources:
             requests:
               memory: "64Mi"
