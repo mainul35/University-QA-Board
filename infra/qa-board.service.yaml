@@ -105,7 +105,7 @@ spec:
       name: qa-board-pod
     spec:
       containers:
-        - name: qa_board
+        - name: qa-board
           image: mainul35/university-qa-board:latest
           resources:
             requests:
