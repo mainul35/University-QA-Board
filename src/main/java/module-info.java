@@ -27,4 +27,6 @@ module ewsd {
     requires jakarta.mail;
     requires java.naming;
     requires jakarta.activation;
+    requires lombok;
+    requires org.slf4j;
 }
