@@ -51,9 +51,6 @@ spec:
     metadata:
       namespace: qa-board-ns
       name: qa-board-db-pod
-      labels:
-        app-name: qa-board-db
-        type: pod
     spec:
       containers:
         - name: qa-board-db
@@ -106,8 +103,6 @@ spec:
     metadata:
       namespace: qa-board-ns
       name: qa-board-pod
-      labels:
-        app-name: qa-board
     spec:
       containers:
         - name: qa_board
