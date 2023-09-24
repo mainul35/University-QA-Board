@@ -2,13 +2,18 @@
 https://www.youtube.com/watch?v=1HTjNi27dK8
 
 ## Run with Docker
+
+To get more information about how to run with docker, read the overview section in the official docker image page.
+
+https://hub.docker.com/repository/docker/mainul35/university-qa-board/general
+
 - Pull the image:
 ```
 $ docker pull mainul35/university-qa-board:latest
 ```
 - Run the image:
 ```
-$ docker run mainul35/university-qa-board
+$ docker run -e JAVA_OPTS="-DDB_PASSWORD=postgres -DDB_URL=jdbc:postgresql://YOUR_DATABASE_SERVER_IP:DB_SERVER_PORT/qabord_db -DDB_USER=postgres -DFILE_LOCATION=~/Documents/docker_data/qaboard_data" -p 8080:8080 mainul35/university-qa-board:latest
 
 ....................................
 06-Sep-2021 18:52:13.411 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/usr/local/tomcat/webapps/ROOT.war] has finished in [4,592] ms
