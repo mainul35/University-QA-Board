@@ -104,7 +104,9 @@ spec:
   template:
     metadata:
       namespace: qa-board-ns
-      name: qa-board-pod
+      labels:
+        app-name: qa-board-pod
+        type: pod
     spec:
       containers:
         - name: qa-board
@@ -136,7 +138,7 @@ spec:
             claimName: qa-board-db-pvc
   selector:
     matchLabels:
-      app-name: qa-board-db
+      app-name: qa-board-pod
       type: pod
   replicas: 2
 ---
@@ -162,7 +164,8 @@ metadata:
 spec:
   type: NodePort
   selector:
-    deployment-name: qa-board-deployment
+    app-name: qa-board-pod
+    type: pod
   ports:
     - port: 8083
       targetPort: 8083
