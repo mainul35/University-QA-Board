@@ -40,7 +40,7 @@ public class IdeaService {
 	}
 
 	public List<Idea> listAllIdeas(){
-		return (List<Idea>) ideaRepository.findAll(Sort.by(Sort.Direction.ASC));
+		return (List<Idea>) ideaRepository.findAll(Sort.by(Sort.Direction.ASC, "createdAt"));
 	}
 	
 	public List<Idea> listIdeasByTag(Tag tag){
