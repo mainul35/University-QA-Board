@@ -221,9 +221,6 @@
 	</nav>
 </header>
 
-
-
-
 <!-- Start of createRole -->
 
 <th:block th:fragment="createRole(isOk='', role='')">
@@ -293,15 +290,24 @@
 			type="file" id="images" name="images[]" multiple="multiple"
 			accept=" .wma, .mp3, .mp4, .avi, .wmv, .doc, .docx, image/*" />
 	</div>
+	<script type="text/javascript">
+		function showTermsAndConditions() {
+			$('#myModal').modal({
+				backdrop : 'static',
+				keyboard : false
+			});
+			$(".modal-body").load("/terms-and-conditions");
+		}
+	</script>
 	<div class="row" th:if="${#lists.size(categories)<1}">
 		<div class="form-group col-sm-2">
-			<a onclick="showTermsAndConditions();"
+			<a onclick="showTermsAndConditions()"
 				class="btn btn-block btn-primary btn-sm disabled">Post</a>
 		</div>
 	</div>
 	<div class="row" th:if="${#lists.size(categories)>0}">
 		<div class="form-group col-sm-2">
-			<a onclick="showTermsAndConditions();"
+			<a onclick="showTermsAndConditions()"
 				class="btn btn-block btn-primary btn-sm">Post</a>
 		</div>
 	</div>
@@ -347,13 +353,7 @@
 							} ]
 				});
 
-		function showTermsAndConditions() {
-			$('#myModal').modal({
-				backdrop : 'static',
-				keyboard : false
-			});
-			$(".modal-body").load("/terms-and-conditions");
-		}
+
 	</script>
 </th:block>
 

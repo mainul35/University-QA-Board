@@ -3,6 +3,7 @@ package com.mainul35.config;
 import com.mainul35.service.AttachmentService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,6 +28,9 @@ public class Utils {
 
 	@Autowired
 	private ServletContext servletContext;
+
+	private String TEMP_PATH = System.getProperty("FILE_LOCATION") + "/qa-board/temp";
+	private String READ_FROM_PATH = System.getProperty("FILE_LOCATION") + "/qa-board";
 
 	private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
@@ -56,11 +60,11 @@ public class Utils {
 		File dir = null;
 
 		try {
-			dir = Paths.get(Properties.TEMP_PATH).toFile();
+			dir = Paths.get(TEMP_PATH).toFile();
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			dir = new File(Properties.TEMP_PATH + fileName);
+			dir = new File(TEMP_PATH + fileName);
 
 			if (dir.isFile()) {
 
@@ -96,7 +100,7 @@ public class Utils {
 		String attachmentUrl = attachmentService.readAttachment(fileId).getFileURL();
 		InputStream in = null;
 		if (servletContext.getResourceAsStream(attachmentUrl) == null) {
-			in = new FileInputStream (Properties.READ_FROM_PATH + attachmentUrl);
+			in = new FileInputStream (READ_FROM_PATH + attachmentUrl);
 		} else {
 			in = servletContext.getResourceAsStream(attachmentUrl);
 		}
@@ -110,7 +114,7 @@ public class Utils {
 		BufferedOutputStream bufferedOutputStream = null;
 
 		try {
-			file = new File(Properties.TEMP_PATH + fileName);
+			file = new File(TEMP_PATH + fileName);
 			fileOutputStream = new FileOutputStream(file);
 			bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
 			bufferedOutputStream.write(content.getBytes());
@@ -129,7 +133,7 @@ public class Utils {
 	public void createZip(String filename) throws IOException {
 		
 		StringBuilder sb = new StringBuilder();
-		File file = new File("c:\\temp\\"+filename+".sql");
+		File file = new File(TEMP_PATH +filename+".sql");
 		FileReader fileReader = new FileReader(file);
 		FileInputStream fileInputStream = new FileInputStream(file);
 		String line = "";
@@ -138,7 +142,7 @@ public class Utils {
 			sb.append(line + "\n");
 		}
 
-		File f = new File("c:\\temp\\"+filename+".zip");
+		File f = new File(TEMP_PATH +filename+".zip");
 		ZipOutputStream out = new ZipOutputStream(new FileOutputStream(f));
 		ZipEntry e = new ZipEntry(filename+".sql");
 		out.putNextEntry(e);
@@ -152,10 +156,11 @@ public class Utils {
 
 	
 	public void exportSQL(String filename) throws IOException, InterruptedException {
-		File dir = Paths.get(Properties.TEMP_PATH).toFile();
+		File dir = Paths.get(TEMP_PATH).toFile();
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
+		// TODO: Need to fix this
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "Start C:\\shared\\xampp\\mysql\\bin\\mysqldump -u root --password= ewsd -r c:\\temp\\"+filename+".sql");
 		
 		pb.directory(dir);

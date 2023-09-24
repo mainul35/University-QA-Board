@@ -21,6 +21,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 @ComponentScan(basePackages = {"com.mainul35.controller"})
 public class ServletConfig implements WebMvcConfigurer {
 
+    private String WRITE_PATH = System.getProperty("FILE_LOCATION") + "/qa-board/temp";
+
     @Bean
     @Autowired
     public ThymeleafViewResolver viewResolver(ApplicationContext applicationContext){
@@ -106,7 +108,7 @@ public class ServletConfig implements WebMvcConfigurer {
         		"/qa_manager/temp/**", 
         		"/qa_coordinator/temp/**", 
         		"/ideas/temp/**"
-        		).addResourceLocations("file:///" + Properties.WRITE_PATH + "/").setCachePeriod(999999999);
+        		).addResourceLocations("file:///" + WRITE_PATH + "/").setCachePeriod(999999999);
     }
 
 }
