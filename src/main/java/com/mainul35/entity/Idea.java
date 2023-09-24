@@ -2,11 +2,14 @@ package com.mainul35.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "ewsd_idea")
@@ -38,15 +41,14 @@ public class Idea implements Serializable {
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "idea_seen_by")
 	private Set<String> seenBy = new HashSet<>();
-	/*@CreatedDate
+	@CreatedDate
 	@Column(name = "created_at", nullable = false, updatable = false)
 	private LocalDateTime createdAt;
 
 	@LastModifiedDate
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
-*/
-	/*public LocalDateTime getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
@@ -60,7 +62,7 @@ public class Idea implements Serializable {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
-	}*/
+	}
 
 	public Long getIdeaId() {
 		return ideaId;

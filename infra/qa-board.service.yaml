@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: qa-board-ns
+---
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: dev-quota
+  namespace: qa-board-ns # namespace is used to define for which namespace we are defining this quota
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "10"
+    limits.memory: 10Gi
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  namespace: qa-board-ns
+  name: qa-board-secret
+type: Opaque
+data:
+  qa-board-bd-username: cG9zdGdyZXMK
+  qa-board-db-password: c2VjcmV0Cg==
+  JAVA_OPTS: LUREQl9QQVNTV09SRD1wb3N0Z3JlcyAtRERCX1VSTD1qZGJjOnBvc3RncmVzcWw6Ly9xYWJvYXJkX2RiOjU0MzIvcWFib3JkX2RiIC1EREJfVVNFUj1wb3N0Z3JlcyAtREZJTEVfTE9DQVRJT049fi9Eb2N1bWVudHMvZG9ja2VyX2RhdGEvcWFib2FyZF9kYXRh
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: qa-board-ns
+  name: qa-board-db-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 256Mi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: qa-board-ns
+  name: qa-board-db-deployment
+  labels:
+    app-name: qa-board-db
+spec:
+  template:
+    metadata:
+      namespace: qa-board-ns
+      name: qa-board-db-pod
+      labels:
+        app-name: qa-board-db
+        type: pod
+    spec:
+      containers:
+        - name: qa-board-db
+          image: postgres
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+          env:
+            - name: POSTGRES_DB
+              value: "qabord_db"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: qa-board-secret
+                  key: qa-board-bd-username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: qa-board-db-password
+                  name: qa-board-secret
+          ports:
+            - containerPort: 5432  # PostgreSQL default port
+          volumeMounts:
+            - name: qa-board-db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: qa-board-db-data
+          persistentVolumeClaim:
+            claimName: qa-board-db-pvc  # Create a PVC for persistent storage
+  selector:
+    matchLabels:
+      app-name: qa-board-db
+      type: pod
+  replicas: 2
+  serviceName: qa-board-db-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: qa-board-ns
+  name: qa-board-deployment
+  labels:
+    deployment-name: qa-board-deployment
+spec:
+  template:
+    metadata:
+      namespace: qa-board-ns
+      name: qa-board-pod
+      labels:
+        app-name: qa-board
+    spec:
+      containers:
+        - name: qa_board
+          image: mainul35/university-qa-board:latest
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                secretKeyRef:
+                  name: qa-board-secret
+                  key: JAVA_OPTS
+          ports:
+            - containerPort: 5432  # PostgreSQL default port
+          volumeMounts:
+            - name: qa-board-data
+              mountPath: ~/Documents/docker_data/qaboard_data
+      volumes:
+        - name: qa-board-db-data
+          persistentVolumeClaim:
+            claimName: qa-board-db-pvc  # Create a PVC for persistent storage
+        - name: qa-board-data
+          persistentVolumeClaim:
+            claimName: qa-board-db-pvc
+  selector:
+    matchLabels:
+      app-name: qa-board-db
+      type: pod
+  replicas: 2
