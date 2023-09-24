@@ -92,7 +92,7 @@ spec:
       app-name: qa-board-db
       type: pod
   replicas: 2
-  serviceName: qa-board-db-service
+  serviceName: qa-board-db-headless-service
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -142,3 +142,31 @@ spec:
       app-name: qa-board-db
       type: pod
   replicas: 2
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: qa-board-db-headless-service
+  namespace: qa-board-ns
+spec:
+  selector:
+    app-name: qa-board-db
+    type: pod
+  clusterIP: none
+  ports:
+    - port: 5433
+      targetPort: 5432
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: qa-board-service
+  namespace: qa-board-ns
+spec:
+  type: NodePort
+  selector:
+    deployment-name: qa-board-deployment
+  ports:
+    - port: 8083
+      targetPort: 8083
+      nodePort: 30083
