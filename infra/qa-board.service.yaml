@@ -153,7 +153,7 @@ spec:
     type: pod
   ports:
     - port: 5433
-  clusterIP: none
+  clusterIP: "None"
 ---
 kind: Service
 apiVersion: v1
