@@ -78,7 +78,7 @@ spec:
                   key: qa-board-db-password
                   name: qa-board-secret
           ports:
-            - containerPort: 5432  # PostgreSQL default port
+            - containerPort: 5433
           volumeMounts:
             - name: qa-board-db-data
               mountPath: /var/lib/postgresql/data
@@ -153,6 +153,7 @@ spec:
     type: pod
   ports:
     - port: 5433
+  clusterIP: "None"
 ---
 kind: Service
 apiVersion: v1
