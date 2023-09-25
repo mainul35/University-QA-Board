@@ -91,7 +91,6 @@ spec:
       app-name: qa-board-db
       type: pod
   replicas: 2
-  serviceName: qa-board-db-headless-service
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -145,7 +144,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: qa-board-db-headless-service
+  name: qa-board-db-service
   namespace: qa-board-ns
 spec:
   selector:
@@ -153,7 +152,7 @@ spec:
     type: pod
   ports:
     - port: 5433
-  clusterIP: "None"
+  type: ClusterIP
 ---
 kind: Service
 apiVersion: v1
