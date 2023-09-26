@@ -78,7 +78,7 @@ spec:
                   key: qa-board-db-password
                   name: qa-board-secret
           ports:
-            - containerPort: 5433
+            - containerPort: 5432
           volumeMounts:
             - name: qa-board-db-data
               mountPath: /var/lib/postgresql/data
@@ -124,8 +124,6 @@ spec:
                 secretKeyRef:
                   name: qa-board-secret
                   key: JAVA_OPTS
-          ports:
-            - containerPort: 5432  # PostgreSQL default port
           volumeMounts:
             - name: qa-board-data
               mountPath: ~/Documents/docker_data/qaboard_data
@@ -153,7 +151,7 @@ spec:
     type: pod
   ports:
     - port: 5433
-      targetPort: 5433
+      targetPort: 5432
       nodePort: 30033
   type: NodePort
 ---
