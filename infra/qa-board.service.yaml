@@ -25,7 +25,7 @@ type: Opaque
 data:
   qa-board-bd-username: cG9zdGdyZXMK
   qa-board-db-password: c2VjcmV0Cg==
-  JAVA_OPTS: LUREQl9QQVNTV09SRD1wb3N0Z3JlcyAtRERCX1VSTD1qZGJjOnBvc3RncmVzcWw6Ly9xYS1ib2FyZC1kYi1zZXJ2aWNlLnFhLWJvYXJkLW5zLnN2Yy5jbHVzdGVyLmxvY2FsOjU0MzMvcWFib3JkX2RiIC1EREJfVVNFUj1wb3N0Z3JlcyAtREZJTEVfTE9DQVRJT049fi9Eb2N1bWVudHMvZG9ja2VyX2RhdGEvcWFib2FyZF9kYXRh
+  JAVA_OPTS: LUREQl9QQVNTV09SRD1wb3N0Z3JlcyAtRERCX1VSTD1qZGJjOnBvc3RncmVzcWw6Ly8xOTIuMTY4LjU4LjI6MzAwMzMvcWFib3JkX2RiIC1EREJfVVNFUj1wb3N0Z3JlcyAtREZJTEVfTE9DQVRJT049fi9Eb2N1bWVudHMvZG9ja2VyX2RhdGEvcWFib2FyZF9kYXRh
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -91,6 +91,7 @@ spec:
       app-name: qa-board-db
       type: pod
   replicas: 2
+  serviceName: qa-board-db-service
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -152,7 +153,9 @@ spec:
     type: pod
   ports:
     - port: 5433
-  type: ClusterIP
+      targetPort: 5433
+      nodePort: 30033
+  type: NodePort
 ---
 kind: Service
 apiVersion: v1
