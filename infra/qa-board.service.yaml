@@ -23,9 +23,9 @@ metadata:
   name: qa-board-secret
 type: Opaque
 data:
-  qa-board-bd-username: cG9zdGdyZXMK
-  qa-board-db-password: c2VjcmV0Cg==
-  JAVA_OPTS: LUREQl9QQVNTV09SRD1wb3N0Z3JlcyAtRERCX1VSTD1qZGJjOnBvc3RncmVzcWw6Ly9xYS1ib2FyZC1kYi1zZXJ2aWNlLnN2Yy5jbHVzdGVyLmxvY2FsOjU0MzMvcWFib3JkX2RiIC1EREJfVVNFUj1wb3N0Z3JlcyAtREZJTEVfTE9DQVRJT049fi9Eb2N1bWVudHMvZG9ja2VyX2RhdGEvcWFib2FyZF9kYXRh
+  qa-board-bd-username: cG9zdGdyZXM=
+  qa-board-db-password: c2VjcmV0
+  JAVA_OPTS: LUREQl9QQVNTV09SRD1zZWNyZXQgLUREQl9VUkw9amRiYzpwb3N0Z3Jlc3FsOi8vcWEtYm9hcmQtZGItc2VydmljZS9xYV9ib2FyZF9kYiAtRERCX1VTRVI9cG9zdGdyZXMgLURGSUxFX0xPQ0FUSU9OPX4vRG9jdW1lbnRzL2RvY2tlcl9kYXRhL3FhYm9hcmRfZGF0YQ==
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -125,7 +125,7 @@ spec:
                   name: qa-board-secret
                   key: JAVA_OPTS
           ports:
-            - containerPort: 8083
+            - containerPort: 8080
           volumeMounts:
             - name: qa-board-data
               mountPath: ~/Documents/docker_data/qaboard_data
@@ -153,9 +153,8 @@ spec:
     type: pod
   ports:
     - port: 5433
-      targetPort: 5433
-      nodePort: 30543
-  type: NodePort
+      targetPort: 5432
+  clusterIP: None
 ---
 kind: Service
 apiVersion: v1
@@ -169,5 +168,5 @@ spec:
     type: pod
   ports:
     - port: 8083
-      targetPort: 8083
+      targetPort: 8080
       nodePort: 30083
