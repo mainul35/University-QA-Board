@@ -25,7 +25,7 @@ type: Opaque
 data:
   qa-board-bd-username: cG9zdGdyZXMK
   qa-board-db-password: c2VjcmV0Cg==
-  JAVA_OPTS: LUREQl9QQVNTV09SRD1wb3N0Z3JlcyAtRERCX1VSTD1qZGJjOnBvc3RncmVzcWw6Ly8xOTIuMTY4LjU4LjI6MzAwMzMvcWFib3JkX2RiIC1EREJfVVNFUj1wb3N0Z3JlcyAtREZJTEVfTE9DQVRJT049fi9Eb2N1bWVudHMvZG9ja2VyX2RhdGEvcWFib2FyZF9kYXRh
+  JAVA_OPTS: LUREQl9QQVNTV09SRD1wb3N0Z3JlcyAtRERCX1VSTD1qZGJjOnBvc3RncmVzcWw6Ly9xYS1ib2FyZC1kYi1zZXJ2aWNlLnN2Yy5jbHVzdGVyLmxvY2FsOjU0MzMvcWFib3JkX2RiIC1EREJfVVNFUj1wb3N0Z3JlcyAtREZJTEVfTE9DQVRJT049fi9Eb2N1bWVudHMvZG9ja2VyX2RhdGEvcWFib2FyZF9kYXRh
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -66,7 +66,7 @@ spec:
               cpu: "1"
           env:
             - name: POSTGRES_DB
-              value: "qabord_db"
+              value: "qa_board_db"
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -78,7 +78,7 @@ spec:
                   key: qa-board-db-password
                   name: qa-board-secret
           ports:
-            - containerPort: 5432
+            - containerPort: 5433
           volumeMounts:
             - name: qa-board-db-data
               mountPath: /var/lib/postgresql/data
@@ -124,13 +124,15 @@ spec:
                 secretKeyRef:
                   name: qa-board-secret
                   key: JAVA_OPTS
+          ports:
+            - containerPort: 8083
           volumeMounts:
             - name: qa-board-data
               mountPath: ~/Documents/docker_data/qaboard_data
       volumes:
         - name: qa-board-db-data
           persistentVolumeClaim:
-            claimName: qa-board-db-pvc  # Create a PVC for persistent storage
+            claimName: qa-board-db-pvc
         - name: qa-board-data
           persistentVolumeClaim:
             claimName: qa-board-db-pvc
@@ -151,8 +153,8 @@ spec:
     type: pod
   ports:
     - port: 5433
-      targetPort: 5432
-      nodePort: 30033
+      targetPort: 5433
+      nodePort: 30543
   type: NodePort
 ---
 kind: Service
