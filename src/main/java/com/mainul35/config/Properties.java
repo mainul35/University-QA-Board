@@ -17,9 +17,9 @@ public class Properties {
 
     public static volatile String DB_USER = "postgres";
 
-    public static volatile String DB_PASSWORD = "postgres";
+    public static volatile String DB_PASSWORD = "secret";
 
-    public static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQL94Dialect";
+    public static final String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
     public static final String HIBERNATE_SHOW_SQL = "true";
     public static final String HBM2DDL_AUTO = "update";
     public static final String ENTITY_MANAGER_PACKAGES_TO_SCAN = "com.mainul35.entity";

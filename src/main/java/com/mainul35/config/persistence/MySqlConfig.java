@@ -62,6 +62,12 @@ public class MySqlConfig {
         dataSource.setUrl(db_url);     //MySQL Specific: +"?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false"
         dataSource.setUsername(db_username);
         dataSource.setPassword(db_password);
+        System.out.println("================== Connection Properties ================");
+        System.out.println(db_url);
+        System.out.println(db_username);
+        System.out.println(db_password);
+        System.out.println("================== Connection Properties ================");
+
         return dataSource;
     }
 
