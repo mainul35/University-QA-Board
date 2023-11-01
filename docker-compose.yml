@@ -15,7 +15,7 @@ services:
     command: catalina.sh run
     # Pass environment variables to the service
     environment:
-      JAVA_OPTS: "-DDB_PASSWORD=postgres -DDB_URL=jdbc:postgresql://qaboard_db:5432/qabord_db -DDB_USER=postgres -DFILE_LOCATION=/Documents/docker_data/qaboard_data"
+      JAVA_OPTS: "-DDB_PASSWORD=secret -DDB_URL=jdbc:postgresql://qaboard_db:5432/qa_board_db -DDB_USER=postgres -DFILE_LOCATION=/Documents/docker_data/qaboard_data"
     networks:
     - qaboard_netwok
   qaboard_db:
@@ -28,9 +28,9 @@ services:
     ports:
     - '5433:5432'
     environment:
-    - 'POSTGRES_PASSWORD=postgres'
+    - 'POSTGRES_PASSWORD=secret'
     - 'POSTGRES_USER=postgres'
-    - 'POSTGRES_DB=qabord_db'
+    - 'POSTGRES_DB=qa_board_db'
     networks:
     - qaboard_netwok
 #    extra_hosts:
