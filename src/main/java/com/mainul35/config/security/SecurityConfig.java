@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/resources/**", "/temp/**", "/test/**").permitAll()
+//                                .requestMatchers("/resources/**", "/temp/**", "/test/**").permitAll()
                                 .anyRequest().authenticated())
 //                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
 //                        authorizationManagerRequestMatcherRegistry
