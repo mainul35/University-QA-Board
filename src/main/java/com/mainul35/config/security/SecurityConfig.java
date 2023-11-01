@@ -1,7 +1,5 @@
 package com.mainul35.config.security;
 
-import com.mainul35.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,40 +13,41 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserService userService;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/resources/**", "/temp/**", "/test/**").permitAll()
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/admin/**")
-                        .hasRole("ADMIN")
-                        .requestMatchers("/qa_manager/**")
-                        .hasRole("QA_MANAGER")
-                        .requestMatchers("/qa_coordinator/**")
-                        .hasRole("QA_COORDINATOR")
-                        .requestMatchers("/staff/**")
-                        .hasRole("STAFF")
-                        .requestMatchers("/student/**")
-                        .hasRole("STUDENT")
-                        .requestMatchers(
-                                "/dashboard",
-                                "/ideas",
-                                "/ideas/**",
-                                "/download**",
-                                "/profile**",
-                                "/footer",
-                                "/main-header",
-                                "/post-new-idea",
-                                "/control-sidebar"
-                        )
-                        .authenticated()
-                )
+                                .requestMatchers("/resources/**", "/temp/**", "/test/**").permitAll()
+                                .anyRequest().authenticated())
+//                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+//                        authorizationManagerRequestMatcherRegistry
+//                        .requestMatchers("/resources/**", "/temp/**", "/test/**").permitAll()
+//                        .requestMatchers("/").permitAll()
+//                        .requestMatchers("/admin/**")
+//                        .hasRole("ADMIN")
+//                        .requestMatchers("/qa_manager/**")
+//                        .hasRole("QA_MANAGER")
+//                        .requestMatchers("/qa_coordinator/**")
+//                        .hasRole("QA_COORDINATOR")
+//                        .requestMatchers("/staff/**")
+//                        .hasRole("STAFF")
+//                        .requestMatchers("/student/**")
+//                        .hasRole("STUDENT")
+//                        .requestMatchers(
+//                                "/dashboard",
+//                                "/ideas",
+//                                "/ideas/**",
+//                                "/download**",
+//                                "/profile**",
+//                                "/footer",
+//                                "/main-header",
+//                                "/post-new-idea",
+//                                "/control-sidebar"
+//                        )
+//                        .authenticated()
+//                )
                 .formLogin(httpSecurityFormLoginConfigurer ->
                         httpSecurityFormLoginConfigurer.loginPage("/login")
                                 .loginProcessingUrl("/login-processing")

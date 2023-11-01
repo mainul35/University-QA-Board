@@ -10,8 +10,8 @@
 	<packaging>war</packaging>
 	<properties>
 		<encoding>UTF-8</encoding>
-		<spring.version>6.0.2</spring.version>
-		<spring-security.version>6.1.2</spring-security.version>
+		<spring.version>6.0.9</spring.version>
+		<spring-security.version>6.0.8</spring-security.version>
 		<jakarta.servlet-version>6.0.0</jakarta.servlet-version>
 		<thymeleaf.version>3.1.0.RELEASE</thymeleaf.version>
 	</properties>
