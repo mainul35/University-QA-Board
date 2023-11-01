@@ -13,7 +13,7 @@ $ docker pull mainul35/university-qa-board:latest
 ```
 - Run the image:
 ```
-$ docker run -e JAVA_OPTS="-DDB_PASSWORD=postgres -DDB_URL=jdbc:postgresql://YOUR_DATABASE_SERVER_IP:DB_SERVER_PORT/qabord_db -DDB_USER=postgres -DFILE_LOCATION=~/Documents/docker_data/qaboard_data" -p 8080:8080 mainul35/university-qa-board:latest
+$ docker run -e JAVA_OPTS="-DDB_PASSWORD=secret -DDB_URL=jdbc:postgresql://YOUR_DATABASE_SERVER_IP:DB_SERVER_PORT/qa_board_db -DDB_USER=postgres -DFILE_LOCATION=~/Documents/docker_data/qaboard_data" -p 8080:8080 mainul35/university-qa-board:latest
 
 ....................................
 06-Sep-2021 18:52:13.411 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/usr/local/tomcat/webapps/ROOT.war] has finished in [4,592] ms
