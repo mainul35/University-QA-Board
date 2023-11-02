@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 import jakarta.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +45,7 @@ import com.mainul35.service.IssueService;
 import com.mainul35.service.NotificationService;
 import com.mainul35.service.TagService;
 import com.mainul35.service.UserService;
+import org.thymeleaf.util.ArrayUtils;
 
 @Controller
 @RequestMapping("/qa_coordinator")
@@ -625,7 +625,6 @@ public class QACoordinatorController {
 		Timeline[] timelineArray = new Timeline[timelines.size()];
 		System.out.println(timelineArray);
 		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
-		ArrayUtils.reverse(timelineArray);
 		return timelineArray;
 	}
 
@@ -660,7 +659,6 @@ public class QACoordinatorController {
 		Timeline[] timelineArray = new Timeline[timelines.size()];
 		System.out.println(timelineArray);
 		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
-		ArrayUtils.reverse(timelineArray);
 		return timelineArray;
 	}
 
@@ -695,7 +693,6 @@ public class QACoordinatorController {
 		Timeline[] timelineArray = new Timeline[timelines.size()];
 		System.out.println(timelineArray);
 		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
-		ArrayUtils.reverse(timelineArray);
 		return timelineArray;
 	}
 
@@ -730,7 +727,6 @@ public class QACoordinatorController {
 		Timeline[] timelineArray = new Timeline[timelines.size()];
 		System.out.println(timelineArray);
 		timelineArray = sortTimelines.sort(timelines.toArray(timelineArray));
-		ArrayUtils.reverse(timelineArray);
 		return timelineArray;
 	}
 

@@ -1,0 +1,25 @@
+/**
+###############################################################	Edited by Mainul #####################################
+*/
+
+#change-profile-image {
+}
+
+
+#change-profile-image:hover{
+	margin-top: -90px;
+	margin-bottom: 0px;
+	width: 90px;
+	height: 90px;
+	align-content: center;
+	margin-left: 84px;
+	z-index: 5;
+	border-radius: 50px;
+	border: 3px solid;
+	background-color: #2196f3;
+}
+
+
+/**
+###############################################################	End of Edited by Mainul #####################################
+*/

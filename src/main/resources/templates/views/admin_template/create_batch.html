@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+
+<div class="box-header with-border">
+	<h3 class="box-title">Create Department</h3>
+</div>
+<!-- /.box-header -->
+<!-- form start -->
+<form method="POST" th:action="@{/admin/create-batch}"
+	th:object="${batch}" class="form-horizontal">
+	<div class="box-body" style="margin-left: 7%">
+		<div class="row">
+			<div class="form-group">
+				<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+					<label for="inputBatchName" class="control-label">Batch name</label>
+				</div>
+				<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+					<input type="text" class="form-control" id="inputBatchName"
+						th:field="*{batchName}" placeholder="Batch Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+					<label for="inputAcademicYear" class="control-label">Academic Year</label>
+				</div>
+				<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+					<input type="text" class="form-control" id="inputAcademicYear"
+						th:field="*{academicYear}" placeholder="Academic Year">
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- /.box-body -->
+	<div class="box-footer">
+		<button type="submit" class="btn btn-info pull-right">Create
+			Batch</button>
+	</div>
+	<!-- /.box-footer -->
+</form>

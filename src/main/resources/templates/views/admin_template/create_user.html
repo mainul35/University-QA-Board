@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+
+<div class="box-header with-border">
+	<h3 class="box-title">Create User</h3>
+</div>
+<!-- /.box-header -->
+<!-- form start -->
+<form method="POST" th:action="@{/admin/create-user}"
+	th:object="${user}" class="form-horizontal">
+	<div class="box-body" style="margin-left: 7%">
+		<div class="row">
+			<div class="form-group">
+				<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+					<label for="inputName" class="control-label">Name</label>
+				</div>
+				<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+					<input type="text" class="form-control" id="inputName"
+						th:field="*{name}" placeholder="Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+					<label for="email" class="control-label">Email</label>
+				</div>
+				<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+					<input type="text" class="form-control" id="inputEmail"
+						th:field="*{email}" placeholder="Email">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+					<label for="email" class="control-label">Username</label>
+				</div>
+				<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+					<input type="text" class="form-control" id="inputUsername"
+						th:field="*{username}" placeholder="Username">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+					<label for="email" class="control-label">Password</label>
+				</div>
+				<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+					<input type="password" class="form-control" id="inputPassword"
+						th:field="*{password}" placeholder="Password">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+					<label for="email" class="control-label">Select user type</label>
+				</div>
+				<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+					<div>
+						<input type="radio" name="userType" value="Student" checked="checked" />Student
+					</div>
+					<div>
+						<input type="radio" name="userType" value="Employee" />Employee
+					</div>
+				</div>
+			</div>
+			<div class="row">
+								<div class="form-group">
+									<div class="col-sm-4 col-xs-4 col-md-4 col-lg-4 col-xl-4 ">
+										<label for="inputVisibleToDepartments" class="control-label">Visible
+											to (Departments)</label>
+									</div>
+									<div class="col-sm-7 col-xs-7 col-md-7 col-lg-7 col-xl-7">
+
+										<select name="inputVisibleToDepartments"
+											id="inputVisibleToDepartments" class="form-control"
+											style="width: 100%; color: black;" multiple="multiple">
+											<option th:each="department : ${departments}"
+												th:value="${department}" th:text="${department}"></option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+							<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+							<script type="text/javascript"
+								th:src="@{../../../../webapp/resources/contents/lib/multiple-select/select2.js}"></script>
+
+							<script type="text/javascript" th:inline="javascript">
+								$('#inputVisibleToDepartments').select2();
+			</script>
+		</div>
+
+	</div>
+	<!-- /.box-body -->
+	<div class="box-footer">
+		<button type="submit" class="btn btn-info pull-right">Create
+			User</button>
+	</div>
+	<!-- /.box-footer -->
+</form>
