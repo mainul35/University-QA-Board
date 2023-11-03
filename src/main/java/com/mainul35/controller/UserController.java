@@ -27,13 +27,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private AuthorityService authorityService;
-	@Autowired
-	private IdeaService ideaService;
-	@Autowired
 	private AttachmentService attachmentService;
 	@Autowired
 	private PasswordEncoder encoder;
+	@Autowired
+	private IdeaService ideaService;
 	@Autowired
 	private Utils utils;
 	@Autowired
@@ -42,8 +40,7 @@ public class UserController {
 	private ContributionService contributionService;
 	@Autowired
 	private NotificationService notificationService;
-	@Autowired
-	private DepartmentService departmentService;
+
 	@Autowired
 	private IssueService issueService;
 	@Autowired
@@ -76,8 +73,6 @@ public class UserController {
 		}
 		log(request);
 		model.addAttribute("msg", "some message");
-		Initializer initializer = new Initializer(authorityService, userService, attachmentService,
-				departmentService, encoder);
 		Properties.TEMP_PATH = servletContext.getRealPath("\\");
 		return "/templates/login";
 	}

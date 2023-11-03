@@ -31,7 +31,9 @@ public class ServletConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/static/contents/webjars/").setCachePeriod(999999999);
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/static/contents/webjars/")
+//                .setCachePeriod(999999999)
+        ;
         registry.addResourceHandler(
         		"/admin/contents/**",
         		"/staff/contents/**",
@@ -41,7 +43,9 @@ public class ServletConfig implements WebMvcConfigurer {
         		"/qa_coordinator/ideas/contents/**",
         		"/ideas/contents/**",
         		"/contents/**"
-        		).addResourceLocations("classpath:/static/contents/").setCachePeriod(999999999);
+        		).addResourceLocations("classpath:/static/contents/")
+//                .setCachePeriod(999999999)
+        ;
         registry.addResourceHandler(
         		"/temp/**",
         		"/student/temp/**",
@@ -50,7 +54,9 @@ public class ServletConfig implements WebMvcConfigurer {
         		"/qa_manager/temp/**",
         		"/qa_coordinator/temp/**",
         		"/ideas/temp/**"
-        		).addResourceLocations("file:///" + WRITE_PATH + "/").setCachePeriod(999999999);
+        		).addResourceLocations("file:///" + WRITE_PATH + "/")
+//                .setCachePeriod(999999999)
+        ;
     }
 
 }
